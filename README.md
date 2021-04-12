@@ -11,7 +11,7 @@
 
 ### **_Description_**
 
-RushHour is an app where helps users to find available street parking nearby.
+RushHour is an app where helps users to find available street parking nearby and reserve the parking spot.
 
 Features:
 
@@ -31,3 +31,5 @@ Features:
 ### **_Future Updates_**
 
 - [ ] being able to read parking meters
+- [ ] add payment function
+- [ ] add timer
