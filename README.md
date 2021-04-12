@@ -29,3 +29,5 @@ Features:
 ### **_Preview_**
 
 ### **_Future Updates_**
+
+- [ ] being able to read parking meters
