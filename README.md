@@ -24,6 +24,6 @@ Features:
 - Sequelize
 - Express
 
-### **\_Preview**
+### **_Preview_**
 
 ### **_Future Updates_**
