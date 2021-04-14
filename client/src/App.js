@@ -97,11 +97,15 @@ const App = (props) => {
   const handleChange = (e) => {
     setComment(e.target.value)
   }
-  const submitComment = async (coordinateId) => {
+  const submitComment = async (id) => {
+    const userId = 1
     try {
-      const res = await axios.post(`${BASE_URL}/comment/add/${coordinateId}`, {
+      const res = await axios.post(`${BASE_URL}/comment/add/${id}`, {
+        userId,
+        coordinateId: id,
         comment: comment
       })
+      console.log(res)
       setComments([...comments])
     } catch (error) {
       throw error
@@ -154,9 +158,10 @@ const App = (props) => {
           )}
         />
         <Route
-          path="/reviews"
+          path="/reviews/:id"
           render={(props) => (
             <Comments
+              props={props}
               comment={comment}
               handleChange={handleChange}
               submitComment={submitComment}

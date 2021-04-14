@@ -78,7 +78,6 @@ const Map = (props) => {
                   </button>
                 </Carousel.Item>
               </Carousel>
-              <Comments props={props} parkingId={parking.id} />
               {selectedParking ? (
                 <Popup
                   longitude={selectedParking.longitude}
