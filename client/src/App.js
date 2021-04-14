@@ -6,17 +6,15 @@ import 'sanity-mobile-preview/dist/index.css?raw'
 import { Route, Switch } from 'react-router-dom'
 import { BASE_URL } from './globals'
 import axios from 'axios'
+import Navigate from './components/Navigate'
 
 const App = () => {
   // const [lat, setLat] = useState(null)
   // const [lng, setLng] = useState(null)
   const [coordinates, setCoordinates] = useState([])
   const [status, setStatus] = useState(null)
-  const [parking, setParking] = useState({
-    price: null,
-    coordinates: [],
-    time: null,
-    distance: null
+  const [newParking, setNewParking] = useState({
+    longitude: ''
   })
   const [allParkings, setAllParkings] = useState([])
 
@@ -78,6 +76,7 @@ const App = () => {
           )}
         />
       </Switch>
+      <Navigate />
     </SanityMobilePreview>
   )
 }

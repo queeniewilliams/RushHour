@@ -16,7 +16,7 @@ RushHour is an interactive app where it helps users to find available street par
 Features:
 
 - users are able to log in to add/edit/delete thier parking spot,
-- users are able to log in to see avaiable parrking nearby
+- users are able to log in to see available parking nearby
 - users are able to reserve parking spot
 - users are able to see the distance between current location and the parking spot
 

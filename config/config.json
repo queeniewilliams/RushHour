@@ -1,0 +1,14 @@
+{
+  "development": {
+    "database": "rushhour_database_development",
+    "dialect": "postgres"
+  },
+  "test": {
+    "database": "rushhour_database_test",
+    "dialect": "postgres"
+  },
+  "production": {
+    "database": "database_production",
+    "dialect": "postgres"
+  }
+}
