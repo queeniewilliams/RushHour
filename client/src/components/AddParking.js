@@ -1,20 +1,36 @@
 import React, { useState } from 'react'
 
 const AddParking = (props) => {
+  const getLocation = () => {
+    if (!navigator.geolocation) {
+      props.setStatus('Geolocation is not supported by your browser')
+    } else {
+      props.setStatus('Locating...')
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          props.setStatus(null)
+          props.setLat(position.coords.latitude)
+          props.setLng(position.coords.longitude)
+          // props.setCoordinates([
+          //   position.coords.longitude,
+          //   position.coords.latitude
+          // ])
+        },
+        () => {
+          props.setStatus('Unable to retrieve your location')
+        }
+      )
+    }
+  }
   return (
     <div>
-      <form>
-        <input
-          name="price"
-          placeholder="price"
-          value={props.parking.price}
-          onChange={props.handleChange}
-        />
+      <form onSubmit={props.submitParking}>
         <input type="time" name="time" value="time" />
         <br></br>
-        {/* <button onClick={props.getLocation}>Get Location</button>
+        <button onClick={getLocation}>Get Location</button>
         <p>{props.status}</p>
-        {props.coordinates} */}
+        {props.lat && <p>Latitude: {props.lat}</p>}
+        {props.lng && <p>Longitude: {props.lng}</p>}
       </form>
     </div>
   )

@@ -14,10 +14,10 @@ module.exports = {
         references: { model: 'users', key: 'id' }
       },
       longitude: {
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT
       },
       latitude: {
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT
       },
       createdAt: {
         allowNull: false,

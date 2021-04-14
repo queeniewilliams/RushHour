@@ -20,7 +20,7 @@ const PopupCurrent = ({ coordinate, parking }) => (
   </Popup>
 )
 
-const Map = () => {
+const Map = (props) => {
   const [viewport, setViewport] = useState({
     width: '100%',
     height: '100%',
@@ -28,9 +28,7 @@ const Map = () => {
     longitude: -118,
     zoom: 8
   })
-
-  const CURRENT = 'Los Angeles'
-
+  let CURRENT = 'los Angeles'
   const [selectedParking, setSelectedParking] = useState(null)
   const [showPopup, togglePopup] = useState(null)
   const [showButton, setShowButton] = useState(false)
@@ -61,17 +59,15 @@ const Map = () => {
       maxZoom={100}
       minZoom={1.6}
     >
-      {parkings
-        ? parkings.map(({ geometry: { coordinates, name } }, index) => (
+      {props.allParkings
+        ? props.allParkings.map((parking, index) => (
             <Fragment key={index}>
-              <Marker longitude={coordinates[0]} latitude={coordinates[1]}>
-                <div
-                  className={name === CURRENT ? 'marker-current' : 'marker'}
-                />
+              <Marker longitude={parking.longitude} latitude={parking.latitude}>
+                <div className="marker" />
               </Marker>
-              {name === CURRENT && (
+              {/* {name === CURRENT && (
                 <PopupCurrent coordinate={coordinates} city={CURRENT} />
-              )}
+              )} */}
               <Carousel
                 activeIndex={activeIndex}
                 next={next}
@@ -81,8 +77,11 @@ const Map = () => {
                   onExiting={() => setAnimating(true)}
                   onExited={() => setAnimating(false)}
                 >
-                  <button onClick={() => chooseSpot({ coordinates, name })}>
-                    {name}
+                  <button
+                    onClick={() =>
+                      chooseSpot(parking.longitude, parking.latitude)
+                    }
+                  >
                     <p>Time:</p>
                     <p>Distance:</p>
                     <button>open in google map</button>
@@ -91,10 +90,10 @@ const Map = () => {
               </Carousel>
               {selectedParking ? (
                 <Popup
-                  longitude={selectedParking.coordinates[0]}
-                  latitude={selectedParking.coordinates[1]}
+                  longitude={selectedParking.longitude}
+                  latitude={selectedParking.latitude}
                 >
-                  {selectedParking.name}
+                  {/* {selectedParking.name} */}
                 </Popup>
               ) : null}
             </Fragment>

@@ -3,8 +3,11 @@ const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Coordinate extends Model {
     static associate(models) {
-      Coordinate.belongsTo(models.User, { foreignKey: 'userId' })
-      Coordinate.hasMany(models.Comment, { foreignKey: 'coordinateId' })
+      Coordinate.belongsTo(models.User, { as: 'owner', foreignKey: 'userId' })
+      Coordinate.hasMany(models.Comment, {
+        as: 'comments',
+        foreignKey: 'coordinateId'
+      })
     }
   }
   Coordinate.init(
@@ -14,8 +17,8 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         references: { model: 'users', key: 'id' }
       },
-      longitude: DataTypes.INTEGER,
-      latitude: DataTypes.INTEGER
+      longitude: DataTypes.FLOAT,
+      latitude: DataTypes.FLOAT
     },
     {
       sequelize,
