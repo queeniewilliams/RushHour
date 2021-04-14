@@ -8,7 +8,7 @@ import { Route, Switch } from 'react-router-dom'
 import { BASE_URL } from './globals'
 import axios from 'axios'
 
-const App = () => {
+const App = (props) => {
   const [lat, setLat] = useState(null)
   const [lng, setLng] = useState(null)
   const [coordinates, setCoordinates] = useState([])
@@ -18,7 +18,7 @@ const App = () => {
   const [distance, setDistance] = useState(null)
   const [comments, setComments] = useState([])
   const [comment, setComment] = useState('')
-  const { coordinate_id } = props.match.params
+  // const coordinateId = props.match.params.id
   // const [newParking, setNewParking] = useState({
   //   longitude: ''
   // })
@@ -48,7 +48,7 @@ const App = () => {
     const userId = 1
     try {
       // console.log(lng, lat)
-      const res = await axios.post(`${BASE_URL}/add/${coordinate_id}`, {
+      const res = await axios.post(`${BASE_URL}/add`, {
         userId,
         longitude: lng,
         latitude: lat
@@ -66,6 +66,7 @@ const App = () => {
   useEffect(() => {
     getAllParkings()
     // calcDistance()
+    getAllComments()
   }, [])
   const getAllParkings = async () => {
     try {
@@ -94,17 +95,13 @@ const App = () => {
     setDistance(d)
   }
   console.log(distance)
+
   const handleChange = (e) => {
     setComment(e.target.value)
   }
-  const submitComment = async (e) => {
-    e.preventDefault()
-    const userId = 1
-    const coordinateId = 1
+  const submitComment = async (coordinateId) => {
     try {
-      const res = await axios.post(`${BASE_URL}/comment/add`, {
-        userId,
-        coordinateId,
+      const res = await axios.post(`${BASE_URL}/comment/add/${coordinateId}`, {
         comment: comment
       })
       setComments([...comments])
@@ -114,7 +111,7 @@ const App = () => {
   }
   const getAllComments = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/all/${coordinate_id} `)
+      const res = await axios.get(`${BASE_URL}/all/1 `)
       console.log(res)
       setComments(res.data)
     } catch (error) {
