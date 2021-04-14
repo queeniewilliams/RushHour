@@ -24,7 +24,7 @@ const UpdateParking = async (req, res) => {
   try {
     const parking = await Coordinate.update(
       { ...req.body },
-      { where: { id: req.params.parking_id }, returning: true }
+      { where: { id: req.params.coordinate_id }, returning: true }
     )
     res.send(parking)
   } catch (error) {
@@ -33,10 +33,10 @@ const UpdateParking = async (req, res) => {
 }
 const DeleteParking = async (req, res) => {
   try {
-    await Coordinate.destroy({ where: { id: req.params.parking_id } })
+    await Coordinate.destroy({ where: { id: req.params.coordinate_id } })
     res.send({
       msg: 'Parking Deleted',
-      payload: req.params.parking_id,
+      payload: req.params.coordinate_id,
       status: 'Ok'
     })
   } catch (error) {

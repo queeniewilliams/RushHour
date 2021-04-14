@@ -15,7 +15,7 @@ app.use(cors())
 app.use(bodyParser.json())
 
 app.get('/', (req, res) => res.json({ message: 'Server Works' }))
-app.use('/add', ParkingRouter)
+app.use('/parking', ParkingRouter)
 app.use('/auth', AuthController)
 app.use('/comment', CommentController)
 

@@ -1,10 +1,12 @@
 import React from 'react'
 
 const Comments = (props) => {
-  console.log(props.match.params)
+  console.log(props)
   return (
     <div>
-      <form onSubmit={() => props.submitComment(props.match.params)}>
+      <form
+      //  onSubmit={() => props.submitComment(props.match.params)}
+      >
         <input
           name="comment"
           value={props.comment}

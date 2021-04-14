@@ -5,6 +5,7 @@ import Carousel from 'react-bootstrap/Carousel'
 import '../css/mapbox.css'
 import Navigate from './Navigate'
 import { useHistory } from 'react-router-dom'
+import Comments from '../components/Comments'
 
 const Map = (props) => {
   const [viewport, setViewport] = useState({
@@ -77,6 +78,7 @@ const Map = (props) => {
                   </button>
                 </Carousel.Item>
               </Carousel>
+              <Comments props={props} parkingId={parking.id} />
               {selectedParking ? (
                 <Popup
                   longitude={selectedParking.longitude}

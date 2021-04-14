@@ -19,9 +19,7 @@ const App = (props) => {
   const [comments, setComments] = useState([])
   const [comment, setComment] = useState('')
   // const coordinateId = props.match.params.id
-  // const [newParking, setNewParking] = useState({
-  //   longitude: ''
-  // })
+
   const [allParkings, setAllParkings] = useState([])
 
   // const getLocation = () => {
@@ -48,7 +46,7 @@ const App = (props) => {
     const userId = 1
     try {
       // console.log(lng, lat)
-      const res = await axios.post(`${BASE_URL}/add`, {
+      const res = await axios.post(`${BASE_URL}/parking/add`, {
         userId,
         longitude: lng,
         latitude: lat
@@ -70,7 +68,7 @@ const App = (props) => {
   }, [])
   const getAllParkings = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/add`)
+      const res = await axios.get(`${BASE_URL}/parking`)
       console.log(res)
       setAllParkings(res.data)
     } catch (error) {
