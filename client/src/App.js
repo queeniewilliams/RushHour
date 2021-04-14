@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Map from './components/Map'
 import AddParking from './components/AddParking'
+import Comments from './components/Comments'
 import SanityMobilePreview from 'sanity-mobile-preview'
 import 'sanity-mobile-preview/dist/index.css?raw'
 import { Route, Switch } from 'react-router-dom'
@@ -15,6 +16,9 @@ const App = () => {
   const [currentLng, setCurrentLng] = useState(null)
   const [currentLat, setCurrentLat] = useState(null)
   const [distance, setDistance] = useState(null)
+  const [comments, setComments] = useState([])
+  const [comment, setComment] = useState('')
+  const { coordinate_id } = props.match.params
   // const [newParking, setNewParking] = useState({
   //   longitude: ''
   // })
@@ -44,7 +48,7 @@ const App = () => {
     const userId = 1
     try {
       // console.log(lng, lat)
-      const res = await axios.post(`${BASE_URL}/add`, {
+      const res = await axios.post(`${BASE_URL}/add/${coordinate_id}`, {
         userId,
         longitude: lng,
         latitude: lat
@@ -65,7 +69,7 @@ const App = () => {
   }, [])
   const getAllParkings = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/add `)
+      const res = await axios.get(`${BASE_URL}/add`)
       console.log(res)
       setAllParkings(res.data)
     } catch (error) {
@@ -90,6 +94,33 @@ const App = () => {
     setDistance(d)
   }
   console.log(distance)
+  const handleChange = (e) => {
+    setComment(e.target.value)
+  }
+  const submitComment = async (e) => {
+    e.preventDefault()
+    const userId = 1
+    const coordinateId = 1
+    try {
+      const res = await axios.post(`${BASE_URL}/comment/add`, {
+        userId,
+        coordinateId,
+        comment: comment
+      })
+      setComments([...comments])
+    } catch (error) {
+      throw error
+    }
+  }
+  const getAllComments = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/all/${coordinate_id} `)
+      console.log(res)
+      setComments(res.data)
+    } catch (error) {
+      throw error
+    }
+  }
   return (
     <SanityMobilePreview>
       <div>
@@ -124,6 +155,16 @@ const App = () => {
               status={status}
               // getLocation={getLocation}
               coordinates={coordinates}
+            />
+          )}
+        />
+        <Route
+          path="/reviews"
+          render={(props) => (
+            <Comments
+              comment={comment}
+              handleChange={handleChange}
+              submitComment={submitComment}
             />
           )}
         />

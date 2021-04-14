@@ -8,8 +8,7 @@ const GetPostComments = async (req, res) => {
       include: [
         {
           model: User,
-          as: 'commenter',
-          attributes: ['id']
+          as: 'commenter'
         }
       ]
     })
@@ -20,10 +19,10 @@ const GetPostComments = async (req, res) => {
 }
 const AddComment = async (req, res) => {
   try {
-    const { token } = res.locals
+    // const { token } = res.locals
     const comment = await Comment.create({
       ...req.body,
-      userId: token.id,
+      userId: 1,
       coordinateId: req.params.coordinate_id
     })
     res.send(comment)
@@ -31,8 +30,20 @@ const AddComment = async (req, res) => {
     throw error
   }
 }
-
+const DeleteComment = async (req, res) => {
+  try {
+    await Comment.destroy({ where: { id: req.params.coordinate_id } })
+    res.send({
+      msg: 'Comment Deleted',
+      payload: req.params.coordinate_id,
+      status: 'Ok'
+    })
+  } catch (error) {
+    throw error
+  }
+}
 module.exports = {
   GetPostComments,
-  AddComment
+  AddComment,
+  DeleteComment
 }

@@ -1,6 +1,7 @@
 const router = require('express').Router()
-const controller = require('../controllers/commentController')
+const controller = require('../controllers/CommentController')
 router.get('/all/:coordinate_id', controller.GetPostComments)
-router.post('/add/:post_id', controller.AddComment)
+router.post('/add/:coordinate_id', controller.AddComment)
+router.delete('/:coordinate_id', controller.DeleteComment)
 
 module.exports = router

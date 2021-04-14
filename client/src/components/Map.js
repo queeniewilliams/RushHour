@@ -4,6 +4,7 @@ import { parkings } from '../assets/parkings.json'
 import Carousel from 'react-bootstrap/Carousel'
 import '../css/mapbox.css'
 import Navigate from './Navigate'
+import { useHistory } from 'react-router-dom'
 
 const Map = (props) => {
   const [viewport, setViewport] = useState({
@@ -19,6 +20,7 @@ const Map = (props) => {
   const [showButton, setShowButton] = useState(false)
   const [activeIndex, setActiveIndex] = useState(0)
   const [animating, setAnimating] = useState(false)
+  const history = useHistory()
 
   const chooseSpot = (longitude, latitude) => {
     setSelectedParking(longitude, latitude)
@@ -59,7 +61,7 @@ const Map = (props) => {
                   onExiting={() => setAnimating(true)}
                   onExited={() => setAnimating(false)}
                 >
-                  {/* <button
+                  <button
                     onClick={() =>
                       chooseSpot(parking.longitude, parking.latitude)
                     }
@@ -67,7 +69,10 @@ const Map = (props) => {
                     <p>Time:</p>
                     <p>Distance:</p>
                     <button>open in google map</button>
-                  </button> */}
+                    <button onClick={() => history.push('/reviews')}>
+                      reviews
+                    </button>
+                  </button>
                 </Carousel.Item>
               </Carousel>
               {selectedParking ? (
@@ -81,7 +86,7 @@ const Map = (props) => {
             </Fragment>
           ))
         : null}
-      <Navigate history={props.history} />
+      <Navigate />
       <button onClick={props.calcDistance}>Get Distance</button>
     </ReactMap>
   )
