@@ -6,7 +6,6 @@ import 'sanity-mobile-preview/dist/index.css?raw'
 import { Route, Switch } from 'react-router-dom'
 import { BASE_URL } from './globals'
 import axios from 'axios'
-import Navigate from './components/Navigate'
 
 const App = () => {
   // const [lat, setLat] = useState(null)
@@ -41,14 +40,14 @@ const App = () => {
   const submitParking = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.post(`${BASE_URL}`, parking)
+      const res = await axios.post(`${BASE_URL}`, newParking)
       setAllParkings([...allParkings])
     } catch (error) {
       throw error
     }
   }
   const handleChange = ({ target }) => {
-    setParking({ ...parking, [target.name]: target.value })
+    setNewParking({ ...newParking, [target.name]: target.value })
   }
   return (
     <SanityMobilePreview>
@@ -66,8 +65,8 @@ const App = () => {
           path="/add"
           render={(props) => (
             <AddParking
-              parking={parking}
-              setParking={setParking}
+              parking={newParking}
+              setParking={setNewParking}
               handleChange={handleChange}
               status={status}
               getLocation={getLocation}
@@ -76,7 +75,6 @@ const App = () => {
           )}
         />
       </Switch>
-      <Navigate />
     </SanityMobilePreview>
   )
 }

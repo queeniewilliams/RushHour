@@ -3,6 +3,7 @@ import ReactMap, { Marker, Popup } from 'react-map-gl'
 import { parkings } from '../assets/parkings.json'
 import Carousel from 'react-bootstrap/Carousel'
 import '../css/mapbox.css'
+import Navigate from './Navigate'
 
 const PopupCurrent = ({ coordinate, parking }) => (
   <Popup
@@ -99,6 +100,7 @@ const Map = () => {
             </Fragment>
           ))
         : null}
+      <Navigate />
     </ReactMap>
   )
 }
