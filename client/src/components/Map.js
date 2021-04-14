@@ -59,7 +59,7 @@ const Map = (props) => {
                   onExiting={() => setAnimating(true)}
                   onExited={() => setAnimating(false)}
                 >
-                  <button
+                  {/* <button
                     onClick={() =>
                       chooseSpot(parking.longitude, parking.latitude)
                     }
@@ -67,7 +67,7 @@ const Map = (props) => {
                     <p>Time:</p>
                     <p>Distance:</p>
                     <button>open in google map</button>
-                  </button>
+                  </button> */}
                 </Carousel.Item>
               </Carousel>
               {selectedParking ? (
@@ -75,13 +75,14 @@ const Map = (props) => {
                   longitude={selectedParking.longitude}
                   latitude={selectedParking.latitude}
                 >
-                  {/* {selectedParking.name} */}
+                  {selectedParking.name}
                 </Popup>
               ) : null}
             </Fragment>
           ))
         : null}
       <Navigate history={props.history} />
+      <button onClick={props.calcDistance}>Get Distance</button>
     </ReactMap>
   )
 }

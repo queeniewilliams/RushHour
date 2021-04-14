@@ -12,8 +12,8 @@ const App = () => {
   const [lng, setLng] = useState(null)
   const [coordinates, setCoordinates] = useState([])
   const [status, setStatus] = useState(null)
-  const [currentlng, setCurrentLng] = useState(-118)
-  const [currentlat, setcurrentLat] = useState(34)
+  const [currentLng, setCurrentLng] = useState(null)
+  const [currentLat, setCurrentLat] = useState(null)
   const [distance, setDistance] = useState(null)
   // const [newParking, setNewParking] = useState({
   //   longitude: ''
@@ -28,9 +28,9 @@ const App = () => {
   //     navigator.geolocation.getCurrentPosition(
   //       (position) => {
   //         setStatus(null)
-  //         // setLat(position.coords.latitude)
-  //         // setLng(position.coords.longitude)
-  //         setCoordinates([position.coords.longitude, position.coords.latitude])
+  //         setCurrentLat(position.coords.latitude)
+  //         setCurrentLng(position.coords.longitude)
+  //         // setCoordinates([position.coords.longitude, position.coords.latitude])
   //       },
   //       () => {
   //         setStatus('Unable to retrieve your location')
@@ -61,7 +61,7 @@ const App = () => {
   // }
   useEffect(() => {
     getAllParkings()
-    calcDistance()
+    // calcDistance()
   }, [])
   const getAllParkings = async () => {
     try {
@@ -75,16 +75,16 @@ const App = () => {
 
   const calcDistance = () => {
     const R = 6371
-    let dLat = toRad(currentlat - lat)
-    let dLng = toRad(currentlng - lng)
-    let lat = toRad(lat)
-    let currentlat = toRad(currentlat)
+    let dLat = ((currentLat - lat) * Math.PI) / 180
+    let dLng = ((currentLng - lng) * Math.PI) / 180
+    let lat = (lat * Math.PI) / 180
+    let currentLat = (currentLat * Math.PI) / 180
     let a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.sin(dLng / 2) *
         Math.sin(dLng / 2) *
         Math.cos(lat) *
-        Math.cos(currentlat)
+        Math.cos(currentLat)
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
     var d = R * c
     setDistance(d)
@@ -104,7 +104,9 @@ const App = () => {
         <Route
           exact
           path="/"
-          render={(props) => <Map allParkings={allParkings} />}
+          render={(props) => (
+            <Map allParkings={allParkings} calcDistance={calcDistance} />
+          )}
         />
         <Route
           path="/add"
