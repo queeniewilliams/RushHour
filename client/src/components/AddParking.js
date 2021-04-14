@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const AddParking = (props) => {
+  // useEffect(() => {
+  //   getLocation()
+  // }, [])
   const getLocation = () => {
     if (!navigator.geolocation) {
       props.setStatus('Geolocation is not supported by your browser')
@@ -22,6 +25,7 @@ const AddParking = (props) => {
       )
     }
   }
+  console.log(props)
   return (
     <div>
       <form onSubmit={props.submitParking}>

@@ -5,21 +5,6 @@ import Carousel from 'react-bootstrap/Carousel'
 import '../css/mapbox.css'
 import Navigate from './Navigate'
 
-const PopupCurrent = ({ coordinate, parking }) => (
-  <Popup
-    longitude={coordinate[0]}
-    latitude={coordinate[1]}
-    closeButton={false}
-    anchor="bottom-right"
-  >
-    <div className="popup-text">Current</div>
-    <div>
-      {parking}
-      <span className="flag" role="img" aria-label="US"></span>
-    </div>
-  </Popup>
-)
-
 const Map = (props) => {
   const [viewport, setViewport] = useState({
     width: '100%',
@@ -35,8 +20,8 @@ const Map = (props) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const [animating, setAnimating] = useState(false)
 
-  const chooseSpot = (info) => {
-    setSelectedParking(info)
+  const chooseSpot = (longitude, latitude) => {
+    setSelectedParking(longitude, latitude)
   }
   const next = () => {
     if (animating) return
@@ -65,9 +50,6 @@ const Map = (props) => {
               <Marker longitude={parking.longitude} latitude={parking.latitude}>
                 <div className="marker" />
               </Marker>
-              {/* {name === CURRENT && (
-                <PopupCurrent coordinate={coordinates} city={CURRENT} />
-              )} */}
               <Carousel
                 activeIndex={activeIndex}
                 next={next}
@@ -99,7 +81,7 @@ const Map = (props) => {
             </Fragment>
           ))
         : null}
-      <Navigate />
+      <Navigate history={props.history} />
     </ReactMap>
   )
 }

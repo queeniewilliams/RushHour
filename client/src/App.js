@@ -12,6 +12,9 @@ const App = () => {
   const [lng, setLng] = useState(null)
   const [coordinates, setCoordinates] = useState([])
   const [status, setStatus] = useState(null)
+  const [currentlng, setCurrentLng] = useState(-118)
+  const [currentlat, setcurrentLat] = useState(34)
+  const [distance, setDistance] = useState(null)
   // const [newParking, setNewParking] = useState({
   //   longitude: ''
   // })
@@ -40,23 +43,25 @@ const App = () => {
     e.preventDefault()
     const userId = 1
     try {
+      // console.log(lng, lat)
       const res = await axios.post(`${BASE_URL}/add`, {
         userId,
-        longitude: parseFloat(lng),
-        latitude: parseFloat(lat)
+        longitude: lng,
+        latitude: lat
       })
-      console.log(res)
-      // setAllParkings([...allParkings])
+      // console.log(res)
+      setAllParkings([...allParkings])
     } catch (error) {
       throw error
     }
   }
-  console.log(typeof lng)
+  // console.log(typeof lng)
   // const handleChange = ({ target }) => {
   //   setNewParking({ ...newParking, [target.name]: target.value })
   // }
   useEffect(() => {
     getAllParkings()
+    calcDistance()
   }, [])
   const getAllParkings = async () => {
     try {
@@ -67,6 +72,24 @@ const App = () => {
       throw error
     }
   }
+
+  const calcDistance = () => {
+    const R = 6371
+    let dLat = toRad(currentlat - lat)
+    let dLng = toRad(currentlng - lng)
+    let lat = toRad(lat)
+    let currentlat = toRad(currentlat)
+    let a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.sin(dLng / 2) *
+        Math.sin(dLng / 2) *
+        Math.cos(lat) *
+        Math.cos(currentlat)
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+    var d = R * c
+    setDistance(d)
+  }
+  console.log(distance)
   return (
     <SanityMobilePreview>
       <div>

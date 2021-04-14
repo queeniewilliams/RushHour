@@ -1,16 +1,22 @@
 import React from 'react'
 import { Dropdown } from 'react-bootstrap'
-const Navigate = () => {
+import { useHistory } from 'react-router-dom'
+const Navigate = (props) => {
+  const history = useHistory()
   return (
     <Dropdown>
       <Dropdown.Toggle variant="success" id="dropdown-basic">
-        Dropdown Button
+        <img
+          src="https://i.ibb.co/kHKpM6V/hamburger-menu-icon-png-53.png"
+          width="50px"
+        />
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+        <Dropdown.Item onClick={() => history.push('/add')}>
+          Add Parking
+        </Dropdown.Item>
+        <Dropdown.Item href="#/action-2">My Parkings</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   )

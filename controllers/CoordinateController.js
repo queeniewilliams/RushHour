@@ -13,6 +13,7 @@ const GetParking = async (req, res) => {
 const CreateParking = async (req, res) => {
   try {
     const addParking = await Coordinate.create({ ...req.body })
+    console.log(req.body)
     res.send(addParking)
   } catch (error) {
     throw error
