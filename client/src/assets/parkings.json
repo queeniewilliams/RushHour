@@ -1,0 +1,22 @@
+{
+  "parkings": [
+    {
+      "geometry": {
+        "coordinates": [-118.4912, 34.0195],
+        "name": "parking 1"
+      }
+    },
+    {
+      "geometry": {
+        "coordinates": [-118.4004, 34.0736],
+        "name": " parking 2"
+      }
+    },
+    {
+      "geometry": {
+        "coordinates": [-118.3287, 34.0928],
+        "name": "parking 3"
+      }
+    }
+  ]
+}
