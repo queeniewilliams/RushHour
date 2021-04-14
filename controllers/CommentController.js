@@ -1,6 +1,6 @@
 const { Comment, User } = require('../models')
 
-const GetPostComments = async (req, res) => {
+const GetAllComments = async (req, res) => {
   try {
     const comments = await Comment.findAll({
       where: { coordinateId: req.params.coordinate_id },
@@ -43,7 +43,7 @@ const DeleteComment = async (req, res) => {
   }
 }
 module.exports = {
-  GetPostComments,
+  GetAllComments,
   AddComment,
   DeleteComment
 }

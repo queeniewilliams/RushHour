@@ -13,6 +13,12 @@ const Comments = (props) => {
         <br></br>
         <input type="submit" />
       </form>
+      {props.comments.map((comment) => (
+        <div>
+          <p>userId:{comment.userId}</p>
+          <p>comments:{comment.comment}</p>
+        </div>
+      ))}
     </div>
   )
 }

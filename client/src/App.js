@@ -98,11 +98,8 @@ const App = (props) => {
     setComment(e.target.value)
   }
   const submitComment = async (id) => {
-    const userId = 1
     try {
       const res = await axios.post(`${BASE_URL}/comment/add/${id}`, {
-        userId,
-        coordinateId: id,
         comment: comment
       })
       console.log(res)
@@ -113,8 +110,8 @@ const App = (props) => {
   }
   const getAllComments = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/all/1 `)
-      console.log(res)
+      const res = await axios.get(`${BASE_URL}/comment/all/3 `)
+      console.log(res.data)
       setComments(res.data)
     } catch (error) {
       throw error
@@ -165,6 +162,7 @@ const App = (props) => {
               comment={comment}
               handleChange={handleChange}
               submitComment={submitComment}
+              comments={comments}
             />
           )}
         />

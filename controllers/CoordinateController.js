@@ -10,6 +10,13 @@ const GetParking = async (req, res) => {
   }
 }
 
+const GetMyParking = async (req, res) => {
+  let myParking = await Coordinate.findAll({
+    where: { userId: req.params.user_id }
+  })
+  res.send(myParking)
+}
+
 const CreateParking = async (req, res) => {
   try {
     const addParking = await Coordinate.create({ ...req.body })
@@ -46,6 +53,7 @@ const DeleteParking = async (req, res) => {
 
 module.exports = {
   GetParking,
+  GetMyParking,
   CreateParking,
   UpdateParking,
   DeleteParking
