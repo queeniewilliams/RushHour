@@ -10,6 +10,43 @@ const GetParking = async (req, res) => {
   }
 }
 
+const GetParkingByDistance = async (req, res) => {
+  const query = req.params.query
+  const latitude = query.latitude
+  const longitude = query.longitude
+  const myDistance = 10000
+  try {
+    const parkings = await Coordinate.findAll({
+      attributes: {
+        include: [
+          [
+            models.Coordinate.Sequelize.fn(
+              'ST_Distance',
+              models.CoordinateSequelize.col('origin'),
+              models.CoordinateSequelize.fn('ST_MakePoint', longitude, latitude)
+            ),
+            'distance'
+          ]
+        ]
+      },
+      where: models.Coordinate.Sequelize.where(
+        models.Coordinate.Sequelize.fn(
+          'ST_DWithin',
+          models.Coordinate.Sequelize.col('origin'),
+          models.Coordinate.Sequelize.fn('ST_MakePoint', longitude, latitude),
+          myDistance
+        ),
+        true
+      ),
+      order: models.Coordinate.Sequelize.literal('distance ASC'),
+      limit: 10
+    })
+    res.send(parkings)
+  } catch (error) {
+    throw error
+  }
+}
+
 const GetMyParking = async (req, res) => {
   let myParking = await Coordinate.findAll({
     where: { userId: req.params.user_id }
@@ -56,5 +93,6 @@ module.exports = {
   GetMyParking,
   CreateParking,
   UpdateParking,
-  DeleteParking
+  DeleteParking,
+  GetParkingByDistance
 }

@@ -5,14 +5,13 @@ import Carousel from 'react-bootstrap/Carousel'
 import '../css/mapbox.css'
 import Navigate from './Navigate'
 import { useHistory } from 'react-router-dom'
-import Comments from '../components/Comments'
 
 const Map = (props) => {
   const [viewport, setViewport] = useState({
     width: '100%',
     height: '100%',
-    latitude: 34,
-    longitude: -118,
+    latitude: props.currentLat ? props.currentLat : 34,
+    longitude: props.currentLng ? props.currentLng : -116,
     zoom: 8
   })
   let CURRENT = 'los Angeles'

@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const controller = require('../controllers/CoordinateController')
-const { route } = require('./AuthRouter')
 
+// router.get('/',controller.GetParkingByDistance)
 router.get('/', controller.GetParking)
 router.get('/:user_id', controller.GetMyParking)
 router.post('/add', controller.CreateParking)

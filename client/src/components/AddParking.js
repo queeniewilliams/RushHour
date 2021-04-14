@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
 const AddParking = (props) => {
-  // useEffect(() => {
-  //   getLocation()
-  // }, [])
+  useEffect(() => {
+    props.getMyParkings()
+  }, [])
   const getLocation = () => {
     if (!navigator.geolocation) {
       props.setStatus('Geolocation is not supported by your browser')
@@ -36,6 +36,13 @@ const AddParking = (props) => {
         {props.lat && <p>Latitude: {props.lat}</p>}
         {props.lng && <p>Longitude: {props.lng}</p>}
       </form>
+      {props.myParkings.map((each) => (
+        <div>
+          <p>{each.longitude}</p>
+          <p>{each.latitude}</p>
+          <button onClick={() => props.deleteParking(each.id)}>delete</button>
+        </div>
+      ))}
     </div>
   )
 }

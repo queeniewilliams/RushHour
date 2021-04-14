@@ -18,28 +18,28 @@ const App = (props) => {
   const [distance, setDistance] = useState(null)
   const [comments, setComments] = useState([])
   const [comment, setComment] = useState('')
-  // const coordinateId = props.match.params.id
+  const [myParkings, setMyParkings] = useState([])
 
   const [allParkings, setAllParkings] = useState([])
 
-  // const getLocation = () => {
-  //   if (!navigator.geolocation) {
-  //     setStatus('Geolocation is not supported by your browser')
-  //   } else {
-  //     setStatus('Locating...')
-  //     navigator.geolocation.getCurrentPosition(
-  //       (position) => {
-  //         setStatus(null)
-  //         setCurrentLat(position.coords.latitude)
-  //         setCurrentLng(position.coords.longitude)
-  //         // setCoordinates([position.coords.longitude, position.coords.latitude])
-  //       },
-  //       () => {
-  //         setStatus('Unable to retrieve your location')
-  //       }
-  //     )
-  //   }
-  // }
+  const getLocation = () => {
+    if (!navigator.geolocation) {
+      setStatus('Geolocation is not supported by your browser')
+    } else {
+      setStatus('Locating...')
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setStatus(null)
+          setCurrentLat(position.coords.latitude)
+          setCurrentLng(position.coords.longitude)
+          // setCoordinates([position.coords.longitude, position.coords.latitude])
+        },
+        () => {
+          setStatus('Unable to retrieve your location')
+        }
+      )
+    }
+  }
 
   const submitParking = async (e) => {
     e.preventDefault()
@@ -57,6 +57,17 @@ const App = (props) => {
       throw error
     }
   }
+  const deleteParking = async (parkingId) => {
+    try {
+      const res = await axios.delete(`${BASE_URL}/parking/delete/${parkingId}`)
+      let filteredParkings = [...myParkings].filter(
+        (my) => my.id !== parseInt(res.data.payload)
+      )
+      setMyParkings(filteredParkings)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   // console.log(typeof lng)
   // const handleChange = ({ target }) => {
   //   setNewParking({ ...newParking, [target.name]: target.value })
@@ -65,6 +76,7 @@ const App = (props) => {
     getAllParkings()
     // calcDistance()
     getAllComments()
+    getMyParkings()
   }, [])
   const getAllParkings = async () => {
     try {
@@ -117,14 +129,22 @@ const App = (props) => {
       throw error
     }
   }
+  const getMyParkings = async (e) => {
+    const userId = 1
+    try {
+      const res = await axios.get(`${BASE_URL}/parking/${userId}`)
+      setMyParkings(res.data)
+    } catch (err) {
+      throw err
+    }
+  }
   return (
     <SanityMobilePreview>
       <div>
-        {/* <button onClick={getLocation}>Get Location</button>
-        <p>{status}</p> */}
-        {/* <input type="time" name="time" value="time" /> */}
-        {/* {lat && <p>Latitude: {lat}</p>}
-        {lng && <p>Longitude: {lng}</p>} */}
+        <button onClick={getLocation}>Get Location</button>
+        <p>{status}</p>
+        {currentLat && <p>Latitude: {currentLat}</p>}
+        {currentLng && <p>Longitude: {currentLng}</p>}
         {/* {coordinates} */}
       </div>
       <Switch>
@@ -132,7 +152,12 @@ const App = (props) => {
           exact
           path="/"
           render={(props) => (
-            <Map allParkings={allParkings} calcDistance={calcDistance} />
+            <Map
+              allParkings={allParkings}
+              calcDistance={calcDistance}
+              currentLat={currentLat}
+              currentLng={currentLng}
+            />
           )}
         />
         <Route
@@ -151,6 +176,9 @@ const App = (props) => {
               status={status}
               // getLocation={getLocation}
               coordinates={coordinates}
+              myParkings={myParkings}
+              deleteParking={deleteParking}
+              getMyParkings={getMyParkings}
             />
           )}
         />
@@ -166,6 +194,12 @@ const App = (props) => {
             />
           )}
         />
+        {/* <Route
+          path="/parking"
+          render={(props) => (
+            <MyParkings myParkings={myParkings} deleteParking={deleteParking} />
+          )}
+        /> */}
       </Switch>
     </SanityMobilePreview>
   )
