@@ -17,6 +17,9 @@ const Comments = (props) => {
         <div>
           <p>userId:{comment.userId}</p>
           <p>comments:{comment.comment}</p>
+          <button onClick={() => props.deleteComment(comment.id)}>
+            Delete
+          </button>
         </div>
       ))}
     </div>

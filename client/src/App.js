@@ -122,11 +122,22 @@ const App = (props) => {
   }
   const getAllComments = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/comment/all/3 `)
+      const res = await axios.get(`${BASE_URL}/comment/all/65 `)
       console.log(res.data)
       setComments(res.data)
     } catch (error) {
       throw error
+    }
+  }
+  const deleteComment = async (commentId) => {
+    try {
+      const res = await axios.delete(`${BASE_URL}/comment/${commentId}`)
+      let filteredComments = [...comments].filter(
+        (comment) => comment.id !== parseInt(res.data.payload)
+      )
+      setComments(filteredComments)
+    } catch (error) {
+      console.log(error)
     }
   }
   const getMyParkings = async (e) => {
@@ -191,6 +202,7 @@ const App = (props) => {
               handleChange={handleChange}
               submitComment={submitComment}
               comments={comments}
+              deleteComment={deleteComment}
             />
           )}
         />

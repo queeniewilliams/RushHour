@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, useEffect } from 'react'
 import ReactMap, { Marker, Popup } from 'react-map-gl'
 import { parkings } from '../assets/parkings.json'
 import Carousel from 'react-bootstrap/Carousel'
@@ -11,7 +11,7 @@ const Map = (props) => {
     width: '100%',
     height: '100%',
     latitude: props.currentLat ? props.currentLat : 34,
-    longitude: props.currentLng ? props.currentLng : -116,
+    longitude: props.currentLng ? props.currentLng : -118,
     zoom: 8
   })
   let CURRENT = 'los Angeles'
@@ -25,18 +25,29 @@ const Map = (props) => {
   const chooseSpot = (longitude, latitude) => {
     setSelectedParking(longitude, latitude)
   }
-  const next = () => {
-    if (animating) return
-    const nextIndex = activeIndex === parkings.length - 1 ? 0 : activeIndex + 1
-    setActiveIndex(nextIndex)
-  }
+  // const next = () => {
+  //   if (animating) return
+  //   const nextIndex = activeIndex === parkings.length - 1 ? 0 : activeIndex + 1
+  //   setActiveIndex(nextIndex)
+  // }
 
-  const previous = () => {
-    if (animating) return
-    const nextIndex = activeIndex === 0 ? parkings.length - 1 : activeIndex - 1
-    setActiveIndex(nextIndex)
-  }
+  // const previous = () => {
+  //   if (animating) return
+  //   const nextIndex = activeIndex === 0 ? parkings.length - 1 : activeIndex - 1
+  //   setActiveIndex(nextIndex)
+  // }
 
+  useEffect(() => {
+    const listener = (e) => {
+      if (e.key === 'Escape') {
+        setSelectedParking(null)
+      }
+    }
+    window.addEventListener('keydown', listener)
+    return () => {
+      window.removeEventListener('keydown', listener)
+    }
+  })
   return (
     <ReactMap
       {...viewport}
@@ -50,9 +61,16 @@ const Map = (props) => {
         ? props.allParkings.map((parking, index) => (
             <Fragment key={index}>
               <Marker longitude={parking.longitude} latitude={parking.latitude}>
-                <div className="marker" />
+                <img
+                  src="https://i.ibb.co/HGny0DC/parking-sign-2526.png"
+                  width="50px"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setSelectedParking(parking)
+                  }}
+                />
               </Marker>
-              <Carousel
+              {/* <Carousel
                 activeIndex={activeIndex}
                 next={next}
                 previous={previous}
@@ -60,8 +78,8 @@ const Map = (props) => {
                 <Carousel.Item
                   onExiting={() => setAnimating(true)}
                   onExited={() => setAnimating(false)}
-                >
-                  <button
+                > */}
+              {/* <button
                     onClick={() =>
                       chooseSpot(parking.longitude, parking.latitude)
                     }
@@ -74,15 +92,26 @@ const Map = (props) => {
                     >
                       reviews
                     </button>
-                  </button>
-                </Carousel.Item>
-              </Carousel>
+                  </button> */}
+              {/* </Carousel.Item> */}
+              {/* </Carousel> */}
               {selectedParking ? (
                 <Popup
                   longitude={selectedParking.longitude}
                   latitude={selectedParking.latitude}
+                  closeOnClick={false}
+                  onClose={() => {
+                    setSelectedParking(null)
+                  }}
                 >
-                  {selectedParking.name}
+                  <p>Time:</p>
+                  <p>Distance:</p>
+                  <button>open in google map</button>
+                  <button
+                    onClick={() => history.push(`/reviews/${parking.id}`)}
+                  >
+                    reviews
+                  </button>
                 </Popup>
               ) : null}
             </Fragment>
