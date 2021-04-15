@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import Map from './components/Map'
 import AddParking from './components/AddParking'
 import Comments from './components/Comments'
-import Navigate from './components/Navigate'
 import SignUp from './components/SignUp'
 import SignIn from './components/SignIn'
 import SanityMobilePreview from 'sanity-mobile-preview'
@@ -29,17 +28,17 @@ const App = (props) => {
 
   const [allParkings, setAllParkings] = useState([])
 
-  const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
-  geocoder
-    .geocode(currentAddress)
-    .then((response) => {
-      console.log(response.results[0].location)
-      setCurrentLat(response.results[0].location.lat)
-      setCurrentLng(response.results[0].location.lng)
-    })
-    .catch((err) => {
-      console.error(err)
-    })
+  // const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
+  // geocoder
+  //   .geocode(currentAddress)
+  //   .then((response) => {
+  //     console.log(response.results[0].location)
+  //     setCurrentLat(response.results[0].location.lat)
+  //     setCurrentLng(response.results[0].location.lng)
+  //   })
+  //   .catch((err) => {
+  //     console.error(err)
+  //   })
 
   const handleAddressChange = (e) => {
     setAddress(e.target.value)
@@ -164,10 +163,6 @@ const App = (props) => {
   }
   return (
     <SanityMobilePreview>
-      <div>
-        <Navigate />
-        <button></button>
-      </div>
       <Switch>
         <Route
           exact

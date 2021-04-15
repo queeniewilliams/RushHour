@@ -1,5 +1,6 @@
 import React, { useState, Fragment, useEffect } from 'react'
 import ReactMap, { Marker, Popup } from 'react-map-gl'
+import Navigate from './Navigate'
 import '../css/mapbox.css'
 import { useHistory } from 'react-router-dom'
 
@@ -67,14 +68,17 @@ const Map = (props) => {
       maxZoom={100}
       minZoom={1.6}
     >
-      <button onClick={getLocation}>Get Location</button>
-      <p>{props.status}</p>
-      {props.currentLat && <p>Latitude: {props.currentLat}</p>}
-      <input
-        name="address"
-        value={props.currentAddress}
-        onChange={props.handleCurrentAddressChange}
-      />
+      <Navigate />
+      <div className="submit">
+        <button onClick={getLocation}>Get Location</button>
+        <p>{props.status}</p>
+        {props.currentLat && <p>Latitude: {props.currentLat}</p>}
+        <input
+          name="address"
+          value={props.currentAddress}
+          onChange={props.handleCurrentAddressChange}
+        />
+      </div>
       {props.allParkings
         ? props.allParkings.map((parking, index) => (
             <Fragment key={index}>
@@ -117,7 +121,7 @@ const Map = (props) => {
             </Fragment>
           ))
         : null}
-      <button onClick={props.calcDistance}>Get Distance</button>
+      {/* <button onClick={props.calcDistance}>Get Distance</button> */}
     </ReactMap>
   )
 }

@@ -1,4 +1,29 @@
-* {
+/* * {
   height: 100%;
   width: 100%;
+} */
+.dropdown {
+  display: block;
+}
+.dropdown-item {
+  text-decoration: none;
+  color: black;
+}
+.overlays {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.navigate.dropdown {
+  grid-column: 2;
+  justify-self: right;
+  margin-top: 10px;
+}
+
+button.dropdown-toggle.btn.btn-primary {
+  border: none;
+  background: transparent;
+}
+.submit {
+  grid-row: 1;
+  grid-column: 1;
 }

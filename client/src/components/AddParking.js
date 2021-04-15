@@ -1,7 +1,9 @@
 import React, { useState, Fragment, useEffect } from 'react'
 import ReactMap, { Marker, Popup } from 'react-map-gl'
+import Navigate from './Navigate'
 import Geocodio from 'geocodio-library-node'
 import { GEOCODIO_KEY } from '../globals'
+import '../App.css'
 
 const AddParking = (props) => {
   const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
@@ -33,16 +35,16 @@ const AddParking = (props) => {
     }
   }
 
-  geocoder
-    .geocode(props.address)
-    .then((response) => {
-      console.log(response.results[0].location)
-      props.setLat(response.results[0].location.lat)
-      props.setLng(response.results[0].location.lng)
-    })
-    .catch((err) => {
-      console.error(err)
-    })
+  // geocoder
+  //   .geocode(props.address)
+  //   .then((response) => {
+  //     console.log(response.results[0].location)
+  //     props.setLat(response.results[0].location.lat)
+  //     props.setLng(response.results[0].location.lng)
+  //   })
+  //   .catch((err) => {
+  //     console.error(err)
+  //   })
   console.log(props)
   const [viewport, setViewport] = useState({
     width: '100%',
@@ -64,7 +66,6 @@ const AddParking = (props) => {
     }
   })
   return (
-    // <div>
     <ReactMap
       {...viewport}
       mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
@@ -73,6 +74,8 @@ const AddParking = (props) => {
       maxZoom={100}
       minZoom={1.6}
     >
+      <Navigate />
+      <div className="submit">
       <form onSubmit={props.submitParking}>
         <button onClick={getLocation}>Get Location</button>
         <p>{props.status}</p>
@@ -87,6 +90,7 @@ const AddParking = (props) => {
         />
         <input type="submit" />
       </form>
+      </div>
       {props.myParkings
         ? props.myParkings.map((each, index) => (
             <Fragment key={index}>
@@ -114,10 +118,10 @@ const AddParking = (props) => {
                   <p>Time:</p>
                   <p>Distance:</p>
                   <button>open in google map</button>
-                  <form>
+                  {/* <form>
                     <input name="coordinate" />
                     <input type="submit">Edit</input>
-                  </form>
+                  </form> */}
                   <button
                     onClick={() => {
                       props.deleteParking(each.id)
@@ -131,7 +135,6 @@ const AddParking = (props) => {
             </Fragment>
           ))
         : null}
-      <button onClick={props.calcDistance}>Get Distance</button>
     </ReactMap>
     //  <form onSubmit={props.submitParking}>
     //   <input type="time" name="time" value="time" />
