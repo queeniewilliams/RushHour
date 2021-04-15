@@ -23,13 +23,14 @@ const App = (props) => {
   const [comment, setComment] = useState('')
   const [myParkings, setMyParkings] = useState([])
   const [route, setRoute] = useState(null)
-  const [address, setAddress] = useState('92584')
+  const [currentAddress, setCurrentAddress] = useState('92584')
+  const [address, setAddress] = useState('90017')
 
   const [allParkings, setAllParkings] = useState([])
 
   const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
   geocoder
-    .geocode(address)
+    .geocode(currentAddress)
     .then((response) => {
       console.log(response.results[0].location)
       setCurrentLat(response.results[0].location.lat)
@@ -39,8 +40,11 @@ const App = (props) => {
       console.error(err)
     })
 
-  const handleAddressChange = (e) => {
-    setAddress(e.target.value)
+  // const handleAddressChange = (e) => {
+  //   setAddress(e.target.value)
+  // }
+  const handleCurrentAddressChange = (e) => {
+    setCurrentAddress(e.target.value)
   }
 
   const getLocation = () => {
@@ -203,8 +207,10 @@ const App = (props) => {
               setLat={setLat}
               setLng={setLng}
               getLocation={getLocation}
-              address={address}
-              handleAddressChange={handleAddressChange}
+              currentAddress={currentAddress}
+              handleCurrentAddressChange={handleCurrentAddressChange}
+              // address={address}
+              // handleAddressChange={handleAddressChange}
             />
           )}
         />
@@ -227,6 +233,8 @@ const App = (props) => {
               myParkings={myParkings}
               deleteParking={deleteParking}
               getMyParkings={getMyParkings}
+              // address={address}
+              // handleAddressChange={handleAddressChange}
             />
           )}
         />

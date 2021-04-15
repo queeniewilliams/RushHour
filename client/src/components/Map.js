@@ -2,7 +2,6 @@ import React, { useState, Fragment, useEffect } from 'react'
 import ReactMap, { Marker, Popup } from 'react-map-gl'
 import '../css/mapbox.css'
 import { useHistory } from 'react-router-dom'
-import LocationForm from './LocationForm'
 
 const Map = (props) => {
   useEffect(() => {
@@ -40,8 +39,8 @@ const Map = (props) => {
     >
       <input
         name="address"
-        value={props.address}
-        onChange={props.handleAddressChange}
+        value={props.currentAddress}
+        onChange={props.handleCurrentAddressChange}
       />
       {props.allParkings
         ? props.allParkings.map((parking, index) => (
