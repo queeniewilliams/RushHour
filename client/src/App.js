@@ -10,6 +10,8 @@ import { Route, Switch } from 'react-router-dom'
 import { BASE_URL, REST_API_KEY, ROUTE_URL, GEOCODIO_KEY } from './globals'
 import axios from 'axios'
 import Geocodio from 'geocodio-library-node'
+import polyline from '@mapbox/polyline'
+import decodePolyline from 'decode-google-map-polyline'
 
 const App = (props) => {
   const [lat, setLat] = useState(null)
@@ -22,12 +24,14 @@ const App = (props) => {
   const [comments, setComments] = useState([])
   const [comment, setComment] = useState('')
   const [myParkings, setMyParkings] = useState([])
-  const [route, setRoute] = useState(null)
+  // const [route, setRoute] = useState(null)
   const [currentAddress, setCurrentAddress] = useState('92584')
   const [address, setAddress] = useState('90017')
+  const [polyline, setPolyline] = useState('')
+  const [polylineCoords, setPolylineCoords] = useState([])
 
   const [allParkings, setAllParkings] = useState([])
-
+  // let array = decodePolyline(polyline)
   // const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
   // geocoder
   //   .geocode(currentAddress)
@@ -77,15 +81,18 @@ const App = (props) => {
     // calcDistance()
     // getAllComments()
     // getMyParkings()
-    // getRoute()
+    getRoute()
   }, [])
   const getRoute = async () => {
     try {
       const res = await axios.get(
         `${ROUTE_URL}transportMode=car&origin=52.5308,13.3847&destination=52.5323,13.3789&return=polyline,summary&apiKey=${REST_API_KEY}`
       )
-      console.log(res)
-      // setRoute(res.data.routes)
+
+      console.log(decodePolyline(res.data.routes[0].sections[0].polyline))
+      // setRoute(res.data.routes[0])
+      // setPolyline(res.data.routes[0].sections[0].polyline)
+      // setPolylineCoords(decodePolyline(res.data.routes[0].sections[0].polyline))
     } catch (error) {
       throw error
     }
