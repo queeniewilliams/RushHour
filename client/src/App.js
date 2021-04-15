@@ -6,7 +6,7 @@ import Navigate from './components/Navigate'
 import SanityMobilePreview from 'sanity-mobile-preview'
 import 'sanity-mobile-preview/dist/index.css?raw'
 import { Route, Switch } from 'react-router-dom'
-import { BASE_URL } from './globals'
+import { BASE_URL, REST_API_KEY, ROUTE_URL } from './globals'
 import axios from 'axios'
 
 const App = (props) => {
@@ -20,6 +20,7 @@ const App = (props) => {
   const [comments, setComments] = useState([])
   const [comment, setComment] = useState('')
   const [myParkings, setMyParkings] = useState([])
+  const [route, setRoute] = useState(null)
 
   const [allParkings, setAllParkings] = useState([])
 
@@ -78,7 +79,19 @@ const App = (props) => {
     // calcDistance()
     getAllComments()
     getMyParkings()
+    getRoute()
   }, [])
+  const getRoute = async () => {
+    try {
+      const res = await axios.get(
+        `${ROUTE_URL}transportMode=car&origin=52.5308,13.3847&destination=52.5323,13.3789&return=polyline,summary&apiKey=${REST_API_KEY}`
+      )
+      console.log(res)
+      // setRoute(res.data.routes)
+    } catch (error) {
+      throw error
+    }
+  }
   const getAllParkings = async () => {
     try {
       const res = await axios.get(`${BASE_URL}/parking`)
