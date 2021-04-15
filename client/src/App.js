@@ -3,11 +3,13 @@ import Map from './components/Map'
 import AddParking from './components/AddParking'
 import Comments from './components/Comments'
 import Navigate from './components/Navigate'
+
 import SanityMobilePreview from 'sanity-mobile-preview'
 import 'sanity-mobile-preview/dist/index.css?raw'
 import { Route, Switch } from 'react-router-dom'
-import { BASE_URL, REST_API_KEY, ROUTE_URL } from './globals'
+import { BASE_URL, REST_API_KEY, ROUTE_URL, GEOCODIO_KEY } from './globals'
 import axios from 'axios'
+import Geocodio from 'geocodio-library-node'
 
 const App = (props) => {
   const [lat, setLat] = useState(null)
@@ -21,8 +23,25 @@ const App = (props) => {
   const [comment, setComment] = useState('')
   const [myParkings, setMyParkings] = useState([])
   const [route, setRoute] = useState(null)
+  const [address, setAddress] = useState('92584')
 
   const [allParkings, setAllParkings] = useState([])
+
+  const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
+  geocoder
+    .geocode(address)
+    .then((response) => {
+      console.log(response.results[0].location)
+      setCurrentLat(response.results[0].location.lat)
+      setCurrentLng(response.results[0].location.lng)
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+
+  const handleAddressChange = (e) => {
+    setAddress(e.target.value)
+  }
 
   const getLocation = () => {
     if (!navigator.geolocation) {
@@ -118,7 +137,7 @@ const App = (props) => {
     var d = R * c
     setDistance(d)
   }
-  console.log(distance)
+  // console.log(distance)
 
   const handleChange = (e) => {
     setComment(e.target.value)
@@ -184,6 +203,8 @@ const App = (props) => {
               setLat={setLat}
               setLng={setLng}
               getLocation={getLocation}
+              address={address}
+              handleAddressChange={handleAddressChange}
             />
           )}
         />
@@ -222,12 +243,6 @@ const App = (props) => {
             />
           )}
         />
-        {/* <Route
-          path="/parking"
-          render={(props) => (
-            <MyParkings myParkings={myParkings} deleteParking={deleteParking} />
-          )}
-        /> */}
       </Switch>
     </SanityMobilePreview>
   )

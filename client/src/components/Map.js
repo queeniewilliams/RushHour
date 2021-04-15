@@ -2,6 +2,7 @@ import React, { useState, Fragment, useEffect } from 'react'
 import ReactMap, { Marker, Popup } from 'react-map-gl'
 import '../css/mapbox.css'
 import { useHistory } from 'react-router-dom'
+import LocationForm from './LocationForm'
 
 const Map = (props) => {
   useEffect(() => {
@@ -37,6 +38,11 @@ const Map = (props) => {
       maxZoom={100}
       minZoom={1.6}
     >
+      <input
+        name="address"
+        value={props.address}
+        onChange={props.handleAddressChange}
+      />
       {props.allParkings
         ? props.allParkings.map((parking, index) => (
             <Fragment key={index}>
@@ -52,7 +58,11 @@ const Map = (props) => {
                   }}
                 />
               </Marker>
-
+              <Marker
+                className="marker-current"
+                longitude={props.currentLng}
+                latitude={props.currentLat}
+              ></Marker>
               {selectedParking ? (
                 <Popup
                   longitude={selectedParking.longitude}
