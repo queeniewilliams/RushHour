@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Map from './components/Map'
 import AddParking from './components/AddParking'
 import Comments from './components/Comments'
+import Navigate from './components/Navigate'
 import SanityMobilePreview from 'sanity-mobile-preview'
 import 'sanity-mobile-preview/dist/index.css?raw'
 import { Route, Switch } from 'react-router-dom'
@@ -90,10 +91,10 @@ const App = (props) => {
 
   const calcDistance = () => {
     const R = 6371
-    let dLat = ((currentLat - lat) * Math.PI) / 180
-    let dLng = ((currentLng - lng) * Math.PI) / 180
+    let dLat = ((33 - lat) * Math.PI) / 180
+    let dLng = ((-118 - lng) * Math.PI) / 180
     let lat = (lat * Math.PI) / 180
-    let currentLat = (currentLat * Math.PI) / 180
+    let currentLat = (33 * Math.PI) / 180
     let a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.sin(dLng / 2) *
@@ -152,11 +153,10 @@ const App = (props) => {
   return (
     <SanityMobilePreview>
       <div>
+        <Navigate />
         <button onClick={getLocation}>Get Location</button>
         <p>{status}</p>
         {currentLat && <p>Latitude: {currentLat}</p>}
-        {currentLng && <p>Longitude: {currentLng}</p>}
-        {/* {coordinates} */}
       </div>
       <Switch>
         <Route
@@ -168,6 +168,9 @@ const App = (props) => {
               calcDistance={calcDistance}
               currentLat={currentLat}
               currentLng={currentLng}
+              setLat={setLat}
+              setLng={setLng}
+              getLocation={getLocation}
             />
           )}
         />

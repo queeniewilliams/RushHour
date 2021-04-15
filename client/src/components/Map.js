@@ -1,12 +1,12 @@
 import React, { useState, Fragment, useEffect } from 'react'
 import ReactMap, { Marker, Popup } from 'react-map-gl'
-import { parkings } from '../assets/parkings.json'
-import Carousel from 'react-bootstrap/Carousel'
 import '../css/mapbox.css'
-import Navigate from './Navigate'
 import { useHistory } from 'react-router-dom'
 
 const Map = (props) => {
+  useEffect(() => {
+    props.getLocation()
+  }, [])
   const [viewport, setViewport] = useState({
     width: '100%',
     height: '100%',
@@ -14,28 +14,8 @@ const Map = (props) => {
     longitude: props.currentLng ? props.currentLng : -118,
     zoom: 8
   })
-  let CURRENT = 'los Angeles'
   const [selectedParking, setSelectedParking] = useState(null)
-  const [showPopup, togglePopup] = useState(null)
-  const [showButton, setShowButton] = useState(false)
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [animating, setAnimating] = useState(false)
   const history = useHistory()
-
-  const chooseSpot = (longitude, latitude) => {
-    setSelectedParking(longitude, latitude)
-  }
-  // const next = () => {
-  //   if (animating) return
-  //   const nextIndex = activeIndex === parkings.length - 1 ? 0 : activeIndex + 1
-  //   setActiveIndex(nextIndex)
-  // }
-
-  // const previous = () => {
-  //   if (animating) return
-  //   const nextIndex = activeIndex === 0 ? parkings.length - 1 : activeIndex - 1
-  //   setActiveIndex(nextIndex)
-  // }
 
   useEffect(() => {
     const listener = (e) => {
@@ -67,34 +47,12 @@ const Map = (props) => {
                   onClick={(e) => {
                     e.preventDefault()
                     setSelectedParking(parking)
+                    props.setLng(parking.longitude)
+                    props.setLat(parking.latitude)
                   }}
                 />
               </Marker>
-              {/* <Carousel
-                activeIndex={activeIndex}
-                next={next}
-                previous={previous}
-              >
-                <Carousel.Item
-                  onExiting={() => setAnimating(true)}
-                  onExited={() => setAnimating(false)}
-                > */}
-              {/* <button
-                    onClick={() =>
-                      chooseSpot(parking.longitude, parking.latitude)
-                    }
-                  >
-                    <p>Time:</p>
-                    <p>Distance:</p>
-                    <button>open in google map</button>
-                    <button
-                      onClick={() => history.push(`/reviews/${parking.id}`)}
-                    >
-                      reviews
-                    </button>
-                  </button> */}
-              {/* </Carousel.Item> */}
-              {/* </Carousel> */}
+
               {selectedParking ? (
                 <Popup
                   longitude={selectedParking.longitude}
@@ -117,7 +75,6 @@ const Map = (props) => {
             </Fragment>
           ))
         : null}
-      <Navigate />
       <button onClick={props.calcDistance}>Get Distance</button>
     </ReactMap>
   )

@@ -11,7 +11,6 @@ const Navigate = (props) => {
           width="50px"
         />
       </Dropdown.Toggle>
-
       <Dropdown.Menu>
         <Dropdown.Item onClick={() => history.push('/add')}>
           Add Parking
