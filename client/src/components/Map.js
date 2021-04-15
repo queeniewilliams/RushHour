@@ -50,7 +50,6 @@ const Map = (props) => {
           props.setStatus(null)
           props.setCurrentLat(position.coords.latitude)
           props.setCurrentLng(position.coords.longitude)
-          // setCoordinates([position.coords.longitude, position.coords.latitude])
         },
         () => {
           props.setStatus('Unable to retrieve your location')

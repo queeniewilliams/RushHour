@@ -16,6 +16,12 @@ const Navigate = (props) => {
           Add Parking
         </Dropdown.Item>
         <Dropdown.Item onClick={() => history.push('/')}>Home</Dropdown.Item>
+        <Dropdown.Item onClick={() => history.push('/signup')}>
+          Sign Up
+        </Dropdown.Item>
+        <Dropdown.Item onClick={() => history.push('/signin')}>
+          Sign In
+        </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   )

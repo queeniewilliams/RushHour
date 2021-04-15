@@ -5,6 +5,13 @@ import { GEOCODIO_KEY } from '../globals'
 
 const AddParking = (props) => {
   const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
+  const [update, setUpdate] = useState({
+    lng: props.lng,
+    lat: props.lat
+  })
+  const handleUpdate = (target) => {
+    setUpdate({ ...update, [target.name]: target.value })
+  }
   useEffect(() => {
     props.getMyParkings()
   }, [])
@@ -18,10 +25,6 @@ const AddParking = (props) => {
           props.setStatus(null)
           props.setLat(position.coords.latitude)
           props.setLng(position.coords.longitude)
-          // props.setCoordinates([
-          //   position.coords.longitude,
-          //   position.coords.latitude
-          // ])
         },
         () => {
           props.setStatus('Unable to retrieve your location')
@@ -111,11 +114,10 @@ const AddParking = (props) => {
                   <p>Time:</p>
                   <p>Distance:</p>
                   <button>open in google map</button>
-                  {/* <button
-                      onClick={() => history.push(`/reviews/${parking.id}`)}
-                    >
-                      reviews
-                    </button> */}
+                  <form>
+                    <input name="coordinate" />
+                    <input type="submit">Edit</input>
+                  </form>
                   <button
                     onClick={() => {
                       props.deleteParking(each.id)

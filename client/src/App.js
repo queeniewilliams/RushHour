@@ -3,6 +3,8 @@ import Map from './components/Map'
 import AddParking from './components/AddParking'
 import Comments from './components/Comments'
 import Navigate from './components/Navigate'
+import SignUp from './components/SignUp'
+import SignIn from './components/SignIn'
 import SanityMobilePreview from 'sanity-mobile-preview'
 import 'sanity-mobile-preview/dist/index.css?raw'
 import { Route, Switch } from 'react-router-dom'
@@ -227,6 +229,8 @@ const App = (props) => {
             />
           )}
         />
+        <Route path="/signup" render={(props) => <SignUp />} />
+        <Route path="/signin" render={(props) => <SignIn />} />
       </Switch>
     </SanityMobilePreview>
   )
