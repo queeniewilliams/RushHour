@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const Comments = (props) => {
   console.log(props.props.match.params.id)
+  useEffect(() => {
+    props.getAllComments(props.props.match.params.id)
+  })
   return (
     <div>
       <form onSubmit={() => props.submitComment(props.props.match.params.id)}>

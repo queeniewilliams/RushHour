@@ -3,7 +3,6 @@ import Map from './components/Map'
 import AddParking from './components/AddParking'
 import Comments from './components/Comments'
 import Navigate from './components/Navigate'
-
 import SanityMobilePreview from 'sanity-mobile-preview'
 import 'sanity-mobile-preview/dist/index.css?raw'
 import { Route, Switch } from 'react-router-dom'
@@ -47,36 +46,15 @@ const App = (props) => {
     setCurrentAddress(e.target.value)
   }
 
-  const getLocation = () => {
-    if (!navigator.geolocation) {
-      setStatus('Geolocation is not supported by your browser')
-    } else {
-      setStatus('Locating...')
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setStatus(null)
-          setCurrentLat(position.coords.latitude)
-          setCurrentLng(position.coords.longitude)
-          // setCoordinates([position.coords.longitude, position.coords.latitude])
-        },
-        () => {
-          setStatus('Unable to retrieve your location')
-        }
-      )
-    }
-  }
-
   const submitParking = async (e) => {
     e.preventDefault()
     const userId = 1
     try {
-      // console.log(lng, lat)
       const res = await axios.post(`${BASE_URL}/parking/add`, {
         userId,
         longitude: lng,
         latitude: lat
       })
-      // console.log(res)
       setAllParkings([...allParkings])
     } catch (error) {
       throw error
@@ -93,16 +71,12 @@ const App = (props) => {
       console.log(error)
     }
   }
-  // console.log(typeof lng)
-  // const handleChange = ({ target }) => {
-  //   setNewParking({ ...newParking, [target.name]: target.value })
-  // }
   useEffect(() => {
-    getAllParkings()
+    // getAllParkings()
     // calcDistance()
-    getAllComments()
-    getMyParkings()
-    getRoute()
+    // getAllComments()
+    // getMyParkings()
+    // getRoute()
   }, [])
   const getRoute = async () => {
     try {
@@ -117,7 +91,7 @@ const App = (props) => {
   }
   const getAllParkings = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/parking`)
+      const res = await axios.get(`${BASE_URL}/parking/all`)
       console.log(res)
       setAllParkings(res.data)
     } catch (error) {
@@ -157,9 +131,9 @@ const App = (props) => {
       throw error
     }
   }
-  const getAllComments = async () => {
+  const getAllComments = async (id) => {
     try {
-      const res = await axios.get(`${BASE_URL}/comment/all/65 `)
+      const res = await axios.get(`${BASE_URL}/comment/all/${id} `)
       console.log(res.data)
       setComments(res.data)
     } catch (error) {
@@ -190,9 +164,7 @@ const App = (props) => {
     <SanityMobilePreview>
       <div>
         <Navigate />
-        <button onClick={getLocation}>Get Location</button>
-        <p>{status}</p>
-        {currentLat && <p>Latitude: {currentLat}</p>}
+        <button></button>
       </div>
       <Switch>
         <Route
@@ -204,9 +176,12 @@ const App = (props) => {
               calcDistance={calcDistance}
               currentLat={currentLat}
               currentLng={currentLng}
+              setCurrentLat={setCurrentLat}
+              setCurrentLng={setCurrentLng}
               setLat={setLat}
               setLng={setLng}
-              getLocation={getLocation}
+              status={status}
+              setStatus={setStatus}
               currentAddress={currentAddress}
               handleCurrentAddressChange={handleCurrentAddressChange}
               // address={address}
@@ -248,6 +223,7 @@ const App = (props) => {
               submitComment={submitComment}
               comments={comments}
               deleteComment={deleteComment}
+              getAllComments={getAllComments}
             />
           )}
         />

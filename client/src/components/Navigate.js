@@ -15,6 +15,7 @@ const Navigate = (props) => {
         <Dropdown.Item onClick={() => history.push('/add')}>
           Add Parking
         </Dropdown.Item>
+        <Dropdown.Item onClick={() => history.push('/')}>Home</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   )
