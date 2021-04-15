@@ -40,9 +40,9 @@ const App = (props) => {
       console.error(err)
     })
 
-  // const handleAddressChange = (e) => {
-  //   setAddress(e.target.value)
-  // }
+  const handleAddressChange = (e) => {
+    setAddress(e.target.value)
+  }
   const handleCurrentAddressChange = (e) => {
     setCurrentAddress(e.target.value)
   }
@@ -233,8 +233,8 @@ const App = (props) => {
               myParkings={myParkings}
               deleteParking={deleteParking}
               getMyParkings={getMyParkings}
-              // address={address}
-              // handleAddressChange={handleAddressChange}
+              address={address}
+              handleAddressChange={handleAddressChange}
             />
           )}
         />
