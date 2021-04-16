@@ -8,11 +8,12 @@ const Navigate = (props) => {
     <Dropdown className="navigate">
       <Dropdown.Toggle>
         <img
+          alt="navigate"
           src="https://i.ibb.co/kHKpM6V/hamburger-menu-icon-png-53.png"
           width="30px"
         />
       </Dropdown.Toggle>
-      <Dropdown.Menu>
+      <Dropdown.Menu className="dropdown-menu">
         <Dropdown.Item
           onClick={() => history.push('/add')}
           className="dropdown-item"
@@ -20,17 +21,33 @@ const Navigate = (props) => {
           Add Parking
         </Dropdown.Item>
         <br></br>
-        <Dropdown.Item onClick={() => history.push('/')}>Home</Dropdown.Item>
+        <Dropdown.Item
+          onClick={() => history.push('/')}
+          className="dropdown-item"
+        >
+          Home
+        </Dropdown.Item>
         <br></br>
         {props.authenticated ? (
-          <Dropdown.Item onClick={() => props.logOut()}>Logout</Dropdown.Item>
+          <Dropdown.Item
+            onClick={() => props.logOut()}
+            className="dropdown-item"
+          >
+            Logout
+          </Dropdown.Item>
         ) : (
           <div>
-            <Dropdown.Item onClick={() => history.push('/signup')}>
+            <Dropdown.Item
+              onClick={() => history.push('/signup')}
+              className="dropdown-item"
+            >
               Sign Up
             </Dropdown.Item>
             <br></br>
-            <Dropdown.Item onClick={() => history.push('/signin')}>
+            <Dropdown.Item
+              onClick={() => history.push('/signin')}
+              className="dropdown-item"
+            >
               Sign In
             </Dropdown.Item>
           </div>

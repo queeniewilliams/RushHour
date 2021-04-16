@@ -63,6 +63,17 @@ const CreateParking = async (req, res) => {
   }
 }
 
+const UpdateParking = async (req, res) => {
+  try {
+    const newParking = await Coordinate.update(
+      { ...req.body },
+      { where: { id: req.params.coordinate_id }, returning: true }
+    )
+    res.send(newParking)
+  } catch (error) {
+    throw error
+  }
+}
 const DeleteParking = async (req, res) => {
   try {
     await Coordinate.destroy({ where: { id: req.params.coordinate_id } })
@@ -81,5 +92,6 @@ module.exports = {
   GetMyParking,
   CreateParking,
   DeleteParking,
+  UpdateParking,
   GetParkingByDistance
 }

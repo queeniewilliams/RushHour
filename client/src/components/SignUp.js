@@ -6,6 +6,7 @@ const SignUp = (props) => {
   const [registerForm, handleRegisterForm] = useState({
     name: '',
     email: '',
+    profile: '',
     passwordDigest: '',
     confirmPassword: ''
   })
@@ -18,6 +19,7 @@ const SignUp = (props) => {
       handleRegisterForm({
         name: '',
         email: '',
+        profile: '',
         passwordDigest: '',
         confirmPassword: ''
       })
@@ -60,6 +62,13 @@ const SignUp = (props) => {
           onChange={handleChange}
           required
         />
+        <input
+          name="profile"
+          placeholder="profile picture"
+          value={registerForm.profile}
+          onChange={handleChange}
+        />
+        <br></br>
         <input
           type="password"
           name="passwordDigest"

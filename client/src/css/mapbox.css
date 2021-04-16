@@ -54,6 +54,11 @@
   font-size: 0.8rem;
   color: grey;
 }
-.flag {
-  margin-left: 0.25rem;
+
+.location {
+  display: flex;
+  align-items: center;
+}
+#location-icon {
+  margin-right: 10px;
 }

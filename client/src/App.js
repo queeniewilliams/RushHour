@@ -27,12 +27,15 @@ const App = (props) => {
   const [myParkings, setMyParkings] = useState([])
   // const [route, setRoute] = useState(null)
   const [currentAddress, setCurrentAddress] = useState('92584')
-  const [address, setAddress] = useState('90017')
+  const [address, setAddress] = useState('')
   const [polyline, setPolyline] = useState('')
   const [polylineCoords, setPolylineCoords] = useState([])
   const [allParkings, setAllParkings] = useState([])
   const [authenticated, setAuthenticated] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
+  const [submitAddress,setSubmitAddress]=useState('')
+  const [image, setImage] = useState({ img: '' })
+  const [parkingId, setParkingId] = useState('')
   const history = useHistory()
 
   const logOut = () => {
@@ -59,7 +62,7 @@ const App = (props) => {
   // geocoder
   //   .geocode(currentAddress)
   //   .then((response) => {
-  //     console.log(response.results[0].location)
+  //     console.log(response.results[0])
   //     setCurrentLat(response.results[0].location.lat)
   //     setCurrentLng(response.results[0].location.lng)
   //   })
@@ -76,17 +79,39 @@ const App = (props) => {
 
   const submitParking = async (e) => {
     e.preventDefault()
-    const userId = currentUser.id
+    const userId = 1
     try {
       const res = await axios.post(`${BASE_URL}/parking/add`, {
         userId,
         longitude: lng,
-        latitude: lat
+        latitude: lat,
+        address: submitAddress
       })
+      setParkingId(res.data.id)
       setAllParkings([...allParkings])
     } catch (error) {
       throw error
     }
+  }
+  const addImage = async (parkingId, image) => {
+    try {
+      const res = await axios.put(`${BASE_URL}/update/${parkingId}`, image)
+      console.log(res)
+      return res.data
+    } catch (error) {
+      throw error
+    }
+  }
+  const submitImage = async (e) => {
+    e.preventDefault()
+    try {
+      addImage(parkingId, image)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const handleImageChange = ({ target }) => {
+    setImage({ ...image, [target.name]: target.value })
   }
   const deleteParking = async (parkingId) => {
     try {
@@ -189,7 +214,7 @@ const App = (props) => {
     }
   }
   const getMyParkings = async (e) => {
-    const userId = currentUser.id
+    const userId = 1
     try {
       const res = await axios.get(`${BASE_URL}/parking/${userId}`)
       setMyParkings(res.data)
@@ -248,7 +273,12 @@ const App = (props) => {
               deleteParking={deleteParking}
               getMyParkings={getMyParkings}
               address={address}
+              setAddress={setAddress}
+              setSubmitAddress={setSubmitAddress}
               handleAddressChange={handleAddressChange}
+              submitImage={submitImage}
+              handleImageChange={handleImageChange}
+              image={image}
             />
           )}
         />
@@ -257,6 +287,8 @@ const App = (props) => {
           render={(props) => (
             <Comments
               props={props}
+              authenticated={authenticated}
+              logOut={logOut}
               comment={comment}
               handleChange={handleChange}
               submitComment={submitComment}

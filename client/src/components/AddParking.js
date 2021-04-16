@@ -1,5 +1,5 @@
 import React, { useState, Fragment, useEffect } from 'react'
-import ReactMap, { Marker, Popup } from 'react-map-gl'
+import ReactMap, { Marker, Popup, FlyToInterpolator } from 'react-map-gl'
 import Navigate from './Navigate'
 import Geocodio from 'geocodio-library-node'
 import { GEOCODIO_KEY } from '../globals'
@@ -37,6 +37,7 @@ const AddParking = (props) => {
   //     console.log(response.results[0].location)
   //     props.setLat(response.results[0].location.lat)
   //     props.setLng(response.results[0].location.lng)
+  //     props.setSubmitAddress(response.results[0].formatted_address)
   //   })
   //   .catch((err) => {
   //     console.error(err)
@@ -50,6 +51,18 @@ const AddParking = (props) => {
     zoom: 8
   })
   const [selectedParking, setSelectedParking] = useState(null)
+  const changeViewport = () => {
+    setViewport({
+      ...viewport,
+      width: '100%',
+      height: '100%',
+      latitude: props.lat,
+      longitude: props.lng,
+      zoom: 10,
+      transitionDuration: 2000,
+      transitionInterpolator: new FlyToInterpolator()
+    })
+  }
   useEffect(() => {
     const listener = (e) => {
       if (e.key === 'Escape') {
@@ -72,7 +85,13 @@ const AddParking = (props) => {
     >
       <Navigate authenticated={props.authenticated} logOut={props.logOut} />
       <div className="submit">
-        <form onSubmit={props.submitParking}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            props.submitParking()
+            changeViewport()
+          }}
+        >
           <button onClick={getLocation}>Get Location</button>
           <p>{props.status}</p>
           {props.lat && <p>Latitude: {props.lat}</p>}
@@ -92,6 +111,7 @@ const AddParking = (props) => {
             <Fragment key={index}>
               <Marker longitude={each.longitude} latitude={each.latitude}>
                 <img
+                  alt="parking-icon"
                   src="https://i.ibb.co/HGny0DC/parking-sign-2526.png"
                   width="50px"
                   onClick={(e) => {
@@ -113,7 +133,15 @@ const AddParking = (props) => {
                 >
                   <p>Time:</p>
                   <p>Distance:</p>
-                  <button>open in google map</button>
+                  <form onSubmit={props.submitImage}>
+                    <input
+                      name="image"
+                      value={props.image.img}
+                      onChange={props.handleImageChange}
+                      placeholder="upload image"
+                    />
+                    <button type="submit">Upload</button>
+                  </form>
                   <button
                     onClick={() => {
                       props.deleteParking(selectedParking.id)

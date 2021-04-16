@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Navigate from './Navigate'
 import axios from 'axios'
 import { BASE_URL } from '../globals'
 import '../App.css'
@@ -40,6 +41,7 @@ const Comments = (props) => {
   }
   return (
     <div>
+      <Navigate authenticated={props.authenticated} logOut={props.logOut} />
       <form onSubmit={() => props.submitComment(props.props.match.params.id)}>
         <input
           name="comment"
@@ -56,30 +58,35 @@ const Comments = (props) => {
           <p>Likes: {comment.likes}</p>
           <button onClick={() => likeComment(comment.id)}>like</button>
           <img
+            alt="icon"
             className={`rating ${selected ? 'selected' : ''}`}
             src="https://i.ibb.co/khg4RKH/star-256.png"
             width="30px"
             onClick={() => selectRating(comment.id)}
           />
           <img
+            alt="icon"
             className={`rating1 ${selected1 ? 'selected1' : ''}`}
             src="https://i.ibb.co/khg4RKH/star-256.png"
             width="30px"
             onClick={() => selectRating1(comment.id)}
           />
           <img
+            alt="icon"
             className={`rating2 ${selected2 ? 'selected2' : ''}`}
             src="https://i.ibb.co/khg4RKH/star-256.png"
             width="30px"
             onClick={() => selectRating2()}
           />
           <img
+            alt="icon"
             className={`rating3 ${selected3 ? 'selected3' : ''}`}
             src="https://i.ibb.co/khg4RKH/star-256.png"
             width="30px"
             onClick={() => selectRating3()}
           />
           <img
+            alt="icon"
             className={`rating4 ${selected4 ? 'selected4' : ''}`}
             src="https://i.ibb.co/khg4RKH/star-256.png"
             width="30px"

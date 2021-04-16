@@ -18,7 +18,9 @@ module.exports = (sequelize, DataTypes) => {
         references: { model: 'users', key: 'id' }
       },
       longitude: DataTypes.FLOAT,
-      latitude: DataTypes.FLOAT
+      latitude: DataTypes.FLOAT,
+      address: DataTypes.STRING,
+      image: DataTypes.STRING
     },
     {
       sequelize,

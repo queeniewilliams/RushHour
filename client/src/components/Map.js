@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import ReactMap, { Marker, Popup, FlyToInterpolator } from 'react-map-gl'
 import Navigate from './Navigate'
 import '../css/mapbox.css'
@@ -9,10 +9,10 @@ const Map = (props) => {
     width: '100%',
     height: '100%',
     latitude: 34,
-    longitude: -118,
+    longitude: -118.3,
     // latitude: props.currentLat ? props.currentLat : 34,
     // longitude: props.currentLng ? props.currentLng : -118,
-    zoom: 8
+    zoom: 10
   })
   const changeViewport = () => {
     setViewport({
@@ -21,7 +21,7 @@ const Map = (props) => {
       height: '100%',
       latitude: props.currentLat,
       longitude: props.currentLng,
-      zoom: 8,
+      zoom: 10,
       transitionDuration: 2000,
       transitionInterpolator: new FlyToInterpolator()
     })
@@ -88,7 +88,8 @@ const Map = (props) => {
             <div key={index}>
               <Marker longitude={parking.longitude} latitude={parking.latitude}>
                 <img
-                  src="https://i.ibb.co/HGny0DC/parking-sign-2526.png"
+                  alt="parking-icon"
+                  src="https://i.ibb.co/z5H0Qx3/free-parking.png"
                   width="50px"
                   onClick={(e) => {
                     e.preventDefault()
@@ -109,15 +110,26 @@ const Map = (props) => {
                   }}
                 >
                   <p>Parking {selectedParking.id}</p>
+                  <div className="location">
+                    <img
+                      id="location-icon"
+                      alt="location"
+                      src="https://i.ibb.co/mNGXhnb/pngjoy-com-location-pin-icon-location-icon-3d-png-hd-2645202.png"
+                      width="20px"
+                      height="25px"
+                    />
+                    <p>{selectedParking.address}</p>
+                  </div>
                   <p>Distance:</p>
                   <button>open in google map</button>
-                  <button
+                  <br></br>
+                  <img
+                    src="https://i.ibb.co/Hdbst8z/vippng-com-review-icon-png-3657900.png"
+                    width="40px"
                     onClick={() =>
                       history.push(`/reviews/${selectedParking.id}`)
                     }
-                  >
-                    reviews
-                  </button>
+                  />
                 </Popup>
               ) : null}
             </div>

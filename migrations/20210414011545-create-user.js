@@ -17,6 +17,9 @@ module.exports = {
       passwordDigest: {
         type: Sequelize.STRING
       },
+      profile: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

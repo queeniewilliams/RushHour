@@ -3,11 +3,13 @@ const { HashPassword, ComparePassword, CreateToken } = require('../middleware')
 
 const Register = async (req, res) => {
   try {
-    let { email } = req.body
+    let { email, name, profile } = req.body
     let passwordDigest = await HashPassword(req.body.passwordDigest)
     const user = await User.create({
       email,
-      passwordDigest
+      name,
+      passwordDigest,
+      profile
     })
     res.send(user)
   } catch (error) {
