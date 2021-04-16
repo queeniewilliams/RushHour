@@ -1,10 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import { BASE_URL } from '../globals'
 
 const Comments = (props) => {
   console.log(props.props.match.params.id)
+
   useEffect(() => {
     props.getAllComments(props.props.match.params.id)
   })
+
   return (
     <div>
       <form onSubmit={() => props.submitComment(props.props.match.params.id)}>

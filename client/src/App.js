@@ -31,18 +31,18 @@ const App = (props) => {
   const [polylineCoords, setPolylineCoords] = useState([])
   const [allParkings, setAllParkings] = useState([])
 
-  // let array = decodePolyline(polyline)
-  // const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
-  // geocoder
-  //   .geocode(currentAddress)
-  //   .then((response) => {
-  //     console.log(response.results[0].location)
-  //     setCurrentLat(response.results[0].location.lat)
-  //     setCurrentLng(response.results[0].location.lng)
-  //   })
-  //   .catch((err) => {
-  //     console.error(err)
-  //   })
+  let array = decodePolyline(polyline)
+  const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
+  geocoder
+    .geocode(currentAddress)
+    .then((response) => {
+      console.log(response.results[0].location)
+      setCurrentLat(response.results[0].location.lat)
+      setCurrentLng(response.results[0].location.lng)
+    })
+    .catch((err) => {
+      console.error(err)
+    })
 
   const handleAddressChange = (e) => {
     setAddress(e.target.value)
@@ -86,16 +86,17 @@ const App = (props) => {
   const getRoute = async () => {
     try {
       const res = await axios.get(
-        `${ROUTE_URL}transportMode=car&origin=52.5308,13.3847&destination=52.5323,13.3789&return=polyline,summary&apiKey=${REST_API_KEY}`
+        `${ROUTE_URL}transportMode=car&origin=52.5308,13.3847&destination=${lng},${lat}&return=polyline,summary&apiKey=${REST_API_KEY}`
       )
+      console.log(res)
 
-      console.log(decodePolyline(res.data.routes[0].sections[0].polyline))
-      let array = decodePolyline(res.data.routes[0].sections[0].polyline)
-      let myCoords = array.map((point) => ({
-        latitude: point.lat,
-        longitude: point.lng
-      }))
-      setPolylineCoords(myCoords)
+      // console.log(decodePolyline(res.data.routes[0].sections[0].polyline))
+      // let array = decodePolyline(res.data.routes[0].sections[0].polyline)
+      // let myCoords = array.map((point) => ({
+      //   latitude: point.lat,
+      //   longitude: point.lng
+      // }))
+      // setPolylineCoords(myCoords)
       // setRoute(res.data.routes[0])
       // setPolyline(res.data.routes[0].sections[0].polyline)
       // setPolylineCoords(decodePolyline(res.data.routes[0].sections[0].polyline))

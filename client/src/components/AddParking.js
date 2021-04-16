@@ -3,8 +3,7 @@ import ReactMap, { Marker, Popup } from 'react-map-gl'
 import Navigate from './Navigate'
 import Geocodio from 'geocodio-library-node'
 import { GEOCODIO_KEY } from '../globals'
-import axios from 'axios'
-import { BASE_URL } from '../globals'
+
 import '../App.css'
 
 const AddParking = (props) => {
@@ -31,16 +30,16 @@ const AddParking = (props) => {
     }
   }
 
-  // geocoder
-  //   .geocode(props.address)
-  //   .then((response) => {
-  //     console.log(response.results[0].location)
-  //     props.setLat(response.results[0].location.lat)
-  //     props.setLng(response.results[0].location.lng)
-  //   })
-  //   .catch((err) => {
-  //     console.error(err)
-  //   })
+  geocoder
+    .geocode(props.address)
+    .then((response) => {
+      console.log(response.results[0].location)
+      props.setLat(response.results[0].location.lat)
+      props.setLng(response.results[0].location.lng)
+    })
+    .catch((err) => {
+      console.error(err)
+    })
   console.log(props)
   const [viewport, setViewport] = useState({
     width: '100%',

@@ -30,20 +30,37 @@ const AddComment = async (req, res) => {
     throw error
   }
 }
+
 const DeleteComment = async (req, res) => {
   try {
-    await Comment.destroy({ where: { id: req.params.coordinate_id } })
+    await Comment.destroy({ where: { id: req.params.comment_id } })
     res.send({
       msg: 'Comment Deleted',
-      payload: req.params.coordinate_id,
+      payload: req.params.comment_id,
       status: 'Ok'
     })
   } catch (error) {
     throw error
   }
 }
+
+const LikeComment = async (req, res) => {
+  try {
+    const comment = await Comment.increment(
+      {
+        likes: 1
+      },
+      { where: { id: req.params.comment_id } }
+    )
+    res.send(comment)
+  } catch (error) {
+    throw error
+  }
+}
+
 module.exports = {
   GetAllComments,
   AddComment,
-  DeleteComment
+  DeleteComment,
+  LikeComment
 }

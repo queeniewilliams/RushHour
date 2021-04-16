@@ -4,7 +4,7 @@ const middleware = require('../middleware')
 
 // router.get('/all', controller.GetAllUsers)
 
-// router.post('/login', controller.Login)
+router.post('/login', controller.Login)
 
 router.post('/register', controller.Register)
 

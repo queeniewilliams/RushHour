@@ -18,7 +18,15 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         references: { model: 'coordinates', key: 'id' }
       },
-      comment: DataTypes.STRING
+      comment: DataTypes.STRING,
+      likes: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+        validate: {
+          min: 0
+        }
+      }
     },
     {
       sequelize,

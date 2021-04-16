@@ -21,6 +21,14 @@ module.exports = {
       comment: {
         type: Sequelize.STRING
       },
+      likes: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+        validate: {
+          min: 0
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
