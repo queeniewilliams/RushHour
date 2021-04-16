@@ -3,17 +3,13 @@ import ReactMap, { Marker, Popup } from 'react-map-gl'
 import Navigate from './Navigate'
 import Geocodio from 'geocodio-library-node'
 import { GEOCODIO_KEY } from '../globals'
+import axios from 'axios'
+import { BASE_URL } from '../globals'
 import '../App.css'
 
 const AddParking = (props) => {
   const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
-  const [update, setUpdate] = useState({
-    lng: props.lng,
-    lat: props.lat
-  })
-  const handleUpdate = (target) => {
-    setUpdate({ ...update, [target.name]: target.value })
-  }
+
   useEffect(() => {
     props.getMyParkings()
   }, [])
@@ -76,20 +72,20 @@ const AddParking = (props) => {
     >
       <Navigate />
       <div className="submit">
-      <form onSubmit={props.submitParking}>
-        <button onClick={getLocation}>Get Location</button>
-        <p>{props.status}</p>
-        {props.lat && <p>Latitude: {props.lat}</p>}
-        {props.lng && <p>Longitude: {props.lng}</p>}
-      </form>
-      <form onSubmit={props.submitParking}>
-        <input
-          name="address"
-          value={props.address}
-          onChange={props.handleAddressChange}
-        />
-        <input type="submit" />
-      </form>
+        <form onSubmit={props.submitParking}>
+          <button onClick={getLocation}>Get Location</button>
+          <p>{props.status}</p>
+          {props.lat && <p>Latitude: {props.lat}</p>}
+          {props.lng && <p>Longitude: {props.lng}</p>}
+        </form>
+        <form onSubmit={props.submitParking}>
+          <input
+            name="address"
+            value={props.address}
+            onChange={props.handleAddressChange}
+          />
+          <input type="Submit" />
+        </form>
       </div>
       {props.myParkings
         ? props.myParkings.map((each, index) => (
@@ -118,13 +114,9 @@ const AddParking = (props) => {
                   <p>Time:</p>
                   <p>Distance:</p>
                   <button>open in google map</button>
-                  {/* <form>
-                    <input name="coordinate" />
-                    <input type="submit">Edit</input>
-                  </form> */}
                   <button
                     onClick={() => {
-                      props.deleteParking(each.id)
+                      props.deleteParking(selectedParking.id)
                       setSelectedParking(null)
                     }}
                   >

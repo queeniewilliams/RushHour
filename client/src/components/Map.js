@@ -108,7 +108,9 @@ const Map = (props) => {
                   <p>Distance:</p>
                   <button>open in google map</button>
                   <button
-                    onClick={() => history.push(`/reviews/${parking.id}`)}
+                    onClick={() =>
+                      history.push(`/reviews/${selectedParking.id}`)
+                    }
                   >
                     reviews
                   </button>
