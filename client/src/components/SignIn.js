@@ -1,20 +1,22 @@
 import React, { useState } from 'react'
 import { Login } from '../services/AuthServices'
+import { useHistory } from 'react-router-dom'
 
 const SignIn = (props) => {
   const [loginForm, handleLoginForm] = useState({
     email: '',
     password: ''
   })
-
+  const history = useHistory()
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
       const res = await Login(loginForm)
       localStorage.setItem('token', res.token)
-      // props.setAuthenticated(true)
-
+      props.setAuthenticated(true)
+      // props.setCurrentUser(res.data.user)
       handleLoginForm({ email: '', password: '' })
+      return history.push('/')
     } catch (error) {
       console.log(error)
       return alert('Your username or password is incorrect')

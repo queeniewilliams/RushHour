@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import { Register } from '../services/AuthServices'
+import { useHistory } from 'react-router-dom'
 
 const SignUp = (props) => {
   const [registerForm, handleRegisterForm] = useState({
     name: '',
     email: '',
-    password: '',
+    passwordDigest: '',
     confirmPassword: ''
   })
+  const history = useHistory()
 
   const handleSubmit = async () => {
     console.log('firing')
@@ -16,8 +18,10 @@ const SignUp = (props) => {
       handleRegisterForm({
         name: '',
         email: '',
-        password: ''
+        passwordDigest: '',
+        confirmPassword: ''
       })
+      return history.push('/signin')
     } catch (error) {
       console.log(error)
     }
@@ -29,7 +33,7 @@ const SignUp = (props) => {
 
   const handleConfirm = (e) => {
     e.preventDefault()
-    if (registerForm.password === registerForm.confirmPassword) {
+    if (registerForm.passwordDigest === registerForm.confirmPassword) {
       return handleSubmit()
     } else {
       alert('Your password does not match, please try again!')
@@ -58,7 +62,7 @@ const SignUp = (props) => {
         />
         <input
           type="password"
-          name="password"
+          name="passwordDigest"
           placeholder="Password"
           value={registerForm.passwordDigest}
           onChange={handleChange}
@@ -77,7 +81,9 @@ const SignUp = (props) => {
         <button
           type="submit"
           disabled={
-            !registerForm.email || !registerForm.password || !registerForm.name
+            !registerForm.email ||
+            !registerForm.passwordDigest ||
+            !registerForm.name
           }
           className="signBtn"
         >

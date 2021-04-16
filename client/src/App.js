@@ -12,6 +12,7 @@ import axios from 'axios'
 import Geocodio from 'geocodio-library-node'
 import polyline from '@mapbox/polyline'
 import decodePolyline from 'decode-google-map-polyline'
+import { useHistory } from 'react-router-dom'
 
 const App = (props) => {
   const [lat, setLat] = useState(0)
@@ -30,6 +31,15 @@ const App = (props) => {
   const [polyline, setPolyline] = useState('')
   const [polylineCoords, setPolylineCoords] = useState([])
   const [allParkings, setAllParkings] = useState([])
+  const [authenticated, setAuthenticated] = useState(false)
+  const [currentUser, setCurrentUser] = useState({})
+  const history = useHistory()
+
+  const logOut = () => {
+    setAuthenticated(false)
+    localStorage.clear()
+    return history.push('/')
+  }
 
   let array = decodePolyline(polyline)
   // const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
@@ -239,7 +249,17 @@ const App = (props) => {
           )}
         />
         <Route path="/signup" render={(props) => <SignUp />} />
-        <Route path="/signin" render={(props) => <SignIn />} />
+        <Route
+          path="/signin"
+          render={(props) => (
+            <SignIn
+              authenticated={authenticated}
+              setAuthenticated={setAuthenticated}
+              currentUser={currentUser}
+              setCurrentUser={setCurrentUser}
+            />
+          )}
+        />
       </Switch>
     </SanityMobilePreview>
   )

@@ -108,7 +108,7 @@ const Map = (props) => {
                     setSelectedParking(null)
                   }}
                 >
-                  <p>Time:</p>
+                  <p>Parking {selectedParking.id}</p>
                   <p>Distance:</p>
                   <button>open in google map</button>
                   <button
