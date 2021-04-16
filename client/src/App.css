@@ -27,3 +27,48 @@ button.dropdown-toggle.btn.btn-primary {
   grid-row: 1;
   grid-column: 1;
 }
+.rating {
+  opacity: 0.5;
+}
+.rating:hover {
+  opacity: 1;
+}
+.rating.selected {
+  opacity: 1;
+}
+.rating1 {
+  opacity: 0.5;
+}
+.rating1:hover {
+  opacity: 1;
+}
+.rating1.selected1 {
+  opacity: 1;
+}
+.rating2 {
+  opacity: 0.5;
+}
+.rating2:hover {
+  opacity: 1;
+}
+.rating2.selected2 {
+  opacity: 1;
+}
+.rating3 {
+  opacity: 0.5;
+}
+.rating3:hover {
+  opacity: 1;
+}
+.rating3.selected3 {
+  opacity: 1;
+}
+.rating4 {
+  opacity: 0.5;
+}
+.rating4:hover {
+  opacity: 1;
+}
+.rating4.selected4 {
+  opacity: 1;
+}

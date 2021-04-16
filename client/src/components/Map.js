@@ -23,9 +23,9 @@ const Map = (props) => {
       zoom: 8
     })
   }
-  useEffect(() => {
-    changeViewport()
-  }, [])
+  // useEffect(() => {
+  //   changeViewport()
+  // }, [])
   const [selectedParking, setSelectedParking] = useState(null)
   const history = useHistory()
 
@@ -39,7 +39,7 @@ const Map = (props) => {
     return () => {
       window.removeEventListener('keydown', listener)
     }
-  })
+  }, [])
 
   const getLocation = () => {
     if (!navigator.geolocation) {
@@ -64,7 +64,7 @@ const Map = (props) => {
       {...viewport}
       mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
       mapStyle="mapbox://styles/queeniew329/cknayeur00b3d17mrmpewxjni"
-      onViewportChange={() => changeViewport()}
+      onViewportChange={(viewport) => setViewport(viewport)}
       maxZoom={100}
       minZoom={1.6}
     >
@@ -91,6 +91,7 @@ const Map = (props) => {
                     setSelectedParking(parking)
                     props.setLng(parking.longitude)
                     props.setLat(parking.latitude)
+                    props.getRoute()
                   }}
                 />
               </Marker>

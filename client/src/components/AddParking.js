@@ -40,7 +40,7 @@ const AddParking = (props) => {
   //   .catch((err) => {
   //     console.error(err)
   //   })
-  console.log(props)
+
   const [viewport, setViewport] = useState({
     width: '100%',
     height: '100%',

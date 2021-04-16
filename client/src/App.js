@@ -86,7 +86,7 @@ const App = (props) => {
   const getRoute = async () => {
     try {
       const res = await axios.get(
-        `${ROUTE_URL}transportMode=car&origin=52.5308,13.3847&destination=${lng},${lat}&return=polyline,summary&apiKey=${REST_API_KEY}`
+        `${ROUTE_URL}transportMode=car&origin=53,23&destination=52, 24&return=polyline,summary&apiKey=${REST_API_KEY}`
       )
       console.log(res)
 
@@ -107,7 +107,6 @@ const App = (props) => {
   const getAllParkings = async () => {
     try {
       const res = await axios.get(`${BASE_URL}/parking/all`)
-      console.log(res)
       setAllParkings(res.data)
     } catch (error) {
       throw error
@@ -195,6 +194,7 @@ const App = (props) => {
               setStatus={setStatus}
               currentAddress={currentAddress}
               handleCurrentAddressChange={handleCurrentAddressChange}
+              getRoute={getRoute}
               // address={address}
               // handleAddressChange={handleAddressChange}
             />
