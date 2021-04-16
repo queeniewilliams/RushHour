@@ -71,7 +71,7 @@ const Map = (props) => {
       maxZoom={100}
       minZoom={1.6}
     >
-      <Navigate />
+      <Navigate authenticated={props.authenticated} logOut={props.logOut} />
       <div className="submit">
         <button onClick={getLocation}>Get Location</button>
         <p>{props.status}</p>

@@ -22,13 +22,19 @@ const Navigate = (props) => {
         <br></br>
         <Dropdown.Item onClick={() => history.push('/')}>Home</Dropdown.Item>
         <br></br>
-        <Dropdown.Item onClick={() => history.push('/signup')}>
-          Sign Up
-        </Dropdown.Item>
-        <br></br>
-        <Dropdown.Item onClick={() => history.push('/signin')}>
-          Sign In
-        </Dropdown.Item>
+        {props.authenticated ? (
+          <Dropdown.Item onClick={() => props.logOut()}>Logout</Dropdown.Item>
+        ) : (
+          <div>
+            <Dropdown.Item onClick={() => history.push('/signup')}>
+              Sign Up
+            </Dropdown.Item>
+            <br></br>
+            <Dropdown.Item onClick={() => history.push('/signin')}>
+              Sign In
+            </Dropdown.Item>
+          </div>
+        )}
       </Dropdown.Menu>
     </Dropdown>
   )

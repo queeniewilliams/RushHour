@@ -11,6 +11,7 @@ const AddParking = (props) => {
 
   useEffect(() => {
     props.getMyParkings()
+    props.checkSession()
   }, [])
   const getLocation = () => {
     if (!navigator.geolocation) {
@@ -69,7 +70,7 @@ const AddParking = (props) => {
       maxZoom={100}
       minZoom={1.6}
     >
-      <Navigate />
+      <Navigate authenticated={props.authenticated} logOut={props.logOut} />
       <div className="submit">
         <form onSubmit={props.submitParking}>
           <button onClick={getLocation}>Get Location</button>

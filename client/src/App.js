@@ -40,6 +40,19 @@ const App = (props) => {
     localStorage.clear()
     return history.push('/')
   }
+  const checkSession = async () => {
+    let token = localStorage.getItem('token')
+    if (token) {
+      const res = await axios.get(`${BASE_URL}/auth/session`)
+      console.log(res)
+      setCurrentUser(res.data)
+      setAuthenticated(true)
+    }
+  }
+
+  useEffect(() => {
+    checkSession()
+  }, [])
 
   let array = decodePolyline(polyline)
   // const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
@@ -63,7 +76,7 @@ const App = (props) => {
 
   const submitParking = async (e) => {
     e.preventDefault()
-    const userId = 1
+    const userId = currentUser.id
     try {
       const res = await axios.post(`${BASE_URL}/parking/add`, {
         userId,
@@ -176,7 +189,7 @@ const App = (props) => {
     }
   }
   const getMyParkings = async (e) => {
-    const userId = 1
+    const userId = currentUser.id
     try {
       const res = await axios.get(`${BASE_URL}/parking/${userId}`)
       setMyParkings(res.data)
@@ -192,6 +205,8 @@ const App = (props) => {
           path="/"
           render={(props) => (
             <Map
+              authenticated={authenticated}
+              logOut={logOut}
               allParkings={allParkings}
               calcDistance={calcDistance}
               currentLat={currentLat}
@@ -217,6 +232,9 @@ const App = (props) => {
               // parking={newParking}
               // setParking={setNewParking}
               // handleChange={handleChange}
+              authenticated={authenticated}
+              logOut={logOut}
+              checkSession={checkSession}
               lng={lng}
               lat={lat}
               setStatus={setStatus}
