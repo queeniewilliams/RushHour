@@ -59,13 +59,13 @@ const Comments = (props) => {
             className={`rating ${selected ? 'selected' : ''}`}
             src="https://i.ibb.co/khg4RKH/star-256.png"
             width="30px"
-            onClick={() => selectRating()}
+            onClick={() => selectRating(comment.id)}
           />
           <img
             className={`rating1 ${selected1 ? 'selected1' : ''}`}
             src="https://i.ibb.co/khg4RKH/star-256.png"
             width="30px"
-            onClick={() => selectRating1()}
+            onClick={() => selectRating1(comment.id)}
           />
           <img
             className={`rating2 ${selected2 ? 'selected2' : ''}`}

@@ -1,5 +1,5 @@
 import React, { useState, Fragment, useEffect } from 'react'
-import ReactMap, { Marker, Popup } from 'react-map-gl'
+import ReactMap, { Marker, Popup, FlyToInterpolator } from 'react-map-gl'
 import Navigate from './Navigate'
 import '../css/mapbox.css'
 import { useHistory } from 'react-router-dom'
@@ -16,11 +16,14 @@ const Map = (props) => {
   })
   const changeViewport = () => {
     setViewport({
+      ...viewport,
       width: '100%',
       height: '100%',
       latitude: props.currentLat,
       longitude: props.currentLng,
-      zoom: 8
+      zoom: 8,
+      transitionDuration: 2000,
+      transitionInterpolator: new FlyToInterpolator()
     })
   }
   // useEffect(() => {
@@ -78,6 +81,7 @@ const Map = (props) => {
           value={props.currentAddress}
           onChange={props.handleCurrentAddressChange}
         />
+        <button onClick={changeViewport}>Go</button>
       </div>
       {props
         ? props.allParkings.map((parking, index) => (
