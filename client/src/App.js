@@ -32,17 +32,17 @@ const App = (props) => {
   const [allParkings, setAllParkings] = useState([])
 
   let array = decodePolyline(polyline)
-  const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
-  geocoder
-    .geocode(currentAddress)
-    .then((response) => {
-      console.log(response.results[0].location)
-      setCurrentLat(response.results[0].location.lat)
-      setCurrentLng(response.results[0].location.lng)
-    })
-    .catch((err) => {
-      console.error(err)
-    })
+  // const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
+  // geocoder
+  //   .geocode(currentAddress)
+  //   .then((response) => {
+  //     console.log(response.results[0].location)
+  //     setCurrentLat(response.results[0].location.lat)
+  //     setCurrentLng(response.results[0].location.lng)
+  //   })
+  //   .catch((err) => {
+  //     console.error(err)
+  //   })
 
   const handleAddressChange = (e) => {
     setAddress(e.target.value)

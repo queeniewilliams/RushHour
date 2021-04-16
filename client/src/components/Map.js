@@ -5,7 +5,6 @@ import '../css/mapbox.css'
 import { useHistory } from 'react-router-dom'
 
 const Map = (props) => {
-  console.log(props)
   const [viewport, setViewport] = useState({
     width: '100%',
     height: '100%',
@@ -24,9 +23,9 @@ const Map = (props) => {
       zoom: 8
     })
   }
-  // useEffect(() => {
-  //   changeViewport()
-  // }, [])
+  useEffect(() => {
+    changeViewport()
+  }, [])
   const [selectedParking, setSelectedParking] = useState(null)
   const history = useHistory()
 
@@ -65,7 +64,7 @@ const Map = (props) => {
       {...viewport}
       mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
       mapStyle="mapbox://styles/queeniew329/cknayeur00b3d17mrmpewxjni"
-      onViewportChange={(viewport) => setViewport(viewport)}
+      onViewportChange={() => changeViewport()}
       maxZoom={100}
       minZoom={1.6}
     >
