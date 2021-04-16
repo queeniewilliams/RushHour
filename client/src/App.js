@@ -14,8 +14,8 @@ import polyline from '@mapbox/polyline'
 import decodePolyline from 'decode-google-map-polyline'
 
 const App = (props) => {
-  const [lat, setLat] = useState(null)
-  const [lng, setLng] = useState(null)
+  const [lat, setLat] = useState(0)
+  const [lng, setLng] = useState(0)
   const [coordinates, setCoordinates] = useState([])
   const [status, setStatus] = useState(null)
   const [currentLng, setCurrentLng] = useState(null)
@@ -29,8 +29,8 @@ const App = (props) => {
   const [address, setAddress] = useState('90017')
   const [polyline, setPolyline] = useState('')
   const [polylineCoords, setPolylineCoords] = useState([])
-
   const [allParkings, setAllParkings] = useState([])
+
   // let array = decodePolyline(polyline)
   // const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
   // geocoder
@@ -77,11 +77,11 @@ const App = (props) => {
     }
   }
   useEffect(() => {
-    // getAllParkings()
+    getAllParkings()
     // calcDistance()
     // getAllComments()
     // getMyParkings()
-    getRoute()
+    // getRoute()
   }, [])
   const getRoute = async () => {
     try {
@@ -90,6 +90,12 @@ const App = (props) => {
       )
 
       console.log(decodePolyline(res.data.routes[0].sections[0].polyline))
+      let array = decodePolyline(res.data.routes[0].sections[0].polyline)
+      let myCoords = array.map((point) => ({
+        latitude: point.lat,
+        longitude: point.lng
+      }))
+      setPolylineCoords(myCoords)
       // setRoute(res.data.routes[0])
       // setPolyline(res.data.routes[0].sections[0].polyline)
       // setPolylineCoords(decodePolyline(res.data.routes[0].sections[0].polyline))

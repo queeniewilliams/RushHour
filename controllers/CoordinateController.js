@@ -4,6 +4,7 @@ const { Op } = require('sequelize')
 const GetParking = async (req, res) => {
   try {
     const parkings = await Coordinate.findAll()
+    console.log(parkings)
     res.send(parkings)
   } catch (error) {
     throw error

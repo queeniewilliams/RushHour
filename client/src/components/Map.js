@@ -5,6 +5,7 @@ import '../css/mapbox.css'
 import { useHistory } from 'react-router-dom'
 
 const Map = (props) => {
+  console.log(props)
   const [viewport, setViewport] = useState({
     width: '100%',
     height: '100%',
@@ -79,9 +80,9 @@ const Map = (props) => {
           onChange={props.handleCurrentAddressChange}
         />
       </div>
-      {props.allParkings
+      {props
         ? props.allParkings.map((parking, index) => (
-            <Fragment key={index}>
+            <div key={index}>
               <Marker longitude={parking.longitude} latitude={parking.latitude}>
                 <img
                   src="https://i.ibb.co/HGny0DC/parking-sign-2526.png"
@@ -94,11 +95,6 @@ const Map = (props) => {
                   }}
                 />
               </Marker>
-              <Marker
-                className="marker-current"
-                longitude={props.currentLng}
-                latitude={props.currentLat}
-              ></Marker>
               {selectedParking ? (
                 <Popup
                   longitude={selectedParking.longitude}
@@ -118,9 +114,17 @@ const Map = (props) => {
                   </button>
                 </Popup>
               ) : null}
-            </Fragment>
+            </div>
           ))
         : null}
+      {props.currentLat && props.currentLng ? (
+        <Marker
+          className="marker-current"
+          longitude={props.currentLng}
+          latitude={props.currentLat}
+        ></Marker>
+      ) : null}
+
       {/* <button onClick={props.calcDistance}>Get Distance</button> */}
     </ReactMap>
   )
