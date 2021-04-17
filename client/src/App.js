@@ -33,7 +33,7 @@ const App = (props) => {
   const [allParkings, setAllParkings] = useState([])
   const [authenticated, setAuthenticated] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
-  const [submitAddress,setSubmitAddress]=useState('')
+  const [submitAddress, setSubmitAddress] = useState('')
   const [image, setImage] = useState({ img: '' })
   const [parkingId, setParkingId] = useState('')
   const history = useHistory()
@@ -52,10 +52,6 @@ const App = (props) => {
       setAuthenticated(true)
     }
   }
-
-  useEffect(() => {
-    checkSession()
-  }, [])
 
   let array = decodePolyline(polyline)
   // const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
@@ -126,15 +122,16 @@ const App = (props) => {
   }
   useEffect(() => {
     getAllParkings()
+    // checkSession()
     // calcDistance()
     // getAllComments()
     // getMyParkings()
-    // getRoute()
+    getRoute()
   }, [])
   const getRoute = async () => {
     try {
       const res = await axios.get(
-        `${ROUTE_URL}transportMode=car&origin=53,23&destination=52, 24&return=polyline,summary&apiKey=${REST_API_KEY}`
+        `${ROUTE_URL}transportMode=car&origin=52.5308,13.3847&destination=52.5264,13.3686&return=polyline,summary&apiKey=${REST_API_KEY}`
       )
       console.log(res)
 

@@ -11,7 +11,7 @@ const AddParking = (props) => {
 
   useEffect(() => {
     props.getMyParkings()
-    props.checkSession()
+    // props.checkSession()
   }, [])
   const getLocation = () => {
     if (!navigator.geolocation) {
@@ -31,17 +31,19 @@ const AddParking = (props) => {
     }
   }
 
-  // geocoder
-  //   .geocode(props.address)
-  //   .then((response) => {
-  //     console.log(response.results[0].location)
-  //     props.setLat(response.results[0].location.lat)
-  //     props.setLng(response.results[0].location.lng)
-  //     props.setSubmitAddress(response.results[0].formatted_address)
-  //   })
-  //   .catch((err) => {
-  //     console.error(err)
-  //   })
+  const getCurrentLocation = () => {
+    geocoder
+      .geocode(props.address)
+      .then((response) => {
+        console.log(response.results[0].location)
+        props.setLat(response.results[0].location.lat)
+        props.setLng(response.results[0].location.lng)
+        props.setSubmitAddress(response.results[0].formatted_address)
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+  }
 
   const [viewport, setViewport] = useState({
     width: '100%',
@@ -86,18 +88,26 @@ const AddParking = (props) => {
       <Navigate authenticated={props.authenticated} logOut={props.logOut} />
       <div className="submit">
         <form
-          onSubmit={(e) => {
-            e.preventDefault()
-            props.submitParking()
-            changeViewport()
-          }}
+        // onSubmit={
+        //   () => {
+        // e.preventDefault()
+        // getCurrentLocation()
+        // props.submitParking()
+        // }
+        // changeViewport()
+        // }
         >
           <button onClick={getLocation}>Get Location</button>
           <p>{props.status}</p>
           {props.lat && <p>Latitude: {props.lat}</p>}
           {props.lng && <p>Longitude: {props.lng}</p>}
         </form>
-        <form onSubmit={props.submitParking}>
+        <form
+          onSubmit={() => {
+            getCurrentLocation()
+            props.submitParking()
+          }}
+        >
           <input
             name="address"
             value={props.address}
