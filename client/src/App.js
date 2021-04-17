@@ -34,7 +34,7 @@ const App = (props) => {
   const [authenticated, setAuthenticated] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
   const [submitAddress, setSubmitAddress] = useState('')
-  const [image, setImage] = useState({ img: '' })
+  const [image, setImage] = useState('')
   const [parkingId, setParkingId] = useState('')
   const history = useHistory()
 
@@ -85,13 +85,22 @@ const App = (props) => {
       })
       setParkingId(res.data.id)
       setAllParkings([...allParkings])
+      console.log(parkingId)
     } catch (error) {
       throw error
     }
   }
   const addImage = async (parkingId, image) => {
+    console.log(parkingId)
+    console.log(image.image)
+    let test = {
+      image: image.image
+    }
     try {
-      const res = await axios.put(`${BASE_URL}/update/${parkingId}`, image)
+      const res = await axios.put(
+        `${BASE_URL}/parking/update/${parkingId}`,
+        test
+      )
       console.log(res)
       return res.data
     } catch (error) {
@@ -100,8 +109,9 @@ const App = (props) => {
   }
   const submitImage = async (e) => {
     e.preventDefault()
+    console.log(e.target.id)
     try {
-      addImage(parkingId, image)
+      addImage(e.target.id, image)
     } catch (error) {
       console.log(error)
     }
@@ -126,7 +136,7 @@ const App = (props) => {
     // calcDistance()
     // getAllComments()
     // getMyParkings()
-    getRoute()
+    // getRoute()
   }, [])
   const getRoute = async () => {
     try {

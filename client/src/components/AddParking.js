@@ -30,20 +30,18 @@ const AddParking = (props) => {
       )
     }
   }
-
-  const getCurrentLocation = () => {
-    geocoder
-      .geocode(props.address)
-      .then((response) => {
-        console.log(response.results[0].location)
-        props.setLat(response.results[0].location.lat)
-        props.setLng(response.results[0].location.lng)
-        props.setSubmitAddress(response.results[0].formatted_address)
-      })
-      .catch((err) => {
-        console.error(err)
-      })
-  }
+  console.log(props.address)
+  // geocoder
+  //   .geocode(props.address)
+  //   .then((response) => {
+  //     console.log(response.results[0].location)
+  //     props.setLat(response.results[0].location.lat)
+  //     props.setLng(response.results[0].location.lng)
+  //     props.setSubmitAddress(response.results[0].formatted_address)
+  //   })
+  //   .catch((err) => {
+  //     console.error(err)
+  //   })
 
   const [viewport, setViewport] = useState({
     width: '100%',
@@ -88,26 +86,19 @@ const AddParking = (props) => {
       <Navigate authenticated={props.authenticated} logOut={props.logOut} />
       <div className="submit">
         <form
-        // onSubmit={
-        //   () => {
-        // e.preventDefault()
-        // getCurrentLocation()
-        // props.submitParking()
-        // }
-        // changeViewport()
-        // }
+          onSubmit={
+            () =>
+              // e.preventDefault()
+              props.submitParking()
+            // changeViewport()
+          }
         >
           <button onClick={getLocation}>Get Location</button>
           <p>{props.status}</p>
           {props.lat && <p>Latitude: {props.lat}</p>}
           {props.lng && <p>Longitude: {props.lng}</p>}
         </form>
-        <form
-          onSubmit={() => {
-            getCurrentLocation()
-            props.submitParking()
-          }}
-        >
+        <form onSubmit={props.submitParking}>
           <input
             name="address"
             value={props.address}
@@ -143,7 +134,11 @@ const AddParking = (props) => {
                 >
                   <p>Time:</p>
                   <p>Distance:</p>
-                  <form onSubmit={props.submitImage}>
+                  <p>{selectedParking.id}</p>
+                  <form
+                    id={selectedParking.id}
+                    onSubmit={(e) => props.submitImage(e)}
+                  >
                     <input
                       name="image"
                       value={props.image.img}

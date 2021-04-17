@@ -64,6 +64,7 @@ const CreateParking = async (req, res) => {
 }
 
 const UpdateParking = async (req, res) => {
+  console.log(req.params.coordinate_id)
   try {
     const newParking = await Coordinate.update(
       { ...req.body },
