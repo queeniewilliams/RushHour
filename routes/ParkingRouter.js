@@ -1,10 +1,31 @@
 const router = require('express').Router()
 const controller = require('../controllers/CoordinateController')
+const middleware = require('../middleware')
 
 // router.get('/',controller.GetParkingByDistance)
 router.get('/all', controller.GetParking)
-router.get('/:user_id', controller.GetMyParking)
-router.post('/add', controller.CreateParking)
-router.put('/update/:coordinate_id', controller.UpdateParking)
-router.delete('/delete/:coordinate_id', controller.DeleteParking)
+router.get(
+  '/:user_id',
+  middleware.StripHeaders,
+  middleware.VerifyToken,
+  controller.GetMyParking
+)
+router.post(
+  '/add',
+  middleware.StripHeaders,
+  middleware.VerifyToken,
+  controller.CreateParking
+)
+router.put(
+  '/update/:coordinate_id',
+  middleware.StripHeaders,
+  middleware.VerifyToken,
+  controller.UpdateParking
+)
+router.delete(
+  '/delete/:coordinate_id',
+  middleware.StripHeaders,
+  middleware.VerifyToken,
+  controller.DeleteParking
+)
 module.exports = router

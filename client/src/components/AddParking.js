@@ -32,17 +32,17 @@ const AddParking = (props) => {
     }
   }
   console.log(props.address)
-  // geocoder
-  //   .geocode(props.address)
-  //   .then((response) => {
-  //     console.log(response.results[0].location)
-  //     props.setLat(response.results[0].location.lat)
-  //     props.setLng(response.results[0].location.lng)
-  //     props.setSubmitAddress(response.results[0].formatted_address)
-  //   })
-  //   .catch((err) => {
-  //     console.error(err)
-  //   })
+  geocoder
+    .geocode(props.address)
+    .then((response) => {
+      console.log(response.results[0].location)
+      props.setLat(response.results[0].location.lat)
+      props.setLng(response.results[0].location.lng)
+      props.setSubmitAddress(response.results[0].formatted_address)
+    })
+    .catch((err) => {
+      console.error(err)
+    })
 
   const [viewport, setViewport] = useState({
     width: '100%',
@@ -133,9 +133,7 @@ const AddParking = (props) => {
                     setSelectedParking(null)
                   }}
                 >
-                  <p>Time:</p>
-                  <p>Distance:</p>
-                  <p>{selectedParking.id}</p>
+                  <p>Parking {selectedParking.id}</p>
                   <form
                     id={selectedParking.id}
                     onSubmit={(e) => props.submitImage(e)}

@@ -25,6 +25,7 @@ import {
   CreateComment,
   DeleteComment
 } from './services/CommentServices'
+import { CheckSession } from './services/AuthServices'
 
 const App = (props) => {
   const [lat, setLat] = useState(0)
@@ -44,13 +45,14 @@ const App = (props) => {
   const [polylineCoords, setPolylineCoords] = useState([])
   const [allParkings, setAllParkings] = useState([])
   const [authenticated, setAuthenticated] = useState(false)
-  const [currentUser, setCurrentUser] = useState({})
+  const [currentUser, setCurrentUser] = useState(null)
   const [submitAddress, setSubmitAddress] = useState('')
   const [image, setImage] = useState('')
   const [parkingId, setParkingId] = useState('')
   const [selectedParking, setSelectedParking] = useState(null)
   const history = useHistory()
 
+  console.log(currentUser)
   const logOut = () => {
     setAuthenticated(false)
     localStorage.clear()
@@ -59,10 +61,13 @@ const App = (props) => {
   const checkSession = async () => {
     let token = localStorage.getItem('token')
     if (token) {
-      const res = await axios.get(`${BASE_URL}/auth/session`)
-      console.log(res)
-      setCurrentUser(res.data)
-      setAuthenticated(true)
+      try {
+        const res = await CheckSession()
+        setCurrentUser(res)
+        setAuthenticated(true)
+      } catch (error) {
+        throw error
+      }
     }
   }
 
@@ -87,7 +92,7 @@ const App = (props) => {
 
   const submitParking = async (e) => {
     e.preventDefault()
-    const userId = 1
+    const userId = currentUser.id
     try {
       const res = await CreateParking({
         userId,
@@ -100,6 +105,7 @@ const App = (props) => {
     } catch (error) {
       throw error
     }
+    getAllParkings()
   }
   const addImage = async (parkingId, image) => {
     let test = {
@@ -124,9 +130,9 @@ const App = (props) => {
   const handleImageChange = ({ target }) => {
     setImage({ ...image, [target.name]: target.value })
   }
-  const deleteParking = async (id) => {
+  const deleteParking = async (parkingId) => {
     try {
-      const res = await DeleteParking(id)
+      const res = await DeleteParking(parkingId)
       console.log(res)
       let filteredParkings = [...myParkings].filter(
         (my) => my.id !== parseInt(res.payload)
@@ -193,7 +199,6 @@ const App = (props) => {
       const res = await CreateComment(id, {
         comment: comment
       })
-      console.log(res)
       setComments([...comments])
     } catch (error) {
       throw error
@@ -210,9 +215,9 @@ const App = (props) => {
   }
   const deleteComment = async (commentId) => {
     try {
-      const res = await DeleteComment(commentId)
+      await DeleteComment(commentId)
       let filteredComments = [...comments].filter(
-        (comment) => comment.id !== parseInt(res.payload)
+        (comment) => comment.id !== parseInt(commentId)
       )
       setComments(filteredComments)
     } catch (error) {
