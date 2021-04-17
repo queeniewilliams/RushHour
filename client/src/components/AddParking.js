@@ -7,6 +7,7 @@ import { GEOCODIO_KEY } from '../globals'
 import '../App.css'
 
 const AddParking = (props) => {
+  console.log(props.currentUser)
   const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
 
   useEffect(() => {

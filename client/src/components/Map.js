@@ -5,13 +5,13 @@ import '../css/mapbox.css'
 import { useHistory } from 'react-router-dom'
 
 const Map = (props) => {
+  console.log(props.allParkings)
   const [viewport, setViewport] = useState({
     width: '100%',
     height: '100%',
     latitude: 34,
     longitude: -118.3,
-    // latitude: props.currentLat ? props.currentLat : 34,
-    // longitude: props.currentLng ? props.currentLng : -118,
+
     zoom: 10
   })
   const changeViewport = () => {
@@ -29,13 +29,13 @@ const Map = (props) => {
   // useEffect(() => {
   //   changeViewport()
   // }, [])
-  const [selectedParking, setSelectedParking] = useState(null)
+
   const history = useHistory()
 
   useEffect(() => {
     const listener = (e) => {
       if (e.key === 'Escape') {
-        setSelectedParking(null)
+        props.setSelectedParking(null)
       }
     }
     window.addEventListener('keydown', listener)
@@ -83,7 +83,7 @@ const Map = (props) => {
         />
         <button onClick={changeViewport}>Go</button>
       </div>
-      {props
+      {props.allParkings
         ? props.allParkings.map((parking, index) => (
             <div key={index}>
               <Marker longitude={parking.longitude} latitude={parking.latitude}>
@@ -91,25 +91,25 @@ const Map = (props) => {
                   alt="parking-icon"
                   src="https://i.ibb.co/z5H0Qx3/free-parking.png"
                   width="50px"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    setSelectedParking(parking)
-                    props.setLng(parking.longitude)
-                    props.setLat(parking.latitude)
-                    props.getRoute()
-                  }}
+                  onClick={() =>
+                    // setSelectedParking(parking)
+                    // props.setLng(parking.longitude)
+                    // props.setLat(parking.latitude)
+                    // props.calcDistance()
+                    props.handleDistance(parking)
+                  }
                 />
               </Marker>
-              {selectedParking ? (
+              {props.selectedParking ? (
                 <Popup
-                  longitude={selectedParking.longitude}
-                  latitude={selectedParking.latitude}
+                  longitude={props.selectedParking.longitude}
+                  latitude={props.selectedParking.latitude}
                   closeOnClick={false}
                   onClose={() => {
-                    setSelectedParking(null)
+                    props.setSelectedParking(null)
                   }}
                 >
-                  <p>Parking {selectedParking.id}</p>
+                  <p>Parking {props.selectedParking.id}</p>
                   <div className="location">
                     <img
                       id="location-icon"
@@ -118,16 +118,16 @@ const Map = (props) => {
                       width="20px"
                       height="25px"
                     />
-                    <p>{selectedParking.address}</p>
+                    <p>{props.selectedParking.address}</p>
                   </div>
-                  <p>Distance:</p>
+                  <p>Distance:{props.distance}Km</p>
                   <button>open in google map</button>
                   <br></br>
                   <img
                     src="https://i.ibb.co/Hdbst8z/vippng-com-review-icon-png-3657900.png"
                     width="40px"
                     onClick={() =>
-                      history.push(`/reviews/${selectedParking.id}`)
+                      history.push(`/reviews/${props.selectedParking.id}`)
                     }
                   />
                 </Popup>
@@ -142,8 +142,6 @@ const Map = (props) => {
           latitude={props.currentLat}
         ></Marker>
       ) : null}
-
-      {/* <button onClick={props.calcDistance}>Get Distance</button> */}
     </ReactMap>
   )
 }

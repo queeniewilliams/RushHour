@@ -3,9 +3,9 @@ import Navigate from './Navigate'
 import axios from 'axios'
 import { BASE_URL } from '../globals'
 import '../App.css'
+import { UpdateComment } from '../services/CommentServices'
 
 const Comments = (props) => {
-  console.log(props.props.match.params.id)
   const [like, setLike] = useState(0)
   const [selected, setSelected] = useState(false)
   const [selected1, setSelected1] = useState(false)
@@ -32,7 +32,7 @@ const Comments = (props) => {
   }, [like])
   const likeComment = async (id) => {
     try {
-      const res = await axios.put(`${BASE_URL}/comment/like/${id}`)
+      const res = await UpdateComment(id)
       setLike({ ...props.comments, like: props.comments.likes + 1 })
       return res.data
     } catch (error) {
@@ -51,8 +51,8 @@ const Comments = (props) => {
         <br></br>
         <input type="submit" />
       </form>
-      {props.comments.map((comment) => (
-        <div>
+      {props.comments.map((comment, index) => (
+        <div key={index}>
           <p>userId:{comment.userId}</p>
           <p>comments:{comment.comment}</p>
           <p>Likes: {comment.likes}</p>

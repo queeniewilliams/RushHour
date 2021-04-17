@@ -13,6 +13,18 @@ import Geocodio from 'geocodio-library-node'
 import polyline from '@mapbox/polyline'
 import decodePolyline from 'decode-google-map-polyline'
 import { useHistory } from 'react-router-dom'
+import {
+  GetAllParkings,
+  UpdateParking,
+  DeleteParking,
+  GetMyParkings,
+  CreateParking
+} from './services/CoordinateServices'
+import {
+  GetAllComments,
+  CreateComment,
+  DeleteComment
+} from './services/CommentServices'
 
 const App = (props) => {
   const [lat, setLat] = useState(0)
@@ -36,6 +48,7 @@ const App = (props) => {
   const [submitAddress, setSubmitAddress] = useState('')
   const [image, setImage] = useState('')
   const [parkingId, setParkingId] = useState('')
+  const [selectedParking, setSelectedParking] = useState(null)
   const history = useHistory()
 
   const logOut = () => {
@@ -58,7 +71,6 @@ const App = (props) => {
   // geocoder
   //   .geocode(currentAddress)
   //   .then((response) => {
-  //     console.log(response.results[0])
   //     setCurrentLat(response.results[0].location.lat)
   //     setCurrentLng(response.results[0].location.lng)
   //   })
@@ -77,32 +89,25 @@ const App = (props) => {
     e.preventDefault()
     const userId = 1
     try {
-      const res = await axios.post(`${BASE_URL}/parking/add`, {
+      const res = await CreateParking({
         userId,
         longitude: lng,
         latitude: lat,
         address: submitAddress
       })
-      setParkingId(res.data.id)
+      setParkingId(res.id)
       setAllParkings([...allParkings])
-      console.log(parkingId)
     } catch (error) {
       throw error
     }
   }
   const addImage = async (parkingId, image) => {
-    console.log(parkingId)
-    console.log(image.image)
     let test = {
       image: image.image
     }
     try {
-      const res = await axios.put(
-        `${BASE_URL}/parking/update/${parkingId}`,
-        test
-      )
-      console.log(res)
-      return res.data
+      const res = await UpdateParking(parkingId, test)
+      return res
     } catch (error) {
       throw error
     }
@@ -119,11 +124,12 @@ const App = (props) => {
   const handleImageChange = ({ target }) => {
     setImage({ ...image, [target.name]: target.value })
   }
-  const deleteParking = async (parkingId) => {
+  const deleteParking = async (id) => {
     try {
-      const res = await axios.delete(`${BASE_URL}/parking/delete/${parkingId}`)
+      const res = await DeleteParking(id)
+      console.log(res)
       let filteredParkings = [...myParkings].filter(
-        (my) => my.id !== parseInt(res.data.payload)
+        (my) => my.id !== parseInt(res.payload)
       )
       setMyParkings(filteredParkings)
     } catch (error) {
@@ -132,66 +138,59 @@ const App = (props) => {
   }
   useEffect(() => {
     getAllParkings()
-    // checkSession()
+    checkSession()
     // calcDistance()
     // getAllComments()
     // getMyParkings()
-    // getRoute()
   }, [])
-  const getRoute = async () => {
-    try {
-      const res = await axios.get(
-        `${ROUTE_URL}transportMode=car&origin=52.5308,13.3847&destination=52.5264,13.3686&return=polyline,summary&apiKey=${REST_API_KEY}`
-      )
-      console.log(res)
 
-      // console.log(decodePolyline(res.data.routes[0].sections[0].polyline))
-      // let array = decodePolyline(res.data.routes[0].sections[0].polyline)
-      // let myCoords = array.map((point) => ({
-      //   latitude: point.lat,
-      //   longitude: point.lng
-      // }))
-      // setPolylineCoords(myCoords)
-      // setRoute(res.data.routes[0])
-      // setPolyline(res.data.routes[0].sections[0].polyline)
-      // setPolylineCoords(decodePolyline(res.data.routes[0].sections[0].polyline))
+  const getAllParkings = async () => {
+    try {
+      const res = await GetAllParkings()
+      console.log(res)
+      setAllParkings(res)
     } catch (error) {
       throw error
     }
   }
-  const getAllParkings = async () => {
+  const handleDistance = async (parking) => {
+    setSelectedParking(parking)
     try {
-      const res = await axios.get(`${BASE_URL}/parking/all`)
-      setAllParkings(res.data)
+      await setLng(parking.longitude)
+      await setLat(parking.latitude)
+      await calcDistance()
     } catch (error) {
-      throw error
+      console.log(error)
     }
   }
 
   const calcDistance = () => {
+    let calcLat = lat
+    let calcLng = lng
+    let lat2 = currentLat
+    let lng2 = currentLng
     const R = 6371
-    let dLat = ((33 - lat) * Math.PI) / 180
-    let dLng = ((-118 - lng) * Math.PI) / 180
-    let lat = (lat * Math.PI) / 180
-    let currentLat = (33 * Math.PI) / 180
+    let dLat = ((lat2 - calcLat) * Math.PI) / 180
+    let dLng = ((lng2 - calcLng) * Math.PI) / 180
+    let lat1 = (calcLat * Math.PI) / 180
+    let currentLat1 = (lat2 * Math.PI) / 180
     let a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.sin(dLng / 2) *
         Math.sin(dLng / 2) *
-        Math.cos(lat) *
-        Math.cos(currentLat)
+        Math.cos(lat1) *
+        Math.cos(currentLat1)
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
     var d = R * c
     setDistance(d)
   }
-  // console.log(distance)
 
   const handleChange = (e) => {
     setComment(e.target.value)
   }
   const submitComment = async (id) => {
     try {
-      const res = await axios.post(`${BASE_URL}/comment/add/${id}`, {
+      const res = await CreateComment(id, {
         comment: comment
       })
       console.log(res)
@@ -202,18 +201,18 @@ const App = (props) => {
   }
   const getAllComments = async (id) => {
     try {
-      const res = await axios.get(`${BASE_URL}/comment/all/${id} `)
-      console.log(res.data)
-      setComments(res.data)
+      const res = await GetAllComments(id)
+      console.log(res)
+      setComments(res)
     } catch (error) {
       throw error
     }
   }
   const deleteComment = async (commentId) => {
     try {
-      const res = await axios.delete(`${BASE_URL}/comment/${commentId}`)
+      const res = await DeleteComment(commentId)
       let filteredComments = [...comments].filter(
-        (comment) => comment.id !== parseInt(res.data.payload)
+        (comment) => comment.id !== parseInt(res.payload)
       )
       setComments(filteredComments)
     } catch (error) {
@@ -223,8 +222,8 @@ const App = (props) => {
   const getMyParkings = async (e) => {
     const userId = 1
     try {
-      const res = await axios.get(`${BASE_URL}/parking/${userId}`)
-      setMyParkings(res.data)
+      const res = await GetMyParkings(userId)
+      setMyParkings(res)
     } catch (err) {
       throw err
     }
@@ -251,9 +250,12 @@ const App = (props) => {
               setStatus={setStatus}
               currentAddress={currentAddress}
               handleCurrentAddressChange={handleCurrentAddressChange}
-              getRoute={getRoute}
               // address={address}
               // handleAddressChange={handleAddressChange}
+              handleDistance={handleDistance}
+              selectedParking={selectedParking}
+              setSelectedParking={setSelectedParking}
+              distance={distance}
             />
           )}
         />
@@ -286,6 +288,7 @@ const App = (props) => {
               submitImage={submitImage}
               handleImageChange={handleImageChange}
               image={image}
+              currentUser={currentUser}
             />
           )}
         />
