@@ -77,14 +77,14 @@ const Map = (props) => {
           onClick={getLocation}
         />
         <div className="searchBar">
-        <input
-          name="address"
-          value={props.currentAddress}
-          onChange={props.handleCurrentAddressChange}
-        />
-        <button className="goBtn" onClick={changeViewport}>
-          GO
-        </button>
+          <input
+            name="address"
+            value={props.currentAddress}
+            onChange={props.handleCurrentAddressChange}
+          />
+          <button className="goBtn" onClick={changeViewport}>
+            GO
+          </button>
         </div>
       </div>
       {props.allParkings
@@ -108,7 +108,7 @@ const Map = (props) => {
                   }}
                 >
                   {props.selectedParking.image ? (
-                    <img src={props.selectedParking.image} width="100px" />
+                    <img src={props.selectedParking.image} width="200px" />
                   ) : null}
                   <p>Parking {props.selectedParking.id}</p>
                   <div className="location">
@@ -122,7 +122,7 @@ const Map = (props) => {
                     <p>{props.selectedParking.address}</p>
                   </div>
                   <p>Distance:{props.distance}Km</p>
-                  <button>open in google map</button>
+                  <button>Get Direction</button>
                   <br></br>
                   <img
                     src="https://i.ibb.co/Hdbst8z/vippng-com-review-icon-png-3657900.png"

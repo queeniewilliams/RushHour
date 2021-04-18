@@ -4,6 +4,7 @@ import '../App.css'
 import { UpdateComment } from '../services/CommentServices'
 
 const Comments = (props) => {
+  console.log(props)
   const [like, setLike] = useState(0)
   const [selected, setSelected] = useState(false)
   const [selected1, setSelected1] = useState(false)
@@ -41,6 +42,7 @@ const Comments = (props) => {
     <div>
       <Navigate authenticated={props.authenticated} logOut={props.logOut} />
       <form onSubmit={() => props.submitComment(props.props.match.params.id)}>
+        <p>Write a review</p>
         <input
           name="comment"
           value={props.comment}
@@ -52,44 +54,44 @@ const Comments = (props) => {
       {props.comments.map((comment, index) => (
         <div key={index}>
           <p>userId:{comment.userId}</p>
-          <p>comments:{comment.comment}</p>
-          <p>Likes: {comment.likes}</p>
-          <button onClick={() => likeComment(comment.id)}>like</button>
           <img
             alt="icon"
             className={`rating ${selected ? 'selected' : ''}`}
-            src="https://i.ibb.co/khg4RKH/star-256.png"
-            width="30px"
+            src="https://iconsplace.com/wp-content/uploads/_icons/ffa500/256/png/rating-star-icon-11-256.png"
+            width="20px"
             onClick={() => selectRating(comment.id)}
           />
           <img
             alt="icon"
             className={`rating1 ${selected1 ? 'selected1' : ''}`}
-            src="https://i.ibb.co/khg4RKH/star-256.png"
-            width="30px"
+            src="https://iconsplace.com/wp-content/uploads/_icons/ffa500/256/png/rating-star-icon-11-256.png"
+            width="20px"
             onClick={() => selectRating1(comment.id)}
           />
           <img
             alt="icon"
             className={`rating2 ${selected2 ? 'selected2' : ''}`}
-            src="https://i.ibb.co/khg4RKH/star-256.png"
-            width="30px"
+            src="https://iconsplace.com/wp-content/uploads/_icons/ffa500/256/png/rating-star-icon-11-256.png"
+            width="20px"
             onClick={() => selectRating2()}
           />
           <img
             alt="icon"
             className={`rating3 ${selected3 ? 'selected3' : ''}`}
-            src="https://i.ibb.co/khg4RKH/star-256.png"
-            width="30px"
+            src="https://iconsplace.com/wp-content/uploads/_icons/ffa500/256/png/rating-star-icon-11-256.png"
+            width="20px"
             onClick={() => selectRating3()}
           />
           <img
             alt="icon"
             className={`rating4 ${selected4 ? 'selected4' : ''}`}
-            src="https://i.ibb.co/khg4RKH/star-256.png"
-            width="30px"
+            src="https://iconsplace.com/wp-content/uploads/_icons/ffa500/256/png/rating-star-icon-11-256.png"
+            width="20px"
             onClick={() => selectRating4()}
           />
+          <p>comments:{comment.comment}</p>
+          <p>Likes: {comment.likes}</p>{' '}
+          <button onClick={() => likeComment(comment.id)}>like</button>
           <button onClick={() => props.deleteComment(comment.id)}>
             Delete
           </button>

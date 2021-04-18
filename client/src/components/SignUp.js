@@ -43,9 +43,9 @@ const SignUp = (props) => {
   }
 
   return (
-    <div>
-      <h2 style={{ color: 'black' }}>Sign Up</h2>
-      <form onSubmit={handleConfirm}>
+    <div className="signup">
+      <h2 className="signform">Get On Board</h2>
+      <form onSubmit={handleConfirm} className="signform">
         <input
           type="text"
           name="name"
@@ -68,7 +68,6 @@ const SignUp = (props) => {
           value={registerForm.profile}
           onChange={handleChange}
         />
-        <br></br>
         <input
           type="password"
           name="passwordDigest"

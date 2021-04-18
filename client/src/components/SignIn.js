@@ -29,9 +29,11 @@ const SignIn = (props) => {
   }
 
   return (
-    <div>
-      <h2 style={{ color: 'black' }}>Sign In</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="signup">
+      <h2 className="signform">
+        Hello there, <br></br>Welcome back
+      </h2>
+      <form className="signform" onSubmit={handleSubmit}>
         <input
           type="text"
           name="email"

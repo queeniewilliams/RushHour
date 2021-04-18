@@ -3,9 +3,10 @@
   width: 100vw;
 } */
 .dropdown-menu.show {
-  background-color: white;
+  background-color: rgb(250, 173, 31);
   width: 10em;
-  height: 8em;
+  height: 100%;
+  z-index: 2;
 }
 .dropdown-item {
   text-decoration: none;
@@ -74,4 +75,23 @@ button.dropdown-toggle.btn.btn-primary {
 }
 .rating4.selected4 {
   opacity: 1;
+}
+.signup {
+  height: 100%;
+  justify-items: center;
+  background: rgb(253, 29, 29);
+  background: linear-gradient(
+    360deg,
+    rgba(253, 29, 29, 1) 0%,
+    rgba(252, 176, 69, 1) 100%
+  );
+}
+.signform {
+  display: grid;
+  justify-items: center;
+}
+h2 {
+  color: white;
+  margin-top: 0;
+  padding-top: 50%;
 }
