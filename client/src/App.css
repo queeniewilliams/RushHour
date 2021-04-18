@@ -111,6 +111,7 @@ h2 {
   display: grid;
   grid-template-columns: 1fr 1fr 5fr;
   align-items: center;
+  margin-left: -10px;
 }
 .reviews {
   display: grid;
@@ -126,4 +127,11 @@ h2 {
 .profile-picture {
   border-radius: 50px;
   margin-right: 10px;
+}
+.review-section {
+  display: flex;
+  justify-content: space-between;
+}
+.trash-icon {
+  padding-top: 10px;
 }

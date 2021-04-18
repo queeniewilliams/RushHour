@@ -43,7 +43,7 @@ const Comments = (props) => {
         authenticated={props.authenticated}
         logOut={props.logOut}
         myProfile={props.myProfile}
-        currentUser={props.currentUser}
+        // currentUser={props.currentUser}
       />
       {/* <img src={props.selectedParking.image} width="100%" /> */}
       <div className="reviews">
@@ -64,7 +64,26 @@ const Comments = (props) => {
         </form>
         {props.comments.map((comment, index) => (
           <div key={index}>
-            <p>userId:{comment.userId}</p>
+            {/* <div className="review-section">
+              <div className="user">
+                <img
+                  className="profile-picture"
+                  alt="profile"
+                  src={props.myProfile.profile}
+                  width="40px"
+                  height="40px"
+                />
+                <p style={{ color: 'black' }}>{props.myProfile.name}</p>
+              </div>
+              <img
+                className="trash-icon"
+                alt="icon"
+                src="https://i.ibb.co/yRrxz6H/trash-2-256.gif"
+                width="25px"
+                height="25px"
+                onClick={() => props.deleteComment(comment.id)}
+              />
+            </div> */}
             <img
               alt="icon"
               className={`rating ${selected ? 'selected' : ''}`}
@@ -110,14 +129,6 @@ const Comments = (props) => {
                 onClick={() => likeComment(comment.id)}
               />
               <p>{comment.likes}</p>
-              <img
-                className="trach-icon"
-                alt="icon"
-                src="https://i.ibb.co/yRrxz6H/trash-2-256.gif"
-                width="25px"
-                height="25px"
-                onClick={() => props.deleteComment(comment.id)}
-              />
             </div>
           </div>
         ))}

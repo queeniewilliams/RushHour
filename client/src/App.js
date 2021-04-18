@@ -67,7 +67,7 @@ const App = () => {
     }
   }
   const getProfile = async () => {
-    const userId = currentUser.id
+    const userId = 1
     try {
       const res = await GetProfile(userId)
       setMyProflie(res)
@@ -98,7 +98,7 @@ const App = () => {
   }
 
   const getMyParkings = async () => {
-    const userId = currentUser.id
+    const userId = 1
     try {
       const res = await GetMyParkings(userId)
       setMyParkings(res)
@@ -286,8 +286,7 @@ const App = () => {
     image,
     currentUser,
     setStatus,
-    myProfile,
-    currentUser
+    myProfile
   }
 
   return (
@@ -313,7 +312,7 @@ const App = () => {
               getAllComments={getAllComments}
               selectedParking={selectedParking}
               myProfile={myProfile}
-              currentUser
+              currentUser={currentUser}
             />
           )}
         />

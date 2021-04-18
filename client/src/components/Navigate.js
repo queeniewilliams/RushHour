@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom'
 import '../App.css'
 const Navigate = (props) => {
   const history = useHistory()
-  console.log(props.myProfile)
   return (
     <Dropdown className="navigate">
       <Dropdown.Toggle>
