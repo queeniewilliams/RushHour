@@ -43,12 +43,14 @@ const Comments = (props) => {
         authenticated={props.authenticated}
         logOut={props.logOut}
         myProfile={props.myProfile}
+        checkSession={props.checkSession}
       />
       <div className="reviews">
         <form onSubmit={() => props.submitComment(props.props.match.params.id)}>
           <div className="write-icon">
             <p>Write a review</p>
             <img
+              alt="icon"
               src="https://i.ibb.co/7nG05fM/wondicon-ui-free-write-111263.png"
               width="30px"
               height="30px"

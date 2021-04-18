@@ -8,7 +8,6 @@ import SanityMobilePreview from 'sanity-mobile-preview'
 import 'sanity-mobile-preview/dist/index.css?raw'
 import { Route, Switch } from 'react-router-dom'
 import { GEOCODIO_KEY } from './globals'
-import Geocodio from 'geocodio-library-node'
 import { useHistory } from 'react-router-dom'
 import {
   GetAllParkings,
@@ -28,7 +27,6 @@ import axios from 'axios'
 const App = () => {
   const [lat, setLat] = useState(0)
   const [lng, setLng] = useState(0)
-  const [coordinates, setCoordinates] = useState([])
   const [status, setStatus] = useState(null)
   const [currentLng, setCurrentLng] = useState(-118)
   const [currentLat, setCurrentLat] = useState(34)
@@ -276,7 +274,8 @@ const App = () => {
     setStatus,
     myProfile,
     currentUser,
-    convertToCoordinates
+    convertToCoordinates,
+    checkSession
   }
 
   const addParkingProps = {
@@ -288,7 +287,6 @@ const App = () => {
     setLat,
     setLng,
     submitParking,
-    coordinates,
     myParkings,
     deleteParking,
     getMyParkings,
@@ -302,7 +300,8 @@ const App = () => {
     currentUser,
     setStatus,
     myProfile,
-    convertCoordinatesAddParking
+    convertCoordinatesAddParking,
+    checkSession
   }
 
   return (
@@ -328,6 +327,7 @@ const App = () => {
               getAllComments={getAllComments}
               myProfile={myProfile}
               currentUser={currentUser}
+              checkSession={checkSession}
             />
           )}
         />

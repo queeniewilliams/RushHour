@@ -79,6 +79,7 @@ const AddParking = (props) => {
         logOut={props.logOut}
         myProfile={props.myProfile}
         currentUser={props.currentUser}
+        checkSession={props.checkSession}
       />
       <div className="submit">
         <form onSubmit={() => props.submitParking()}>
@@ -96,10 +97,16 @@ const AddParking = (props) => {
             value={props.address}
             onChange={props.handleAddressChange}
           />
-          <button className="goBtn" onClick={(e) => handleViewport(e)}>
-            Go
+          <img
+            alt="icon"
+            style={{ marginLeft: '10px' }}
+            src="https://i.ibb.co/vDF3yDg/pngarea-com-searchicon-png-search-1164446.png"
+            width="30px"
+            onClick={(e) => handleViewport(e)}
+          />
+          <button type="submit" className="goBtn">
+            Add
           </button>
-          <button type="submit">Add</button>
         </form>
       </div>
       {props.myParkings
@@ -127,7 +134,7 @@ const AddParking = (props) => {
                     setSelectedParking(null)
                   }}
                 >
-                  <img src={selectedParking.image} width="300px" />
+                  <img alt="icon" src={selectedParking.image} width="300px" />
                   <p>Parking {selectedParking.id}</p>
                   <form
                     className="upload-form"

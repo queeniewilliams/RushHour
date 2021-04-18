@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import ReactMap, { Marker, Popup, FlyToInterpolator } from 'react-map-gl'
 import Navigate from './Navigate'
 import '../css/mapbox.css'
@@ -79,6 +79,7 @@ const Map = (props) => {
         logOut={props.logOut}
         myProfile={props.myProfile}
         currentUser={props.currentUser}
+        checkSession={props.checkSession}
       />
       <div className="submit">
         <img
@@ -121,6 +122,7 @@ const Map = (props) => {
                 >
                   {props.selectedParking.image ? (
                     <img
+                      alt="icon"
                       className="parking-image"
                       src={props.selectedParking.image}
                       width="200px"
@@ -142,6 +144,7 @@ const Map = (props) => {
                   </div>
                   <div className="location">
                     <img
+                      alt="icon"
                       src="https://i.ibb.co/84x6628/Pngtree-vector-distance-icon-3767406.png"
                       height="30px"
                     />

@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 import '../App.css'
 const Navigate = (props) => {
   const history = useHistory()
+  useEffect(() => {
+    props.checkSession()
+  }, [])
   return (
     <Dropdown className="navigate">
       <Dropdown.Toggle>
