@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import '../App.css'
 const Navigate = (props) => {
   const history = useHistory()
+  console.log(props.myProfile)
   return (
     <Dropdown className="navigate">
       <Dropdown.Toggle>
@@ -17,16 +18,18 @@ const Navigate = (props) => {
       <Dropdown.Menu className="dropdown-menu">
         <div>
           <Dropdown.Item>
-            <div className="user">
-              <img
-                className="profile-picture"
-                alt="profile"
-                src={props.myProfile.profile}
-                width="40px"
-                height="40px"
-              />
-              <p style={{ color: 'black' }}>{props.myProfile.name}</p>
-            </div>
+            {props.myProfile ? (
+              <div className="user">
+                <img
+                  className="profile-picture"
+                  alt="profile"
+                  src={props.myProfile.profile}
+                  width="40px"
+                  height="40px"
+                />
+                <p style={{ color: 'black' }}>{props.myProfile.name}</p>
+              </div>
+            ) : null}
           </Dropdown.Item>
           <Dropdown.Item
             onClick={() => history.push('/add')}

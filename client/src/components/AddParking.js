@@ -82,7 +82,12 @@ const AddParking = (props) => {
       maxZoom={100}
       minZoom={1.6}
     >
-      <Navigate authenticated={props.authenticated} logOut={props.logOut} />
+      <Navigate
+        authenticated={props.authenticated}
+        logOut={props.logOut}
+        myProfile={props.myProfile}
+        currentUser={props.currentUser}
+      />
       <div className="submit">
         <form onSubmit={() => props.submitParking()}>
           <img

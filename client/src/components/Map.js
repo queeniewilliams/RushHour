@@ -71,6 +71,7 @@ const Map = (props) => {
         authenticated={props.authenticated}
         logOut={props.logOut}
         myProfile={props.myProfile}
+        currentUser={props.currentUser}
       />
       <div className="submit">
         <img

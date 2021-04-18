@@ -39,7 +39,12 @@ const Comments = (props) => {
   }
   return (
     <div>
-      <Navigate authenticated={props.authenticated} logOut={props.logOut} />
+      <Navigate
+        authenticated={props.authenticated}
+        logOut={props.logOut}
+        myProfile={props.myProfile}
+        currentUser={props.currentUser}
+      />
       {/* <img src={props.selectedParking.image} width="100%" /> */}
       <div className="reviews">
         <form

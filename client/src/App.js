@@ -67,7 +67,7 @@ const App = () => {
     }
   }
   const getProfile = async () => {
-    const userId = 1
+    const userId = currentUser.id
     try {
       const res = await GetProfile(userId)
       setMyProflie(res)
@@ -260,7 +260,8 @@ const App = () => {
     setSelectedParking,
     distance,
     setStatus,
-    myProfile
+    myProfile,
+    currentUser
   }
 
   const addParkingProps = {
@@ -284,7 +285,9 @@ const App = () => {
     handleImageChange,
     image,
     currentUser,
-    setStatus
+    setStatus,
+    myProfile,
+    currentUser
   }
 
   return (
@@ -309,6 +312,8 @@ const App = () => {
               deleteComment={deleteComment}
               getAllComments={getAllComments}
               selectedParking={selectedParking}
+              myProfile={myProfile}
+              currentUser
             />
           )}
         />
