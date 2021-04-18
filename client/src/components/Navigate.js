@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 import '../App.css'
@@ -16,6 +16,18 @@ const Navigate = (props) => {
       </Dropdown.Toggle>
       <Dropdown.Menu className="dropdown-menu">
         <div>
+          <Dropdown.Item>
+            <div className="user">
+              <img
+                className="profile-picture"
+                alt="profile"
+                src={props.myProfile.profile}
+                width="40px"
+                height="40px"
+              />
+              <p style={{ color: 'black' }}>{props.myProfile.name}</p>
+            </div>
+          </Dropdown.Item>
           <Dropdown.Item
             onClick={() => history.push('/add')}
             className="dropdown-item"

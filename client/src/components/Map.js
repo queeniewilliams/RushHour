@@ -67,7 +67,11 @@ const Map = (props) => {
       maxZoom={100}
       minZoom={1.6}
     >
-      <Navigate authenticated={props.authenticated} logOut={props.logOut} />
+      <Navigate
+        authenticated={props.authenticated}
+        logOut={props.logOut}
+        myProfile={props.myProfile}
+      />
       <div className="submit">
         <img
           className="current-location"

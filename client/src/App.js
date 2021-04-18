@@ -22,7 +22,7 @@ import {
   CreateComment,
   DeleteComment
 } from './services/CommentServices'
-import { CheckSession } from './services/AuthServices'
+import { CheckSession, GetProfile } from './services/AuthServices'
 import axios from 'axios'
 
 const App = () => {
@@ -45,6 +45,7 @@ const App = () => {
   const [image, setImage] = useState('')
   const [parkingId, setParkingId] = useState('')
   const [selectedParking, setSelectedParking] = useState(null)
+  const [myProfile, setMyProflie] = useState(null)
   const history = useHistory()
 
   // Auth
@@ -63,6 +64,15 @@ const App = () => {
       } catch (error) {
         throw error
       }
+    }
+  }
+  const getProfile = async () => {
+    const userId = 1
+    try {
+      const res = await GetProfile(userId)
+      setMyProflie(res)
+    } catch (err) {
+      throw err
     }
   }
 
@@ -87,8 +97,8 @@ const App = () => {
     }
   }
 
-  const getMyParkings = async (e) => {
-    const userId = 1
+  const getMyParkings = async () => {
+    const userId = currentUser.id
     try {
       const res = await GetMyParkings(userId)
       setMyParkings(res)
@@ -159,6 +169,7 @@ const App = () => {
   useEffect(() => {
     getAllParkings()
     checkSession()
+    getProfile()
   }, [])
 
   //Calculate Distance
@@ -248,7 +259,8 @@ const App = () => {
     selectedParking,
     setSelectedParking,
     distance,
-    setStatus
+    setStatus,
+    myProfile
   }
 
   const addParkingProps = {

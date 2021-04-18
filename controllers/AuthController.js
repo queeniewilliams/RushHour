@@ -54,9 +54,20 @@ const GetCurrentUser = async (req, res) => {
     throw error
   }
 }
+const GetProfile = async (req, res) => {
+  try {
+    const profile = await User.findOne({
+      where: { id: req.params.user_id }
+    })
+    res.send(profile)
+  } catch (error) {
+    throw error
+  }
+}
 module.exports = {
   Register,
   Login,
   GetAllUsers,
-  GetCurrentUser
+  GetCurrentUser,
+  GetProfile
 }

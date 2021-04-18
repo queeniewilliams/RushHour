@@ -22,7 +22,7 @@ const AddComment = async (req, res) => {
     // const { token } = res.locals
     const comment = await Comment.create({
       ...req.body,
-      userId: 1,
+      userId,
       coordinateId: req.params.coordinate_id
     })
     res.send(comment)

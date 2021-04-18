@@ -24,3 +24,12 @@ export const CheckSession = async () => {
     throw error
   }
 }
+
+export const GetProfile = async (id) => {
+  try {
+    const res = await Client.get(`/auth/profile/${id}`)
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}
