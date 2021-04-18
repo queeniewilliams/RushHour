@@ -44,10 +44,16 @@ const Comments = (props) => {
         logOut={props.logOut}
         myProfile={props.myProfile}
       />
-      {/* <img src={props.selectedParking.image} width="100%" /> */}
       <div className="reviews">
         <form onSubmit={() => props.submitComment(props.props.match.params.id)}>
-          <p>Write a review</p>
+          <div className="write-icon">
+            <p>Write a review</p>
+            <img
+              src="https://i.ibb.co/7nG05fM/wondicon-ui-free-write-111263.png"
+              width="30px"
+              height="30px"
+            />
+          </div>
           <input
             className="review"
             name="comment"
@@ -59,7 +65,6 @@ const Comments = (props) => {
         </form>
         {props.comments.map((comment, index) => (
           <div key={index}>
-            <p>userId:{comment.userId}</p>
             {props.myProfile ? (
               <div className="review-section">
                 <div className="user">

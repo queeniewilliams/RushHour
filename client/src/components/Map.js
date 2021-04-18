@@ -26,6 +26,10 @@ const Map = (props) => {
     })
   }
 
+  const handleViewport = async () => {
+    props.convertToCoordinates()
+    // await changeViewport()
+  }
   const history = useHistory()
 
   useEffect(() => {
@@ -87,7 +91,7 @@ const Map = (props) => {
             value={props.currentAddress}
             onChange={props.handleCurrentAddressChange}
           />
-          <button className="goBtn" onClick={changeViewport}>
+          <button className="goBtn" onClick={() => handleViewport()}>
             GO
           </button>
         </div>

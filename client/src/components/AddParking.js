@@ -3,7 +3,6 @@ import ReactMap, { Marker, Popup, FlyToInterpolator } from 'react-map-gl'
 import Navigate from './Navigate'
 import Geocodio from 'geocodio-library-node'
 import { GEOCODIO_KEY } from '../globals'
-
 import '../App.css'
 
 const AddParking = (props) => {
@@ -30,17 +29,17 @@ const AddParking = (props) => {
     }
   }
 
-  geocoder
-    .geocode(props.address)
-    .then((response) => {
-      console.log(response.results[0].location)
-      props.setLat(response.results[0].location.lat)
-      props.setLng(response.results[0].location.lng)
-      props.setSubmitAddress(response.results[0].formatted_address)
-    })
-    .catch((err) => {
-      console.error(err)
-    })
+  // geocoder
+  //   .geocode(props.address)
+  //   .then((response) => {
+  //     console.log(response.results[0].location)
+  //     props.setLat(response.results[0].location.lat)
+  //     props.setLng(response.results[0].location.lng)
+  //     props.setSubmitAddress(response.results[0].formatted_address)
+  //   })
+  //   .catch((err) => {
+  //     console.error(err)
+  //   })
 
   const [viewport, setViewport] = useState({
     width: '100%',
@@ -50,18 +49,7 @@ const AddParking = (props) => {
     zoom: 8
   })
   const [selectedParking, setSelectedParking] = useState(null)
-  const changeViewport = () => {
-    setViewport({
-      ...viewport,
-      width: '100%',
-      height: '100%',
-      latitude: props.lat,
-      longitude: props.lng,
-      zoom: 10,
-      transitionDuration: 2000,
-      transitionInterpolator: new FlyToInterpolator()
-    })
-  }
+
   useEffect(() => {
     const listener = (e) => {
       if (e.key === 'Escape') {
@@ -134,27 +122,39 @@ const AddParking = (props) => {
                     setSelectedParking(null)
                   }}
                 >
+                  <img src={selectedParking.image} width="300px" />
                   <p>Parking {selectedParking.id}</p>
                   <form
+                    className="upload-form"
                     id={selectedParking.id}
                     onSubmit={(e) => props.submitImage(e)}
                   >
                     <input
+                      className="image-upload"
                       name="image"
                       value={props.image.img}
                       onChange={props.handleImageChange}
                       placeholder="upload image"
                     />
-                    <button type="submit">Upload</button>
+                    <button type="submit" className="submit-imageBtn">
+                      <img
+                        alt="icon"
+                        src="https://i.ibb.co/R7rj8BS/upload-image-icon-1.png"
+                        width="30px"
+                      />
+                    </button>
                   </form>
-                  <button
+                  <img
+                    className="trash-icon"
+                    alt="icon"
+                    src="https://i.ibb.co/yRrxz6H/trash-2-256.gif"
+                    width="25px"
+                    height="25px"
                     onClick={() => {
                       props.deleteParking(selectedParking.id)
                       setSelectedParking(null)
                     }}
-                  >
-                    delete
-                  </button>
+                  />
                 </Popup>
               ) : null}
             </Fragment>

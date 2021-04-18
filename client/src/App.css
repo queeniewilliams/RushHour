@@ -12,7 +12,7 @@
   z-index: 2;
 }
 .dropdown {
-  margin-top: 10px;
+  margin-bottom: 10px;
   width: 100%;
 }
 .dropdown:hover {
@@ -134,4 +134,21 @@ h2 {
 }
 .trash-icon {
   padding-top: 10px;
+}
+.write-icon {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+.image-upload {
+  border-bottom: 1px black solid;
+}
+.upload-form {
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+  align-items: center;
+}
+.submit-imageBtn {
+  border: none;
+  background: transparent;
 }

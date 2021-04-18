@@ -12,7 +12,6 @@ const SignIn = (props) => {
     e.preventDefault()
     try {
       const res = await Login(loginForm)
-      localStorage.setItem('token', res.token)
       props.setAuthenticated(true)
       props.setCurrentUser(res.user)
       handleLoginForm({ email: '', password: '' })

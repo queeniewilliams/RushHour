@@ -64,7 +64,6 @@ const Navigate = (props) => {
                   Sign Up
                 </div>
               </Dropdown.Item>
-              <br></br>
               <Dropdown.Item
                 onClick={() => history.push('/signin')}
                 className="dropdown-item"
@@ -81,7 +80,20 @@ const Navigate = (props) => {
               </Dropdown.Item>
             </div>
           )}
-          <br></br>
+          <Dropdown.Item
+            onClick={() => history.push('/')}
+            className="dropdown-item"
+          >
+            <div className="dropdown">
+              <img
+                className="navIcon"
+                alt="icon"
+                src="https://i.ibb.co/PtBr6hd/pngfind-com-white-house-logo-png-5898244.png"
+                width="30px"
+              />
+              Home
+            </div>
+          </Dropdown.Item>
           <Dropdown.Item
             onClick={() => history.push('/add')}
             className="dropdown-item"
@@ -98,20 +110,6 @@ const Navigate = (props) => {
             </div>
           </Dropdown.Item>
           <br></br>
-          <Dropdown.Item
-            onClick={() => history.push('/')}
-            className="dropdown-item"
-          >
-            <div className="dropdown">
-              <img
-                className="navIcon"
-                alt="icon"
-                src="https://i.ibb.co/PtBr6hd/pngfind-com-white-house-logo-png-5898244.png"
-                width="30px"
-              />
-              Home
-            </div>
-          </Dropdown.Item>
         </div>
       </Dropdown.Menu>
     </Dropdown>

@@ -61,31 +61,42 @@ const App = () => {
         const res = await CheckSession()
         setCurrentUser(res)
         setAuthenticated(true)
+        getProfile(res.id)
       } catch (error) {
         throw error
       }
     }
   }
-  const getProfile = async () => {
-    const userId = 1
+  const getProfile = async (id) => {
     try {
-      const res = await GetProfile(userId)
+      const res = await GetProfile(id)
       setMyProflie(res)
     } catch (err) {
       throw err
     }
   }
-
-  const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
-  geocoder
-    .geocode(currentAddress)
-    .then((response) => {
-      setCurrentLat(response.results[0].location.lat)
-      setCurrentLng(response.results[0].location.lng)
-    })
-    .catch((err) => {
-      console.error(err)
-    })
+  const convertToCoordinates = async () => {
+    try {
+      const response = await axios.get(
+        `https://api.geocod.io/v1.6/geocode?q=${currentAddress}&api_key=${GEOCODIO_KEY}`
+      )
+      console.log(response)
+      setCurrentLat(response.data.results[0].location.lat)
+      setCurrentLng(response.data.results[0].location.lng)
+    } catch (error) {
+      throw error
+    }
+  }
+  // const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
+  // geocoder
+  //   .geocode(currentAddress)
+  //   .then((response) => {
+  //     setCurrentLat(response.results[0].location.lat)
+  //     setCurrentLng(response.results[0].location.lng)
+  //   })
+  //   .catch((err) => {
+  //     console.error(err)
+  //   })
 
   //CRUD Parking
   const getAllParkings = async () => {
@@ -113,7 +124,6 @@ const App = () => {
   const handleCurrentAddressChange = (e) => {
     setCurrentAddress(e.target.value)
   }
-
   const submitParking = async (e) => {
     e.preventDefault()
     const userId = currentUser.id
@@ -146,8 +156,6 @@ const App = () => {
     }
   }
   const submitImage = async (e) => {
-    e.preventDefault()
-    console.log(e.target.id)
     try {
       addImage(e.target.id, image)
     } catch (error) {
@@ -169,7 +177,7 @@ const App = () => {
   useEffect(() => {
     getAllParkings()
     checkSession()
-    getProfile()
+    // getProfile()
   }, [])
 
   //Calculate Distance
@@ -220,10 +228,10 @@ const App = () => {
   }
 
   const submitComment = async (id) => {
-    console.log('firing')
     try {
       await CreateComment(id, {
-        comment: comment
+        comment: comment,
+        userId: currentUser.id
       })
       setComments([...comments])
     } catch (error) {
@@ -261,7 +269,8 @@ const App = () => {
     distance,
     setStatus,
     myProfile,
-    currentUser
+    currentUser,
+    convertToCoordinates
   }
 
   const addParkingProps = {
@@ -310,7 +319,6 @@ const App = () => {
               comments={comments}
               deleteComment={deleteComment}
               getAllComments={getAllComments}
-              // selectedParking={selectedParking}
               myProfile={myProfile}
               currentUser={currentUser}
             />
