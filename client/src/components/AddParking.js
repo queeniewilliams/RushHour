@@ -29,17 +29,17 @@ const AddParking = (props) => {
     }
   }
 
-  geocoder
-    .geocode(props.address)
-    .then((response) => {
-      console.log(response.results[0].location)
-      props.setLat(response.results[0].location.lat)
-      props.setLng(response.results[0].location.lng)
-      props.setSubmitAddress(response.results[0].formatted_address)
-    })
-    .catch((err) => {
-      console.error(err)
-    })
+  // geocoder
+  //   .geocode(props.address)
+  //   .then((response) => {
+  //     console.log(response.results[0].location)
+  //     props.setLat(response.results[0].location.lat)
+  //     props.setLng(response.results[0].location.lng)
+  //     props.setSubmitAddress(response.results[0].formatted_address)
+  //   })
+  //   .catch((err) => {
+  //     console.error(err)
+  //   })
 
   const [viewport, setViewport] = useState({
     width: '100%',
@@ -49,17 +49,27 @@ const AddParking = (props) => {
     zoom: 8
   })
   const [selectedParking, setSelectedParking] = useState(null)
-  const changeViewport = () => {
+  const changeViewport = (lat, lng) => {
     setViewport({
       ...viewport,
       width: '100%',
       height: '100%',
-      latitude: props.lat,
-      longitude: props.lng,
+      latitude: lat,
+      longitude: lng,
       zoom: 10,
       transitionDuration: 2000,
       transitionInterpolator: new FlyToInterpolator()
     })
+  }
+
+  const handleViewport = async (e) => {
+    e.preventDefault()
+    const response = await props.convertCoordinatesAddParking()
+    console.log('firing', response)
+    changeViewport(
+      response.data.results[0].location.lat,
+      response.data.results[0].location.lng
+    )
   }
   useEffect(() => {
     const listener = (e) => {
@@ -103,9 +113,10 @@ const AddParking = (props) => {
             value={props.address}
             onChange={props.handleAddressChange}
           />
-          <button className="goBtn" onClick={() => changeViewport()}>
-            Add
+          <button className="goBtn" onClick={(e) => handleViewport(e)}>
+            Go
           </button>
+          <button type="submit">Add</button>
         </form>
       </div>
       {props.myParkings
@@ -171,6 +182,13 @@ const AddParking = (props) => {
             </Fragment>
           ))
         : null}
+      {props.lat && props.lng ? (
+        <Marker
+          className="marker-current"
+          longitude={props.lng}
+          latitude={props.lat}
+        ></Marker>
+      ) : null}
     </ReactMap>
   )
 }

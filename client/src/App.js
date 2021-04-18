@@ -30,8 +30,8 @@ const App = () => {
   const [lng, setLng] = useState(0)
   const [coordinates, setCoordinates] = useState([])
   const [status, setStatus] = useState(null)
-  const [currentLng, setCurrentLng] = useState(null)
-  const [currentLat, setCurrentLat] = useState(null)
+  const [currentLng, setCurrentLng] = useState(-95)
+  const [currentLat, setCurrentLat] = useState(37)
   const [distance, setDistance] = useState(null)
   const [comments, setComments] = useState([])
   const [comment, setComment] = useState('')
@@ -47,7 +47,7 @@ const App = () => {
   const [selectedParking, setSelectedParking] = useState(null)
   const [myProfile, setMyProflie] = useState(null)
   const history = useHistory()
-
+  console.log(currentLat, currentLng)
   // Auth
   const logOut = () => {
     setAuthenticated(false)
@@ -80,13 +80,28 @@ const App = () => {
       const response = await axios.get(
         `https://api.geocod.io/v1.6/geocode?q=${currentAddress}&api_key=${GEOCODIO_KEY}`
       )
-      console.log(response)
       setCurrentLat(response.data.results[0].location.lat)
       setCurrentLng(response.data.results[0].location.lng)
+      return response
     } catch (error) {
       throw error
     }
   }
+
+  const convertCoordinatesAddParking = async () => {
+    try {
+      const response = await axios.get(
+        `https://api.geocod.io/v1.6/geocode?q=${address}&api_key=${GEOCODIO_KEY}`
+      )
+      setLat(response.data.results[0].location.lat)
+      setLng(response.data.results[0].location.lng)
+      setSubmitAddress(response.data.results[0].formatted_address)
+      return response
+    } catch (error) {
+      throw error
+    }
+  }
+
   // const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
   // geocoder
   //   .geocode(currentAddress)
@@ -295,7 +310,8 @@ const App = () => {
     image,
     currentUser,
     setStatus,
-    myProfile
+    myProfile,
+    convertCoordinatesAddParking
   }
 
   return (

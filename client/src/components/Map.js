@@ -10,25 +10,28 @@ const Map = (props) => {
     height: '100%',
     latitude: 34.1,
     longitude: -118.3,
-
     zoom: 10
   })
-  const changeViewport = () => {
+  const changeViewport = (lat, lng) => {
     setViewport({
       ...viewport,
       width: '100%',
       height: '100%',
-      latitude: props.currentLat,
-      longitude: props.currentLng,
+      latitude: lat,
+      longitude: lng,
       zoom: 10,
       transitionDuration: 2000,
       transitionInterpolator: new FlyToInterpolator()
     })
   }
 
-  const handleViewport = async () => {
-    props.convertToCoordinates()
-    // await changeViewport()
+  const handleViewport = async (e) => {
+    e.preventDefault()
+    const response = await props.convertToCoordinates()
+    changeViewport(
+      response.data.results[0].location.lat,
+      response.data.results[0].location.lng
+    )
   }
   const history = useHistory()
 
@@ -91,7 +94,7 @@ const Map = (props) => {
             value={props.currentAddress}
             onChange={props.handleCurrentAddressChange}
           />
-          <button className="goBtn" onClick={() => handleViewport()}>
+          <button className="goBtn" onClick={(e) => handleViewport(e)}>
             GO
           </button>
         </div>
