@@ -1,13 +1,9 @@
 import React, { useState, Fragment, useEffect } from 'react'
 import ReactMap, { Marker, Popup, FlyToInterpolator } from 'react-map-gl'
 import Navigate from './Navigate'
-import Geocodio from 'geocodio-library-node'
-import { GEOCODIO_KEY } from '../globals'
 import '../App.css'
 
 const AddParking = (props) => {
-  const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
-
   useEffect(() => {
     props.getMyParkings()
   }, [])
@@ -28,18 +24,6 @@ const AddParking = (props) => {
       )
     }
   }
-
-  // geocoder
-  //   .geocode(props.address)
-  //   .then((response) => {
-  //     console.log(response.results[0].location)
-  //     props.setLat(response.results[0].location.lat)
-  //     props.setLng(response.results[0].location.lng)
-  //     props.setSubmitAddress(response.results[0].formatted_address)
-  //   })
-  //   .catch((err) => {
-  //     console.error(err)
-  //   })
 
   const [viewport, setViewport] = useState({
     width: '100%',
@@ -65,7 +49,6 @@ const AddParking = (props) => {
   const handleViewport = async (e) => {
     e.preventDefault()
     const response = await props.convertCoordinatesAddParking()
-    console.log('firing', response)
     changeViewport(
       response.data.results[0].location.lat,
       response.data.results[0].location.lng

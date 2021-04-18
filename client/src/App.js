@@ -30,8 +30,8 @@ const App = () => {
   const [lng, setLng] = useState(0)
   const [coordinates, setCoordinates] = useState([])
   const [status, setStatus] = useState(null)
-  const [currentLng, setCurrentLng] = useState(-95)
-  const [currentLat, setCurrentLat] = useState(37)
+  const [currentLng, setCurrentLng] = useState(-118)
+  const [currentLat, setCurrentLat] = useState(34)
   const [distance, setDistance] = useState(null)
   const [comments, setComments] = useState([])
   const [comment, setComment] = useState('')
@@ -47,7 +47,7 @@ const App = () => {
   const [selectedParking, setSelectedParking] = useState(null)
   const [myProfile, setMyProflie] = useState(null)
   const history = useHistory()
-  console.log(currentLat, currentLng)
+
   // Auth
   const logOut = () => {
     setAuthenticated(false)
@@ -62,6 +62,7 @@ const App = () => {
         setCurrentUser(res)
         setAuthenticated(true)
         getProfile(res.id)
+        getMyParkings(res.id)
       } catch (error) {
         throw error
       }
@@ -75,6 +76,8 @@ const App = () => {
       throw err
     }
   }
+
+  //Geocodio
   const convertToCoordinates = async () => {
     try {
       const response = await axios.get(
@@ -102,17 +105,6 @@ const App = () => {
     }
   }
 
-  // const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
-  // geocoder
-  //   .geocode(currentAddress)
-  //   .then((response) => {
-  //     setCurrentLat(response.results[0].location.lat)
-  //     setCurrentLng(response.results[0].location.lng)
-  //   })
-  //   .catch((err) => {
-  //     console.error(err)
-  //   })
-
   //CRUD Parking
   const getAllParkings = async () => {
     try {
@@ -123,8 +115,7 @@ const App = () => {
     }
   }
 
-  const getMyParkings = async () => {
-    const userId = 1
+  const getMyParkings = async (userId) => {
     try {
       const res = await GetMyParkings(userId)
       setMyParkings(res)
