@@ -43,15 +43,10 @@ const Comments = (props) => {
         authenticated={props.authenticated}
         logOut={props.logOut}
         myProfile={props.myProfile}
-        // currentUser={props.currentUser}
       />
       {/* <img src={props.selectedParking.image} width="100%" /> */}
       <div className="reviews">
-        <form
-          onSubmit={() => {
-            props.submitComment(props.props.match.params.id)
-          }}
-        >
+        <form onSubmit={() => props.submitComment(props.props.match.params.id)}>
           <p>Write a review</p>
           <input
             className="review"
@@ -64,26 +59,29 @@ const Comments = (props) => {
         </form>
         {props.comments.map((comment, index) => (
           <div key={index}>
-            {/* <div className="review-section">
-              <div className="user">
+            <p>userId:{comment.userId}</p>
+            {props.myProfile ? (
+              <div className="review-section">
+                <div className="user">
+                  <img
+                    className="profile-picture"
+                    alt="profile"
+                    src={props.myProfile.profile}
+                    width="40px"
+                    height="40px"
+                  />
+                  <p style={{ color: 'black' }}>{props.myProfile.name}</p>
+                </div>
                 <img
-                  className="profile-picture"
-                  alt="profile"
-                  src={props.myProfile.profile}
-                  width="40px"
-                  height="40px"
+                  className="trash-icon"
+                  alt="icon"
+                  src="https://i.ibb.co/yRrxz6H/trash-2-256.gif"
+                  width="25px"
+                  height="25px"
+                  onClick={() => props.deleteComment(comment.id)}
                 />
-                <p style={{ color: 'black' }}>{props.myProfile.name}</p>
               </div>
-              <img
-                className="trash-icon"
-                alt="icon"
-                src="https://i.ibb.co/yRrxz6H/trash-2-256.gif"
-                width="25px"
-                height="25px"
-                onClick={() => props.deleteComment(comment.id)}
-              />
-            </div> */}
+            ) : null}
             <img
               alt="icon"
               className={`rating ${selected ? 'selected' : ''}`}

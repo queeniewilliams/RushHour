@@ -209,7 +209,6 @@ const App = () => {
   const getAllComments = async (id) => {
     try {
       const res = await GetAllComments(id)
-      console.log(res)
       setComments(res)
     } catch (error) {
       throw error
@@ -221,6 +220,7 @@ const App = () => {
   }
 
   const submitComment = async (id) => {
+    console.log('firing')
     try {
       await CreateComment(id, {
         comment: comment
@@ -310,7 +310,7 @@ const App = () => {
               comments={comments}
               deleteComment={deleteComment}
               getAllComments={getAllComments}
-              selectedParking={selectedParking}
+              // selectedParking={selectedParking}
               myProfile={myProfile}
               currentUser={currentUser}
             />

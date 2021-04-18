@@ -19,6 +19,7 @@ const GetAllComments = async (req, res) => {
 }
 const AddComment = async (req, res) => {
   try {
+    const userId = 1
     // const { token } = res.locals
     const comment = await Comment.create({
       ...req.body,
