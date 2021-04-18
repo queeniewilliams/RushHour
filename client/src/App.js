@@ -181,7 +181,6 @@ const App = () => {
   useEffect(() => {
     getAllParkings()
     checkSession()
-    // getProfile()
   }, [])
 
   //Calculate Distance

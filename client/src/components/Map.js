@@ -150,8 +150,6 @@ const Map = (props) => {
                     />
                     <p>{props.distance}Km</p>
                   </div>
-                  <button>Get Direction</button>
-                  <br></br>
                   <button
                     onClick={() =>
                       history.push(`/reviews/${props.selectedParking.id}`)
