@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import ReactMap, { Marker, Popup, FlyToInterpolator } from 'react-map-gl'
 import Navigate from './Navigate'
 import '../css/mapbox.css'
@@ -69,15 +69,23 @@ const Map = (props) => {
     >
       <Navigate authenticated={props.authenticated} logOut={props.logOut} />
       <div className="submit">
-        <button onClick={getLocation}>Get Location</button>
-        <p>{props.status}</p>
-        {props.currentLat && <p>Latitude: {props.currentLat}</p>}
+        <img
+          className="current-location"
+          alt="icon"
+          src="https://i.ibb.co/Hpv5dmk/Nice-Png-knowledge-icon-png-3332260.png"
+          width="40px"
+          onClick={getLocation}
+        />
+        <div className="searchBar">
         <input
           name="address"
           value={props.currentAddress}
           onChange={props.handleCurrentAddressChange}
         />
-        <button onClick={changeViewport}>Go</button>
+        <button className="goBtn" onClick={changeViewport}>
+          GO
+        </button>
+        </div>
       </div>
       {props.allParkings
         ? props.allParkings.map((parking, index) => (
@@ -99,6 +107,9 @@ const Map = (props) => {
                     props.setSelectedParking(null)
                   }}
                 >
+                  {props.selectedParking.image ? (
+                    <img src={props.selectedParking.image} width="100px" />
+                  ) : null}
                   <p>Parking {props.selectedParking.id}</p>
                   <div className="location">
                     <img

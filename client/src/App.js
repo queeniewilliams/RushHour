@@ -23,6 +23,7 @@ import {
   DeleteComment
 } from './services/CommentServices'
 import { CheckSession } from './services/AuthServices'
+import axios from 'axios'
 
 const App = () => {
   const [lat, setLat] = useState(0)
@@ -35,7 +36,7 @@ const App = () => {
   const [comments, setComments] = useState([])
   const [comment, setComment] = useState('')
   const [myParkings, setMyParkings] = useState([])
-  const [currentAddress, setCurrentAddress] = useState('92584')
+  const [currentAddress, setCurrentAddress] = useState('90017')
   const [address, setAddress] = useState('')
   const [allParkings, setAllParkings] = useState([])
   const [authenticated, setAuthenticated] = useState(false)
@@ -65,16 +66,16 @@ const App = () => {
     }
   }
 
-  // const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
-  // geocoder
-  //   .geocode(currentAddress)
-  //   .then((response) => {
-  //     setCurrentLat(response.results[0].location.lat)
-  //     setCurrentLng(response.results[0].location.lng)
-  //   })
-  //   .catch((err) => {
-  //     console.error(err)
-  //   })
+  const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
+  geocoder
+    .geocode(currentAddress)
+    .then((response) => {
+      setCurrentLat(response.results[0].location.lat)
+      setCurrentLng(response.results[0].location.lng)
+    })
+    .catch((err) => {
+      console.error(err)
+    })
 
   //CRUD Parking
   const getAllParkings = async () => {
@@ -190,7 +191,7 @@ const App = () => {
         Math.cos(currentLat1)
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
     var d = R * c
-    setDistance(d)
+    setDistance(d.toFixed(0))
   }
 
   //CRUD Comment
@@ -241,14 +242,13 @@ const App = () => {
     setCurrentLng,
     setLat,
     setLng,
-    status,
-    setStatus,
     currentAddress,
     handleCurrentAddressChange,
     handleDistance,
     selectedParking,
     setSelectedParking,
-    distance
+    distance,
+    setStatus
   }
 
   const addParkingProps = {
@@ -257,11 +257,9 @@ const App = () => {
     checkSession,
     lng,
     lat,
-    setStatus,
     setLat,
     setLng,
     submitParking,
-    status,
     coordinates,
     myParkings,
     deleteParking,
@@ -273,7 +271,8 @@ const App = () => {
     submitImage,
     handleImageChange,
     image,
-    currentUser
+    currentUser,
+    setStatus
   }
 
   return (

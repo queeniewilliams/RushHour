@@ -12,14 +12,14 @@
 }
 .marker {
   background-color: rgb(233, 149, 24);
-  box-shadow: 50px 50px 50px 50px rgb(245, 174, 20);
+  box-shadow: 150px 150px 150px 150px rgb(245, 174, 20);
 }
 @keyframes glowing {
   0% {
     box-shadow: 0 0 20px 15px rgb(245, 174, 20);
   }
   100% {
-    box-shadow: 0 0 20px 20px transparent;
+    box-shadow: 0 0 80px 80px transparent;
     border-width: 2px;
   }
 }
@@ -45,7 +45,7 @@
   border-left-color: rgba(255, 255, 255, 0.2);
 }
 .mapboxgl-popup-content {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgb(12, 12, 12);
   color: black;
   padding: 0.3rem 0.8rem;
 }
@@ -61,4 +61,30 @@
 }
 #location-icon {
   margin-right: 10px;
+}
+.current-location {
+  margin-left: 10px;
+  margin-top: 5px;
+}
+.searchBar {
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+  margin-left: 20px;
+}
+input {
+  padding-left: 30px;
+  width: 15em;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px 10px 15px;
+}
+.goBtn {
+  margin-left: 10px;
+  height: 42px;
+  background-color: black;
+  padding: 10px 10px 10px 10px;
+  color: white;
+  border: none;
+  border-radius: 50px;
 }

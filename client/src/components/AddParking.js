@@ -30,17 +30,17 @@ const AddParking = (props) => {
     }
   }
 
-  geocoder
-    .geocode(props.address)
-    .then((response) => {
-      console.log(response.results[0].location)
-      props.setLat(response.results[0].location.lat)
-      props.setLng(response.results[0].location.lng)
-      props.setSubmitAddress(response.results[0].formatted_address)
-    })
-    .catch((err) => {
-      console.error(err)
-    })
+  // geocoder
+  //   .geocode(props.address)
+  //   .then((response) => {
+  //     console.log(response.results[0].location)
+  //     props.setLat(response.results[0].location.lat)
+  //     props.setLng(response.results[0].location.lng)
+  //     props.setSubmitAddress(response.results[0].formatted_address)
+  //   })
+  //   .catch((err) => {
+  //     console.error(err)
+  //   })
 
   const [viewport, setViewport] = useState({
     width: '100%',
@@ -84,24 +84,24 @@ const AddParking = (props) => {
     >
       <Navigate authenticated={props.authenticated} logOut={props.logOut} />
       <div className="submit">
-        <form
-          onSubmit={
-            () => props.submitParking()
-            // changeViewport()
-          }
-        >
-          <button onClick={getLocation}>Get Location</button>
-          <p>{props.status}</p>
-          {props.lat && <p>Latitude: {props.lat}</p>}
-          {props.lng && <p>Longitude: {props.lng}</p>}
+        <form onSubmit={() => props.submitParking()}>
+          <img
+            className="current-location"
+            alt="icon"
+            src="https://i.ibb.co/Hpv5dmk/Nice-Png-knowledge-icon-png-3332260.png"
+            width="40px"
+            onClick={getLocation}
+          />
         </form>
-        <form onSubmit={props.submitParking}>
+        <form className="searchBar" onSubmit={props.submitParking}>
           <input
             name="address"
             value={props.address}
             onChange={props.handleAddressChange}
           />
-          <input type="Submit" />
+          <button className="goBtn" type="Submit">
+            Add
+          </button>
         </form>
       </div>
       {props.myParkings
