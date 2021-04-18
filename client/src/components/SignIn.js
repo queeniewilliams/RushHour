@@ -14,7 +14,7 @@ const SignIn = (props) => {
       const res = await Login(loginForm)
       localStorage.setItem('token', res.token)
       props.setAuthenticated(true)
-      // props.setCurrentUser(res.data.user)
+      props.setCurrentUser(res.user)
       handleLoginForm({ email: '', password: '' })
       return history.push('/')
     } catch (error) {

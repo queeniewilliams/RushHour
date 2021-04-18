@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import Navigate from './Navigate'
-import axios from 'axios'
-import { BASE_URL } from '../globals'
 import '../App.css'
 import { UpdateComment } from '../services/CommentServices'
 

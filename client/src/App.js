@@ -7,11 +7,8 @@ import SignIn from './components/SignIn'
 import SanityMobilePreview from 'sanity-mobile-preview'
 import 'sanity-mobile-preview/dist/index.css?raw'
 import { Route, Switch } from 'react-router-dom'
-import { BASE_URL, REST_API_KEY, ROUTE_URL, GEOCODIO_KEY } from './globals'
-import axios from 'axios'
+import { GEOCODIO_KEY } from './globals'
 import Geocodio from 'geocodio-library-node'
-import polyline from '@mapbox/polyline'
-import decodePolyline from 'decode-google-map-polyline'
 import { useHistory } from 'react-router-dom'
 import {
   GetAllParkings,
@@ -27,7 +24,7 @@ import {
 } from './services/CommentServices'
 import { CheckSession } from './services/AuthServices'
 
-const App = (props) => {
+const App = () => {
   const [lat, setLat] = useState(0)
   const [lng, setLng] = useState(0)
   const [coordinates, setCoordinates] = useState([])
@@ -38,11 +35,8 @@ const App = (props) => {
   const [comments, setComments] = useState([])
   const [comment, setComment] = useState('')
   const [myParkings, setMyParkings] = useState([])
-  // const [route, setRoute] = useState(null)
   const [currentAddress, setCurrentAddress] = useState('92584')
   const [address, setAddress] = useState('')
-  const [polyline, setPolyline] = useState('')
-  const [polylineCoords, setPolylineCoords] = useState([])
   const [allParkings, setAllParkings] = useState([])
   const [authenticated, setAuthenticated] = useState(false)
   const [currentUser, setCurrentUser] = useState(null)
@@ -52,7 +46,7 @@ const App = (props) => {
   const [selectedParking, setSelectedParking] = useState(null)
   const history = useHistory()
 
-  console.log(currentUser)
+  // Auth
   const logOut = () => {
     setAuthenticated(false)
     localStorage.clear()
@@ -71,7 +65,6 @@ const App = (props) => {
     }
   }
 
-  let array = decodePolyline(polyline)
   // const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
   // geocoder
   //   .geocode(currentAddress)
@@ -82,6 +75,26 @@ const App = (props) => {
   //   .catch((err) => {
   //     console.error(err)
   //   })
+
+  //CRUD Parking
+  const getAllParkings = async () => {
+    try {
+      const res = await GetAllParkings()
+      setAllParkings(res)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  const getMyParkings = async (e) => {
+    const userId = 1
+    try {
+      const res = await GetMyParkings(userId)
+      setMyParkings(res)
+    } catch (err) {
+      throw err
+    }
+  }
 
   const handleAddressChange = (e) => {
     setAddress(e.target.value)
@@ -107,6 +120,9 @@ const App = (props) => {
     }
     getAllParkings()
   }
+  const handleImageChange = ({ target }) => {
+    setImage({ ...image, [target.name]: target.value })
+  }
   const addImage = async (parkingId, image) => {
     let test = {
       image: image.image
@@ -127,15 +143,12 @@ const App = (props) => {
       console.log(error)
     }
   }
-  const handleImageChange = ({ target }) => {
-    setImage({ ...image, [target.name]: target.value })
-  }
   const deleteParking = async (parkingId) => {
     try {
       const res = await DeleteParking(parkingId)
       console.log(res)
       let filteredParkings = [...myParkings].filter(
-        (my) => my.id !== parseInt(res.payload)
+        (my) => my.id !== parseInt(parkingId)
       )
       setMyParkings(filteredParkings)
     } catch (error) {
@@ -145,20 +158,9 @@ const App = (props) => {
   useEffect(() => {
     getAllParkings()
     checkSession()
-    // calcDistance()
-    // getAllComments()
-    // getMyParkings()
   }, [])
 
-  const getAllParkings = async () => {
-    try {
-      const res = await GetAllParkings()
-      console.log(res)
-      setAllParkings(res)
-    } catch (error) {
-      throw error
-    }
-  }
+  //Calculate Distance
   const handleDistance = async (parking) => {
     setSelectedParking(parking)
     try {
@@ -191,24 +193,27 @@ const App = (props) => {
     setDistance(d)
   }
 
-  const handleChange = (e) => {
-    setComment(e.target.value)
-  }
-  const submitComment = async (id) => {
-    try {
-      const res = await CreateComment(id, {
-        comment: comment
-      })
-      setComments([...comments])
-    } catch (error) {
-      throw error
-    }
-  }
+  //CRUD Comment
   const getAllComments = async (id) => {
     try {
       const res = await GetAllComments(id)
       console.log(res)
       setComments(res)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  const handleChange = (e) => {
+    setComment(e.target.value)
+  }
+
+  const submitComment = async (id) => {
+    try {
+      await CreateComment(id, {
+        comment: comment
+      })
+      setComments([...comments])
     } catch (error) {
       throw error
     }
@@ -224,78 +229,60 @@ const App = (props) => {
       console.log(error)
     }
   }
-  const getMyParkings = async (e) => {
-    const userId = 1
-    try {
-      const res = await GetMyParkings(userId)
-      setMyParkings(res)
-    } catch (err) {
-      throw err
-    }
+
+  const mapProps = {
+    authenticated,
+    logOut,
+    allParkings,
+    calcDistance,
+    currentLat,
+    currentLng,
+    setCurrentLat,
+    setCurrentLng,
+    setLat,
+    setLng,
+    status,
+    setStatus,
+    currentAddress,
+    handleCurrentAddressChange,
+    handleDistance,
+    selectedParking,
+    setSelectedParking,
+    distance
   }
+
+  const addParkingProps = {
+    authenticated,
+    logOut,
+    checkSession,
+    lng,
+    lat,
+    setStatus,
+    setLat,
+    setLng,
+    submitParking,
+    status,
+    coordinates,
+    myParkings,
+    deleteParking,
+    getMyParkings,
+    address,
+    setAddress,
+    setSubmitAddress,
+    handleAddressChange,
+    submitImage,
+    handleImageChange,
+    image,
+    currentUser
+  }
+
   return (
     <SanityMobilePreview>
       <Switch>
-        <Route
-          exact
-          path="/"
-          render={(props) => (
-            <Map
-              authenticated={authenticated}
-              logOut={logOut}
-              allParkings={allParkings}
-              calcDistance={calcDistance}
-              currentLat={currentLat}
-              currentLng={currentLng}
-              setCurrentLat={setCurrentLat}
-              setCurrentLng={setCurrentLng}
-              setLat={setLat}
-              setLng={setLng}
-              status={status}
-              setStatus={setStatus}
-              currentAddress={currentAddress}
-              handleCurrentAddressChange={handleCurrentAddressChange}
-              // address={address}
-              // handleAddressChange={handleAddressChange}
-              handleDistance={handleDistance}
-              selectedParking={selectedParking}
-              setSelectedParking={setSelectedParking}
-              distance={distance}
-            />
-          )}
-        />
+        <Route exact path="/" render={(props) => <Map {...mapProps} />} />
         <Route
           path="/add"
-          render={(props) => (
-            <AddParking
-              // parking={newParking}
-              // setParking={setNewParking}
-              // handleChange={handleChange}
-              authenticated={authenticated}
-              logOut={logOut}
-              checkSession={checkSession}
-              lng={lng}
-              lat={lat}
-              setStatus={setStatus}
-              setLat={setLat}
-              setLng={setLng}
-              submitParking={submitParking}
-              status={status}
-              // getLocation={getLocation}
-              coordinates={coordinates}
-              myParkings={myParkings}
-              deleteParking={deleteParking}
-              getMyParkings={getMyParkings}
-              address={address}
-              setAddress={setAddress}
-              setSubmitAddress={setSubmitAddress}
-              handleAddressChange={handleAddressChange}
-              submitImage={submitImage}
-              handleImageChange={handleImageChange}
-              image={image}
-              currentUser={currentUser}
-            />
-          )}
+          render={(props) => <AddParking {...addParkingProps} />}
         />
         <Route
           path="/reviews/:id"

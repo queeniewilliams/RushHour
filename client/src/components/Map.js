@@ -5,7 +5,6 @@ import '../css/mapbox.css'
 import { useHistory } from 'react-router-dom'
 
 const Map = (props) => {
-  console.log(props.allParkings)
   const [viewport, setViewport] = useState({
     width: '100%',
     height: '100%',
@@ -26,9 +25,6 @@ const Map = (props) => {
       transitionInterpolator: new FlyToInterpolator()
     })
   }
-  // useEffect(() => {
-  //   changeViewport()
-  // }, [])
 
   const history = useHistory()
 
@@ -91,13 +87,7 @@ const Map = (props) => {
                   alt="parking-icon"
                   src="https://i.ibb.co/z5H0Qx3/free-parking.png"
                   width="50px"
-                  onClick={() =>
-                    // setSelectedParking(parking)
-                    // props.setLng(parking.longitude)
-                    // props.setLat(parking.latitude)
-                    // props.calcDistance()
-                    props.handleDistance(parking)
-                  }
+                  onClick={() => props.handleDistance(parking)}
                 />
               </Marker>
               {props.selectedParking ? (

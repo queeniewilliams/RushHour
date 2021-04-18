@@ -7,12 +7,10 @@ import { GEOCODIO_KEY } from '../globals'
 import '../App.css'
 
 const AddParking = (props) => {
-  console.log(props.currentUser)
   const geocoder = new Geocodio(`${GEOCODIO_KEY}`)
 
   useEffect(() => {
     props.getMyParkings()
-    // props.checkSession()
   }, [])
   const getLocation = () => {
     if (!navigator.geolocation) {
@@ -31,7 +29,7 @@ const AddParking = (props) => {
       )
     }
   }
-  console.log(props.address)
+
   geocoder
     .geocode(props.address)
     .then((response) => {
@@ -88,9 +86,7 @@ const AddParking = (props) => {
       <div className="submit">
         <form
           onSubmit={
-            () =>
-              // e.preventDefault()
-              props.submitParking()
+            () => props.submitParking()
             // changeViewport()
           }
         >
@@ -160,30 +156,6 @@ const AddParking = (props) => {
           ))
         : null}
     </ReactMap>
-    //  <form onSubmit={props.submitParking}>
-    //   <input type="time" name="time" value="time" />
-    //   <br></br>
-    //   <button onClick={getLocation}>Get Location</button>
-    //   <p>{props.status}</p>
-    //   {props.lat && <p>Latitude: {props.lat}</p>}
-    //   {props.lng && <p>Longitude: {props.lng}</p>}
-    // </form>
-    // <form onSubmit={props.submitParking}>
-    //   <input
-    //     name="address"
-    //     value={props.address}
-    //     onChange={props.handleAddressChange}
-    //   />
-    //   <input type="submit" />
-    // </form>
-    // {props.myParkings.map((each) => (
-    //   <div>
-    //     <p>{each.longitude}</p>
-    //     <p>{each.latitude}</p>
-    //     <button onClick={() => props.deleteParking(each.id)}>delete</button>
-    //   </div>
-    // ))}
-    // </div>
   )
 }
 
