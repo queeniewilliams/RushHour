@@ -29,17 +29,17 @@ const AddParking = (props) => {
     }
   }
 
-  // geocoder
-  //   .geocode(props.address)
-  //   .then((response) => {
-  //     console.log(response.results[0].location)
-  //     props.setLat(response.results[0].location.lat)
-  //     props.setLng(response.results[0].location.lng)
-  //     props.setSubmitAddress(response.results[0].formatted_address)
-  //   })
-  //   .catch((err) => {
-  //     console.error(err)
-  //   })
+  geocoder
+    .geocode(props.address)
+    .then((response) => {
+      console.log(response.results[0].location)
+      props.setLat(response.results[0].location.lat)
+      props.setLng(response.results[0].location.lng)
+      props.setSubmitAddress(response.results[0].formatted_address)
+    })
+    .catch((err) => {
+      console.error(err)
+    })
 
   const [viewport, setViewport] = useState({
     width: '100%',
@@ -49,7 +49,18 @@ const AddParking = (props) => {
     zoom: 8
   })
   const [selectedParking, setSelectedParking] = useState(null)
-
+  const changeViewport = () => {
+    setViewport({
+      ...viewport,
+      width: '100%',
+      height: '100%',
+      latitude: props.lat,
+      longitude: props.lng,
+      zoom: 10,
+      transitionDuration: 2000,
+      transitionInterpolator: new FlyToInterpolator()
+    })
+  }
   useEffect(() => {
     const listener = (e) => {
       if (e.key === 'Escape') {
@@ -92,7 +103,7 @@ const AddParking = (props) => {
             value={props.address}
             onChange={props.handleAddressChange}
           />
-          <button className="goBtn" type="Submit">
+          <button className="goBtn" onClick={() => changeViewport()}>
             Add
           </button>
         </form>
