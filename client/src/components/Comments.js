@@ -41,62 +41,79 @@ const Comments = (props) => {
   return (
     <div>
       <Navigate authenticated={props.authenticated} logOut={props.logOut} />
-      <form onSubmit={() => props.submitComment(props.props.match.params.id)}>
-        <p>Write a review</p>
-        <input
-          name="comment"
-          value={props.comment}
-          onChange={props.handleChange}
-        />
-        <br></br>
-        <input type="submit" />
-      </form>
-      {props.comments.map((comment, index) => (
-        <div key={index}>
-          <p>userId:{comment.userId}</p>
-          <img
-            alt="icon"
-            className={`rating ${selected ? 'selected' : ''}`}
-            src="https://iconsplace.com/wp-content/uploads/_icons/ffa500/256/png/rating-star-icon-11-256.png"
-            width="20px"
-            onClick={() => selectRating(comment.id)}
+      <img src={props.selectedParking.image} width="100%" />
+      <div className="reviews">
+        <form onSubmit={() => props.submitComment(props.props.match.params.id)}>
+          <p>Write a review</p>
+          <input
+            className="review"
+            name="comment"
+            value={props.comment}
+            onChange={props.handleChange}
           />
-          <img
-            alt="icon"
-            className={`rating1 ${selected1 ? 'selected1' : ''}`}
-            src="https://iconsplace.com/wp-content/uploads/_icons/ffa500/256/png/rating-star-icon-11-256.png"
-            width="20px"
-            onClick={() => selectRating1(comment.id)}
-          />
-          <img
-            alt="icon"
-            className={`rating2 ${selected2 ? 'selected2' : ''}`}
-            src="https://iconsplace.com/wp-content/uploads/_icons/ffa500/256/png/rating-star-icon-11-256.png"
-            width="20px"
-            onClick={() => selectRating2()}
-          />
-          <img
-            alt="icon"
-            className={`rating3 ${selected3 ? 'selected3' : ''}`}
-            src="https://iconsplace.com/wp-content/uploads/_icons/ffa500/256/png/rating-star-icon-11-256.png"
-            width="20px"
-            onClick={() => selectRating3()}
-          />
-          <img
-            alt="icon"
-            className={`rating4 ${selected4 ? 'selected4' : ''}`}
-            src="https://iconsplace.com/wp-content/uploads/_icons/ffa500/256/png/rating-star-icon-11-256.png"
-            width="20px"
-            onClick={() => selectRating4()}
-          />
-          <p>comments:{comment.comment}</p>
-          <p>Likes: {comment.likes}</p>{' '}
-          <button onClick={() => likeComment(comment.id)}>like</button>
-          <button onClick={() => props.deleteComment(comment.id)}>
-            Delete
-          </button>
-        </div>
-      ))}
+          <br></br>
+          <input type="submit" />
+        </form>
+        {props.comments.map((comment, index) => (
+          <div key={index}>
+            <p>userId:{comment.userId}</p>
+            <img
+              alt="icon"
+              className={`rating ${selected ? 'selected' : ''}`}
+              src="https://iconsplace.com/wp-content/uploads/_icons/ffa500/256/png/rating-star-icon-11-256.png"
+              width="20px"
+              onClick={() => selectRating(comment.id)}
+            />
+            <img
+              alt="icon"
+              className={`rating1 ${selected1 ? 'selected1' : ''}`}
+              src="https://iconsplace.com/wp-content/uploads/_icons/ffa500/256/png/rating-star-icon-11-256.png"
+              width="20px"
+              onClick={() => selectRating1(comment.id)}
+            />
+            <img
+              alt="icon"
+              className={`rating2 ${selected2 ? 'selected2' : ''}`}
+              src="https://iconsplace.com/wp-content/uploads/_icons/ffa500/256/png/rating-star-icon-11-256.png"
+              width="20px"
+              onClick={() => selectRating2()}
+            />
+            <img
+              alt="icon"
+              className={`rating3 ${selected3 ? 'selected3' : ''}`}
+              src="https://iconsplace.com/wp-content/uploads/_icons/ffa500/256/png/rating-star-icon-11-256.png"
+              width="20px"
+              onClick={() => selectRating3()}
+            />
+            <img
+              alt="icon"
+              className={`rating4 ${selected4 ? 'selected4' : ''}`}
+              src="https://iconsplace.com/wp-content/uploads/_icons/ffa500/256/png/rating-star-icon-11-256.png"
+              width="20px"
+              onClick={() => selectRating4()}
+            />
+            <p>{comment.comment}</p>
+            <div className="likeBtn">
+              <img
+                alt="icon"
+                src="https://i.ibb.co/7NKw5K4/instagram-heart-png-23855.png"
+                width="50px"
+                height="50px"
+                onClick={() => likeComment(comment.id)}
+              />
+              <p>{comment.likes}</p>
+              <img
+                className="trach-icon"
+                alt="icon"
+                src="https://i.ibb.co/yRrxz6H/trash-2-256.gif"
+                width="25px"
+                height="25px"
+                onClick={() => props.deleteComment(comment.id)}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

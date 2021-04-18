@@ -8,50 +8,94 @@ const Navigate = (props) => {
     <Dropdown className="navigate">
       <Dropdown.Toggle>
         <img
+          className="navMenu"
           alt="navigate"
           src="https://i.ibb.co/kHKpM6V/hamburger-menu-icon-png-53.png"
           width="30px"
         />
       </Dropdown.Toggle>
       <Dropdown.Menu className="dropdown-menu">
-        <Dropdown.Item
-          onClick={() => history.push('/add')}
-          className="dropdown-item"
-        >
-          Add Parking
-        </Dropdown.Item>
-        <br></br>
-        <Dropdown.Item
-          onClick={() => history.push('/')}
-          className="dropdown-item"
-        >
-          Home
-        </Dropdown.Item>
-        <br></br>
-        {props.authenticated ? (
+        <div>
           <Dropdown.Item
-            onClick={() => props.logOut()}
+            onClick={() => history.push('/add')}
             className="dropdown-item"
           >
-            Logout
+            <div className="dropdown">
+              <img
+                alt="icon"
+                className="navIcon"
+                src="https://i.ibb.co/RjNhDXK/add-256.png"
+                width="30px"
+                height="30px"
+              />
+              Add Parking
+            </div>
           </Dropdown.Item>
-        ) : (
-          <div>
+          <br></br>
+          <Dropdown.Item
+            onClick={() => history.push('/')}
+            className="dropdown-item"
+          >
+            <div className="dropdown">
+              <img
+                className="navIcon"
+                alt="icon"
+                src="https://i.ibb.co/PtBr6hd/pngfind-com-white-house-logo-png-5898244.png"
+                width="30px"
+              />
+              Home
+            </div>
+          </Dropdown.Item>
+          <br></br>
+          {props.authenticated ? (
             <Dropdown.Item
-              onClick={() => history.push('/signup')}
+              onClick={() => props.logOut()}
               className="dropdown-item"
             >
-              Sign Up
+              <div className="dropdown">
+                <img
+                  className="navIcon"
+                  alt="icon"
+                  src="https://i.ibb.co/02GKVrn/logout-256.gif"
+                  width="30px"
+                />
+                Logout
+              </div>
             </Dropdown.Item>
-            <br></br>
-            <Dropdown.Item
-              onClick={() => history.push('/signin')}
-              className="dropdown-item"
-            >
-              Sign In
-            </Dropdown.Item>
-          </div>
-        )}
+          ) : (
+            <div>
+              <Dropdown.Item
+                onClick={() => history.push('/signup')}
+                className="dropdown-item"
+              >
+                <div className="dropdown">
+                  <img
+                    className="navIcon"
+                    alt="icon"
+                    src="https://i.ibb.co/G9GCzfP/pngkey-com-register-icon-png-3347013.png"
+                    width="30px"
+                  />
+                  Sign Up
+                </div>
+              </Dropdown.Item>
+              <br></br>
+              <Dropdown.Item
+                onClick={() => history.push('/signin')}
+                className="dropdown-item"
+              >
+                <div className="dropdown">
+                  <img
+                    className="navIcon"
+                    alt="icon"
+                    src="https://i.ibb.co/d7fYXBX/pngkey-com-profile-icon-png-2024990.png"
+                    width="30px"
+                  />
+                  Sign In
+                </div>
+              </Dropdown.Item>
+            </div>
+          )}
+        </div>
       </Dropdown.Menu>
     </Dropdown>
   )

@@ -61,7 +61,7 @@
   margin-right: 10px;
 }
 .current-location {
-  margin-left: 10px;
+  margin-left: 15px;
   margin-top: 5px;
 }
 .searchBar {
@@ -71,6 +71,7 @@
   margin-left: 20px;
 }
 input {
+  margin-bottom: 10px;
   padding-left: 30px;
   width: 15em;
   border: none;
@@ -85,4 +86,11 @@ input {
   color: white;
   border: none;
   border-radius: 50px;
+}
+.parkingId {
+  position: absolute;
+  top: 25%;
+  right: 10%;
+  color: white;
+  font-weight: bold;
 }

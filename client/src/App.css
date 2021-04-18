@@ -3,26 +3,40 @@
   width: 100vw;
 } */
 .dropdown-menu.show {
+  display: grid;
+  align-items: center;
+  justify-items: center;
   background-color: rgb(250, 173, 31);
   width: 10em;
   height: 100%;
   z-index: 2;
 }
+.dropdown {
+  margin-top: 10px;
+  width: 100%;
+}
+.dropdown:hover {
+  background-color: rgba(128, 128, 128, 0.233);
+}
+.navIcon {
+  margin-right: 5px;
+}
 .dropdown-item {
   text-decoration: none;
-  color: black;
-  margin: 20px;
+  color: white;
+  font-size: 1em;
+  font-weight: bold;
 }
-.overlays {
+/* .overlays {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-.navigate.dropdown {
+  grid-template-columns: 2fr 1fr;
+} */
+/* .navigate.dropdown {
   grid-column: 2;
-  justify-self: right;
   margin-top: 10px;
-}
-
+  justify-self: right;
+  margin-right: -20px;
+} */
 button.dropdown-toggle.btn.btn-primary {
   border: none;
   background: transparent;
@@ -94,4 +108,25 @@ h2 {
   color: white;
   margin-top: 0;
   padding-top: 50%;
+}
+.signBtn {
+  width: 15em;
+  background: transparent;
+  border: black 1px solid;
+  border-radius: 20px;
+  padding: 10px;
+  color: white;
+}
+.likeBtn {
+  display: grid;
+  grid-template-columns: 1fr 1fr 5fr;
+  align-items: center;
+}
+.reviews {
+  display: grid;
+  justify-items: center;
+}
+.review {
+  border: black 1px solid;
+  height: 50px;
 }

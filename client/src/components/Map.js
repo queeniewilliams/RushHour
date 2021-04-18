@@ -4,11 +4,12 @@ import Navigate from './Navigate'
 import '../css/mapbox.css'
 import { useHistory } from 'react-router-dom'
 
+
 const Map = (props) => {
   const [viewport, setViewport] = useState({
     width: '100%',
     height: '100%',
-    latitude: 34,
+    latitude: 34.1,
     longitude: -118.3,
 
     zoom: 10
@@ -108,9 +109,16 @@ const Map = (props) => {
                   }}
                 >
                   {props.selectedParking.image ? (
-                    <img src={props.selectedParking.image} width="200px" />
+                    <img
+                      className="parking-image"
+                      src={props.selectedParking.image}
+                      width="200px"
+                      height="100px"
+                    />
                   ) : null}
-                  <p>Parking {props.selectedParking.id}</p>
+                  <p className="parkingId">
+                    Parking {props.selectedParking.id}
+                  </p>
                   <div className="location">
                     <img
                       id="location-icon"
@@ -121,16 +129,22 @@ const Map = (props) => {
                     />
                     <p>{props.selectedParking.address}</p>
                   </div>
-                  <p>Distance:{props.distance}Km</p>
+                  <div className="location">
+                    <img
+                      src="https://i.ibb.co/84x6628/Pngtree-vector-distance-icon-3767406.png"
+                      height="30px"
+                    />
+                    <p>{props.distance}Km</p>
+                  </div>
                   <button>Get Direction</button>
                   <br></br>
-                  <img
-                    src="https://i.ibb.co/Hdbst8z/vippng-com-review-icon-png-3657900.png"
-                    width="40px"
+                  <button
                     onClick={() =>
                       history.push(`/reviews/${props.selectedParking.id}`)
                     }
-                  />
+                  >
+                    Reviews
+                  </button>
                 </Popup>
               ) : null}
             </div>

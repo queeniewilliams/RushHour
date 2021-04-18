@@ -296,6 +296,7 @@ const App = () => {
               comments={comments}
               deleteComment={deleteComment}
               getAllComments={getAllComments}
+              selectedParking={selectedParking}
             />
           )}
         />

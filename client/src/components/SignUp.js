@@ -45,6 +45,7 @@ const SignUp = (props) => {
   return (
     <div className="signup">
       <h2 className="signform">Get On Board</h2>
+      <br></br>
       <form onSubmit={handleConfirm} className="signform">
         <input
           type="text"
