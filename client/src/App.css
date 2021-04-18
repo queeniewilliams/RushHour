@@ -27,16 +27,6 @@
   font-size: 1em;
   font-weight: bold;
 }
-/* .overlays {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-} */
-/* .navigate.dropdown {
-  grid-column: 2;
-  margin-top: 10px;
-  justify-self: right;
-  margin-right: -20px;
-} */
 button.dropdown-toggle.btn.btn-primary {
   border: none;
   background: transparent;

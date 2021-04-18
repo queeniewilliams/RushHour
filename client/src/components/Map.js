@@ -4,7 +4,6 @@ import Navigate from './Navigate'
 import '../css/mapbox.css'
 import { useHistory } from 'react-router-dom'
 
-
 const Map = (props) => {
   const [viewport, setViewport] = useState({
     width: '100%',

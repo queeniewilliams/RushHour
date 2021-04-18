@@ -4,7 +4,6 @@ import '../App.css'
 import { UpdateComment } from '../services/CommentServices'
 
 const Comments = (props) => {
-  console.log(props)
   const [like, setLike] = useState(0)
   const [selected, setSelected] = useState(false)
   const [selected1, setSelected1] = useState(false)
@@ -41,9 +40,13 @@ const Comments = (props) => {
   return (
     <div>
       <Navigate authenticated={props.authenticated} logOut={props.logOut} />
-      <img src={props.selectedParking.image} width="100%" />
+      {/* <img src={props.selectedParking.image} width="100%" /> */}
       <div className="reviews">
-        <form onSubmit={() => props.submitComment(props.props.match.params.id)}>
+        <form
+          onSubmit={() => {
+            props.submitComment(props.props.match.params.id)
+          }}
+        >
           <p>Write a review</p>
           <input
             className="review"
