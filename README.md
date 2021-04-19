@@ -29,6 +29,7 @@ Features:
 ### **_Getting Started_**
 
 [Trello](https://trello.com/b/gvMw65ma/rushhour)
+
 [RushHour](http://localhost:3000)
 
 ### **_Preview_**
