@@ -20,10 +20,8 @@ const GetAllComments = async (req, res) => {
 const AddComment = async (req, res) => {
   console.log(res)
   try {
-    // const { token } = res.locals
     const comment = await Comment.create({
       ...req.body,
-      // userId,
       coordinateId: req.params.coordinate_id
     })
     res.send(comment)

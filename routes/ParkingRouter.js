@@ -2,7 +2,6 @@ const router = require('express').Router()
 const controller = require('../controllers/CoordinateController')
 const middleware = require('../middleware')
 
-// router.get('/',controller.GetParkingByDistance)
 router.get('/all', controller.GetParking)
 router.get(
   '/:user_id',
