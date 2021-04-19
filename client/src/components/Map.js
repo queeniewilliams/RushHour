@@ -150,13 +150,21 @@ const Map = (props) => {
                     />
                     <p>{props.distance}Km</p>
                   </div>
-                  <button
-                    onClick={() =>
-                      history.push(`/reviews/${props.selectedParking.id}`)
-                    }
-                  >
-                    Reviews
-                  </button>
+                  <div id="reviews">
+                    <img
+                    alt="icon"
+                      src="https://i.ibb.co/dB3D5fG/pngaaa-com-563369.png"
+                      width="30px"
+                      height="30px"
+                    />
+                    <p
+                      onClick={() =>
+                        history.push(`/reviews/${props.selectedParking.id}`)
+                      }
+                    >
+                      Reviews
+                    </p>
+                  </div>
                 </Popup>
               ) : null}
             </div>

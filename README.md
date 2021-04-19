@@ -11,14 +11,14 @@
 
 ### **_Description_**
 
-RushHour is an interactive app where it helps users to find available street parking nearby and reserve the parking spot. Users will be able to log into the app and post an available parking spot when they are leaving; meanwhile, other users will be able to see the available parking and reserve it for free or a small amount of fee depending on the amount of time takes them to reach to the spot. In order to avoid blocking the traffic, there is also a limited time the user can wait for another user to arrive.
+RushHour is an interactive app where it helps users to find free parking nearby. Users are able to log into the app and post an free parking they found; meanwhile, all users are able to see the free parkings and detailed information, and also leave reviews.
 
 Features:
 
-- users are able to log in to add/edit/delete thier parking spot,
-- users are able to log in to see available parking nearby
-- users are able to reserve parking spot
-- users are able to see the distance between current location and the parking spot
+- users are able to log in to add/edit/delete their parking spot.
+- users are able to log in to see free parkings nearby.
+- users are able to see the distance between current location and the parking spot.
+- users are able to leave reviews for the parking after their visit and post pictures.
 
 ### **_Technologies_**
 
@@ -28,8 +28,13 @@ Features:
 
 ### **_Preview_**
 
+![preview](https://i.ibb.co/rpqQG5B/Screen-Shot-2021-04-18-at-8-15-21-PM.png)
+![preview](https://i.ibb.co/XFT1xDJ/Screen-Shot-2021-04-18-at-8-13-34-PM.png)
+![preview](https://i.ibb.co/xXtN6Mk/Screen-Shot-2021-04-18-at-8-17-14-PM.png)
+
 ### **_Future Updates_**
 
 - [ ] being able to read parking meters
 - [ ] add payment function
-- [ ] add timer
+- [ ] add traffic flow
+- [ ] add routes

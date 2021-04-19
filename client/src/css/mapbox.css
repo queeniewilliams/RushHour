@@ -95,3 +95,8 @@ input {
   color: white;
   font-weight: bold;
 }
+#reviews {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  align-items: center;
+}
