@@ -3,6 +3,9 @@ import ReactMap, { Marker, Popup, FlyToInterpolator } from 'react-map-gl'
 import Navigate from './Navigate'
 import '../css/mapbox.css'
 import { useHistory } from 'react-router-dom'
+import mapboxgl from 'mapbox-gl'
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default
 
 const Map = (props) => {
   const [viewport, setViewport] = useState({
@@ -152,7 +155,7 @@ const Map = (props) => {
                   </div>
                   <div id="reviews">
                     <img
-                    alt="icon"
+                      alt="icon"
                       src="https://i.ibb.co/dB3D5fG/pngaaa-com-563369.png"
                       width="30px"
                       height="30px"
