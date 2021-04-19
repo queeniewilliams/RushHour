@@ -30,7 +30,7 @@ Features:
 
 [Trello](https://trello.com/b/gvMw65ma/rushhour)
 
-[RushHour](http://localhost:3000)
+[RushHour](https://sheltered-dusk-98313.herokuapp.com/)
 
 ### **_Preview_**
 
