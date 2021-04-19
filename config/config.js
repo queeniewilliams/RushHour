@@ -9,7 +9,7 @@ module.exports = {
     dialect: 'postgres'
   },
   production: {
-    database: 'rushhour_database_production',
+    use_env_variable: 'DATABASE_URL',
     dialect: 'postgres',
     dialectOptions: {
       ssl: {
