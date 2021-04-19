@@ -28,9 +28,9 @@ Features:
 
 ### **_Preview_**
 
-![preview](https://i.ibb.co/rpqQG5B/Screen-Shot-2021-04-18-at-8-15-21-PM.png)
-![preview](https://i.ibb.co/XFT1xDJ/Screen-Shot-2021-04-18-at-8-13-34-PM.png)
-![preview](https://i.ibb.co/xXtN6Mk/Screen-Shot-2021-04-18-at-8-17-14-PM.png)
+<img src="https://i.ibb.co/rpqQG5B/Screen-Shot-2021-04-18-at-8-15-21-PM.png" alt="drawing" width="250"/>
+<img src="https://i.ibb.co/XFT1xDJ/Screen-Shot-2021-04-18-at-8-13-34-PM.png" alt="drawing" width="250"/>
+<img src="https://i.ibb.co/xXtN6Mk/Screen-Shot-2021-04-18-at-8-17-14-PM.png" alt="drawing" width="250"/>
 
 ### **_Future Updates_**
 
