@@ -128,8 +128,7 @@ const App = () => {
   const handleCurrentAddressChange = (e) => {
     setCurrentAddress(e.target.value)
   }
-  const submitParking = async (e) => {
-    e.preventDefault()
+  const submitParking = async () => {
     const userId = currentUser.id
     try {
       const res = await CreateParking({
