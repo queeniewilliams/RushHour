@@ -26,6 +26,11 @@ Features:
 - Sequelize
 - Express
 
+### **_Getting Started_**
+
+[Trello](https://trello.com/b/gvMw65ma/rushhour)
+[RushHour](http://localhost:3000)
+
 ### **_Preview_**
 
 <img src="https://i.ibb.co/rpqQG5B/Screen-Shot-2021-04-18-at-8-15-21-PM.png" alt="drawing" width="250"/><img src="https://i.ibb.co/XFT1xDJ/Screen-Shot-2021-04-18-at-8-13-34-PM.png" alt="drawing" width="250"/><img src="https://i.ibb.co/xXtN6Mk/Screen-Shot-2021-04-18-at-8-17-14-PM.png" alt="drawing" width="250"/>
