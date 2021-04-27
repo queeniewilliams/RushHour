@@ -13,7 +13,6 @@ const SignUp = (props) => {
   const history = useHistory()
 
   const handleSubmit = async () => {
-    console.log('firing')
     try {
       await Register(registerForm)
       handleRegisterForm({
